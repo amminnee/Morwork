@@ -1,0 +1,191 @@
+
+
+:root {
+    --primary: #835415;
+    --secondary: #635D59;
+    --background: #FFF8F4;
+    --blue: #2058FF;
+}
+
+body {
+    background-color: var(--background);
+    margin: 0;
+    padding: 0 50px;
+}
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* all app fonts */
+.large-text {
+    font-size: 18px;
+    font-weight: normal;
+    color: black;
+}
+.medium-text {
+    font-size: 12px;
+    font-weight: normal;
+    color: black;
+}
+.normal-text {
+    font-size: 10px;
+    font-weight: normal;
+    color: black;
+}
+.small-text {
+    font-size: 8px;
+    font-weight: normal;
+    color: black;
+}
+.large-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+}
+.medium-title {
+    font-size: 12px;
+    font-weight: bold;
+    color: black;
+}
+.small-title {
+    font-size: 10px;
+    font-weight: bold;
+    color: black;
+}
+.large-label {
+    font-size: 10px;
+    font-weight: medium;
+    color: var(--secondary);
+}
+.medium-label {
+    font-size: 8px;
+    font-weight: medium;
+    color: var(--secondary);
+}
+.small-label {
+    font-size: 6px;
+    font-weight: normal;
+    color: var(--secondary);
+}
+.primary-button {
+    font-size: 10px;
+    font-weight: medium;
+    color: var(--primary);
+}
+.blue-button {
+    font-size: 10px;
+    font-weight: medium;
+    color: var(--blue);
+}
+.on-button {
+    font-size: 10px;
+    font-weight: medium;
+    color: white;
+}
+
+.radius {
+    border-radius: 8px;
+}
+
+/* Elevation classes */
+.elevation-1 {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+  .elevation-2 {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+} 
+  .elevation-3 {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+  .elevation-4 {
+    box-shadow: 0 16px 24px rgba(0, 0, 0, 0.1);
+}
+  .elevation-5 {
+    box-shadow: 0 24px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* main layou */
+.main-cont
+
+/* Navbar style */
+.navbar {
+    padding: 10px 0;
+    background-color: white;
+    width: 200px;
+    height: 100%;
+}
+.active.nav-item p {
+    font-weight: bold;
+}
+.nav-item {
+    height: 50px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.nav-item:hover {
+    cursor: pointer;
+    background-color: rgb(243, 243, 243);
+}
+.nav-item:active {
+    cursor: pointer;
+    background-color: rgb(239, 239, 239);
+}
+.icon {
+    height: 16px;
+    width: 16px;
+}
+.nav-item .avatar {
+    width: 20px;
+    aspect-ratio: 1/1;
+}
+.nav-item.active .avatar {
+    border: 2px solid black;
+}
+
+/* avatar style */
+.avatar {
+    border-radius: 50%;
+}
+
+@media screen and (max-width: 600px) {
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    .radius {
+        border-radius: 0;
+    }
+
+    .navbar {
+        height: 50px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: fixed;
+        bottom: 0;
+        padding: 0;
+        margin: 0;
+    }
+    .nav-item {
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+        flex: 1;
+        height: 100%;
+        gap: 0;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        justify-content: center;
+    }
+    .nav-item p{
+        margin-top: 4px;
+        margin-bottom: 0;
+        padding: 0;
+    }
+    .hidden {
+        display: none;
+    }
+}
