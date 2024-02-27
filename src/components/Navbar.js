@@ -1,15 +1,5 @@
 import React from "react";
 import NavItem from "./NavItem";
-import HomeOutline from '@iconify-icons/teenyicons/home-outline';
-import HomeSolid from '@iconify-icons/teenyicons/home-solid';
-import MajesticonsSuitcaseLine from '@iconify-icons/majesticons/suitcase-line';
-import MajesticonsSuitcase from '@iconify-icons/majesticons/suitcase';
-import ZondiconsAddOutline from '@iconify-icons/zondicons/add-outline';
-import ZondiconsAddSolid from '@iconify-icons/zondicons/add-solid';
-import BxMessage from '@iconify-icons/bx/message';
-import BxsMessage from '@iconify-icons/bxs/message';
-import MingcuteNotificationLine from '@iconify-icons/mingcute/notification-line';
-import MingcuteNotificationFill from '@iconify-icons/mingcute/notification-fill';
 import avatar from '../avatar.jfif'
 
 export default function Navbar(props) {
@@ -20,28 +10,28 @@ export default function Navbar(props) {
                 name="home"
                 text="Home"
                 active={props.currentPage==='home' ? true : false}
-                icon={props.currentPage==='home' ? HomeSolid : HomeOutline}
+                icon={props.currentPage==='home' ? "teenyicons:home-solid" : "teenyicons:home-outline"}
                 handleClick={(newPage) => props.changePage(newPage)}
             />
             <NavItem
                 name="jobs"
                 text="Jobs"
                 active={props.currentPage==='jobs' ? true : false}
-                icon={props.currentPage==='jobs' ? MajesticonsSuitcase : MajesticonsSuitcaseLine}
+                icon={props.currentPage==='jobs' ? "majesticons:suitcase" : "majesticons:suitcase-line"}
                 handleClick={(newPage) => props.changePage(newPage)}
             />
             <NavItem
                 name="post"
                 text="Post"
                 active={props.currentPage==='post' ? true : false}
-                icon={props.currentPage==='post' ? ZondiconsAddSolid : ZondiconsAddOutline}
+                icon={props.currentPage==='post' ? "zondicons:add-solid" : "zondicons:add-outline"}
                 handleClick={(newPage) => props.changePage(newPage)}
             />
             <NavItem
                 name="messages"
                 text="Messages"
                 active={props.currentPage==='messages' ? true : false}
-                icon={props.currentPage==='messages' ? BxsMessage : BxMessage}
+                icon={props.currentPage==='messages' ? "mingcute:message-2-fill" : "mingcute:message-2-line"}
                 handleClick={(newPage) => props.changePage(newPage)}
                 hidden={true}
             />
@@ -49,7 +39,7 @@ export default function Navbar(props) {
                 name="notifications"
                 text="Notifications"
                 active={props.currentPage==='notifications' ? true : false}
-                icon={props.currentPage==='notifications' ? MingcuteNotificationFill : MingcuteNotificationLine}
+                icon={props.currentPage==='notifications' ? "mingcute:notification-fill" : "mingcute:notification-line"}
                 handleClick={(newPage) => props.changePage(newPage)}
             />
             <NavItem
