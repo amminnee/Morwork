@@ -9,7 +9,7 @@ export default function NavItem(props) {
         >
             {props.icon && <Icon icon={props.icon} className="icon" />}
             {props.img && <img src={props.img} className="avatar" />}
-            <p className="medium-text">{props.text}</p>
+            <p className="normal-text">{props.text}</p>
         </div>
     )
 }
