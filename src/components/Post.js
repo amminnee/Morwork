@@ -12,7 +12,7 @@ export default function Post(props) {
                     <div className="user-info">
                         <p className="medium-title">{props.username}</p>
                         <p className="medium-label">{props.title}</p>
-                        <p className="medium-label">{props.time}</p>
+                        <p className="small-label">{props.time}</p>
                     </div>
                 </div>
                 <div className="options">

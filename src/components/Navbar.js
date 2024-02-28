@@ -10,7 +10,7 @@ export default function Navbar(props) {
                 name="home"
                 text="Home"
                 active={props.currentPage==='home' ? true : false}
-                icon={props.currentPage==='home' ? "teenyicons:home-solid" : "teenyicons:home-outline"}
+                icon={props.currentPage==='home' ? "mingcute:home-4-fill" : "mingcute:home-4-line"}
                 handleClick={(newPage) => props.changePage(newPage)}
             />
             <NavItem
