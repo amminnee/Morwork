@@ -7,7 +7,7 @@ export default function PostInteraction(props) {
             className={`post-interaction ${props.active && 'active'}`}
         >
             <Icon icon={props.icon} className="icon"/>
-            <p className="medium-text">{props.text}</p>
+            <p className="small-text">{props.text}</p>
         </div>
     )
 }

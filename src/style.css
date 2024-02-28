@@ -10,7 +10,7 @@
 body {
     background-color: var(--background);
     margin: 0;
-    padding: 0 50px;
+    padding: 10px 200px;
 }
 * {
     font-family: 'Roboto', sans-serif;
@@ -89,6 +89,11 @@ body {
 .radius {
     border-radius: 8px;
 }
+.separator {
+    width: 100%;
+    height: .1px;
+    background-color: rgb(211, 211, 211);
+}
 
 /* Elevation classes */
 .elevation-1 {
@@ -110,17 +115,16 @@ body {
 /* main layou */
 .main-cont {
     display: grid;
-    grid-template-columns: 200px 1fr 250px;
-    column-gap: 10px;
+    grid-template-columns: 250px 1fr 350px;
+    column-gap: 20px;
 }
 
 /* Navbar style */
 .navbar {
     padding: 10px 0;
     background-color: white;
-    width: 200px;
-    height: 100%;
-}
+    width: 100%;
+    }
 .active.nav-item p {
     font-weight: bold;
 }
@@ -139,9 +143,9 @@ body {
     cursor: pointer;
     background-color: rgb(239, 239, 239);
 }
-.icon {
-    height: 16px;
-    width: 16px;
+.nav-item .icon {
+    height: 14px;
+    width: 14px;
 }
 .nav-item .avatar {
     width: 20px;
@@ -166,10 +170,10 @@ body {
 }
 .post {
     background-color: white;
-    padding: 10px 0;
+    padding: 4px 0;
     width: 100%;
 }
-.post .avatar {
+.post .avatar, .avatar.line {
     width: 36px;
     height: 36px;
 }
@@ -195,10 +199,10 @@ body {
     margin: 0 10px;
 }
 .text-section .normal-text {
-    margin: 10px 0 0 0;
+    margin: 4px 0 0 0;
 }
 .text-section .medium-label {
-    margin: 4px 0 10px 0;
+    margin: 4px 0 4px 0;
 }
 .post-media {
     width: 100%;
@@ -209,9 +213,13 @@ body {
     justify-content: space-between;
     margin: 0 10px;
 }
+.info-section p{
+    margin: 0 0 4px 0;
+}
 .interaction-section {
     display: flex; 
-    margin: 0 10px;   
+    margin: 0 10px;  
+    gap: 10px; 
 }
 .post-interaction {
     flex: 1;
@@ -219,9 +227,89 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 2px;
+    border-radius: 10px;
+    padding: 2px 0;
+}
+.post-interaction:hover {
+    cursor: pointer;
+    background-color: #efefef;
 }
 .post-interaction p {
     margin: 0;
+}
+.post-interaction .icon {
+    width: 14px;
+    height: 14px;
+    color: var(--secondary);
+}
+
+
+
+/* SideInfo Style */
+.side-info {
+    display: grid;
+    gap: 10px;
+    align-content: start;
+}
+.profile-card {
+    background-color: white;
+}
+.cover-img {
+    width: 100%;
+    aspect-ratio: 16/4;
+    overflow: hidden;
+    position: relative;
+}
+.cover-img img{
+    width: 100%;
+    position: absolute;
+    top: -50%;
+}
+.user-info-cont{
+    position: relative;
+    padding: 40px 10px 10px 10px;
+}
+.user-info-cont .flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+.user-info-cont .flex .flex{
+    gap: 0px;
+}
+.user-info-cont .flex p{
+    margin: 0;
+}
+.profile-card .avatar {
+    width: 50px;
+    height: 50px;
+    position:absolute;
+    top: -20%;
+    left: 50%;
+    transform: translatex(-50%);
+    border: 2px solid white;
+}
+
+/* suggestions style */
+.suggestions {
+    background-color: white;
+    padding: 10px;
+    display: grid;
+    gap: 10px;
+}
+.suggestions p{
+    margin: 0;
+}
+.user-line {
+    margin: 0;
+    padding: 6px 0;
+}
+.user-line .options {
+    gap: 0;
+}
+.user-line .small-title {
+    font-weight: 500;
 }
 
 
@@ -229,6 +317,7 @@ body {
 @media screen and (max-width: 600px) {
     body {
         margin: 0;
+        margin-bottom: 60px;
         padding: 0;
     }
     .radius {
