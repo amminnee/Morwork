@@ -9,7 +9,12 @@ import Header from "./header";
 
 export default function Main() {
     //defines the current page and changes it if needed
-    const [currentPage, setPage] = React.useState('home')
+    const [currentPage, setPage] = React.useState(localStorage.getItem('page') || 'home')
+    // this function is used to keep the same page after reload
+    const changePage = (page) => {
+        localStorage.setItem('page', page)
+        setPage(page)
+    }
     
      
     return (
@@ -18,7 +23,7 @@ export default function Main() {
         <div className="main-cont">
             <Navbar
                 currentPage={currentPage}
-                changePage={(newPage) => setPage(newPage)}
+                changePage={(newPage) => changePage(newPage)}
             />
             {currentPage === "home" && <Feed />}
             {
@@ -31,7 +36,7 @@ export default function Main() {
             }
         
             {
-                currentPage !== "jobs" && 
+                currentPage === "home" && 
                 <SideInfo />
             }
         </div>

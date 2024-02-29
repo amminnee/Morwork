@@ -6,7 +6,8 @@ import avatar from "../avatar.jfif"
 
 export default function SideInfo(props) {
     return (
-        <div className="side-info">
+        // hidden className hides the component from mobile layout
+        <div className="side-info hidden">
             <ProfileCard 
                 cover={cybertruck}
                 avatar={avatar}

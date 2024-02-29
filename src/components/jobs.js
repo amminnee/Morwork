@@ -7,7 +7,7 @@ export default function Jobs(){
         <div className="Jobs-container radius">
             <div className="title-job-container">
                 <h1 className="large-title jobs-title">Jobs in Morocco</h1>
-                <p className="small-text">Explore Jobs near you</p>
+                <p className="large label">Explore Jobs near you</p>
             </div>
             <JobItem />
             <JobItem />
