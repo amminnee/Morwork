@@ -5,6 +5,7 @@ import SideInfo from "./SideInfo";
 import Notification from "./Notification";
 import Jobs from "./jobs";
 import Header from "./header";
+import NewPost from "./NewPost";
 
 
 export default function Main() {
@@ -15,6 +16,16 @@ export default function Main() {
         localStorage.setItem('page', page)
         setPage(page)
     }
+
+    const [isNewPostOpen, setIsNewPostOpen] = React.useState(false)
+
+    function handleNewPost(){
+        setIsNewPostOpen(!isNewPostOpen)
+        const prevPage = currentPage;
+        if(!isNewPostOpen){
+            setPage(prevPage)
+        }
+    }
     
      
     return (
@@ -23,7 +34,9 @@ export default function Main() {
         <div className="main-cont">
             <Navbar
                 currentPage={currentPage}
-                changePage={(newPage) => changePage(newPage)}
+                changePage={(newPage) => changePage(newPage)
+                }
+                onOpen={handleNewPost}
             />
             {currentPage === "home" && <Feed />}
             {
@@ -38,6 +51,10 @@ export default function Main() {
             {
                 currentPage === "home" && 
                 <SideInfo />
+            }
+            {
+                isNewPostOpen && 
+                <NewPost onClose={handleNewPost}/>
             }
         </div>
         </>

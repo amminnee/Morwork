@@ -25,7 +25,9 @@ export default function Navbar(props) {
                 text="Post"
                 active={props.currentPage==='post' ? true : false}
                 icon={props.currentPage==='post' ? "zondicons:add-solid" : "zondicons:add-outline"}
-                handleClick={(newPage) => props.changePage(newPage)}
+                handleClick={(newPage) => props.changePage(newPage)
+                }
+                onOpen={props.onOpen}
             />
             <NavItem
                 name="messages"
