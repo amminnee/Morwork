@@ -5,6 +5,7 @@ import Notification from "./components/Notification";
 import { createBrowserRouter, Route, RouterProvider } from "react-router-dom"
 import Feed from "./components/Feed";
 import SideInfo from "./components/SideInfo";
+import NewPost from "./components/NewPost";
 
 export default () => {
     // router sets all the paths of the app and assigns them to a component
@@ -29,6 +30,10 @@ export default () => {
                 {
                     path:'/profile',
                     element:<SideInfo />,
+                },
+                {
+                    path:'/post',
+                    element:<NewPost />,
                 },
             ]
         }
