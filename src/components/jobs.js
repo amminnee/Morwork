@@ -12,6 +12,12 @@ export default function Jobs(){
             <JobItem />
             <JobItem />
             <JobItem />
+            <JobItem />
+            <JobItem />
+            <JobItem />
+            <JobItem />
+            <JobItem />
+            <JobItem />
         </div>
     )
 }
