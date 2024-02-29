@@ -5,7 +5,8 @@ export default function NavItem(props) {
     return (
         <div 
             className={`nav-item ${props.active && 'active'} ${props.hidden && 'hidden'}`}
-            onClick={() => {props.handleClick(props.name);
+            onClick={() => {
+            if(props.name !== "post"){props.handleClick(props.name);}
             props.name === "post" && props.onOpen() }}
         >
             {props.icon && <Icon icon={props.icon} className="icon" />}
