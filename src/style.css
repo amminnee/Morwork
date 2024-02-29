@@ -16,7 +16,7 @@
     height: calc(100% - 100px);
     position: fixed;
 }
-.active.side-link p {
+.active.nav-item p {
     font-weight: bold;
 }
 .nav-item {
@@ -42,10 +42,10 @@
     width: 26px;
     aspect-ratio: 1/1;
 }
-.side-link.active .avatar {
+.nav-item.active .avatar {
     border: 3px solid black;
 }
-.side-link {
+.nav-item {
     color: black;
     text-decoration: none;
 }
@@ -272,7 +272,6 @@
 .Jobs-container{
     background: #FFF;
     padding: 20px 12px;
-    width: 100%;
 }
 
 .title-job-container h1{
@@ -477,6 +476,7 @@
         flex: 1;
         height: 100%;
         gap: 0;
+        width: 100%;
         text-overflow: ellipsis;
         overflow: hidden;
         justify-content: center;

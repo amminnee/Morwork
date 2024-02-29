@@ -31,6 +31,7 @@ export default function Navbar(props) {
                     text="Messages"
                     line="mingcute:message-2-line"
                     fill="mingcute:message-2-fill"
+                    hidden={true}
                 />
                 <NavItem
                     url="notifications"

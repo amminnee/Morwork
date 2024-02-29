@@ -10,7 +10,8 @@ export default function Main() {
         <Header />
         <div className="main-cont">
             <Navbar/>
-            <Outlet /> // outlet is the component that gets loaded based on url path defined in route (look in App.js)
+            <Outlet /> 
+            {/* // outlet is the component that gets loaded based on url path defined in route (look in App.js) */}
         </div>
         </>
     )

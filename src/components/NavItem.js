@@ -8,19 +8,15 @@ export default function NavItem(props) {
     console.log(active)
 
     return (
-        <NavLink to={`/${props.url}`} className={`side-link ${({isActive}) => (
+        <NavLink to={`/${props.url}`} className={`nav-item ${({isActive}) => (
             isActive && 'active'
-    )}`}>
-            <div 
-                className={`nav-item ${props.hidden && 'hidden'}`}
-            >
+        )} ${props.hidden && 'hidden'}`}>
                 {props.fill && <Icon    
                     icon={active ? props.fill : props.line} 
                     className="icon" 
                 />}
                 {props.img && <img src={props.img} className="avatar" />}
                 <p className="medium-text">{props.text}</p>
-        </div>
         </NavLink>
         
     )
