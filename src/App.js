@@ -31,10 +31,6 @@ export default () => {
                     path:'/profile',
                     element:<SideInfo />,
                 },
-                {
-                    path:'/post',
-                    element:<NewPost />,
-                },
             ]
         }
     ])

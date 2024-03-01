@@ -371,13 +371,16 @@
     position: fixed;
     top: 0;
     left: 0;
-    background: #0000002e;
+    background: #00000098;
     height: 100vh;
     width: 100%;
     z-index: 1000;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+.darkBackground.hidden {
+    display: none;
 }
 
 .new-post-content{
