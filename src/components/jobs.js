@@ -1,5 +1,5 @@
 import React from "react";
-import JobItem from "./JobItem";
+import JobItem from "./jobItem";
 
 export default function Jobs(){
 

@@ -1,6 +1,6 @@
 import React from "react";
 import Main from "./components/Main";
-import Jobs from "./components/Jobs";
+import Jobs from "./components/jobs";
 import Notification from "./components/Notification";
 import { createBrowserRouter, Route, RouterProvider } from "react-router-dom"
 import Feed from "./components/Feed";
@@ -30,10 +30,6 @@ export default () => {
                 {
                     path:'/profile',
                     element:<SideInfo />,
-                },
-                {
-                    path:'/post',
-                    element:<NewPost />,
                 },
             ]
         }

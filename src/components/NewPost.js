@@ -3,14 +3,12 @@ import React from "react";
 
 export default function NewPost(props){
 
-
-
     return(
-        <div className="darkBackground">
-            <div className="new-post-content elevation-1 radius">
+        <div className={`darkBackground ${props.isVisible}`} onClick={props.hide}>
+            <div className="new-post-content elevation-5 radius" onClick={(event) => event.stopPropagation()}>
                 <div className="new-post-header">
                     <h1 className="large-title">New Post</h1>
-                    <i class="fa-solid fa-xmark" onClick={props.onClose}></i>
+                    <i class="fa-solid fa-xmark" onClick={props.hide}></i>
                 </div>
                 <form>
                     <div className="">
