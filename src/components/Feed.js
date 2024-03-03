@@ -3,6 +3,7 @@ import Post from "./Post"
 import postPhoto from "../post-photo.jpg"
 import SideInfo from "./SideInfo";
 import PostSkeleton from "./PostSkeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 export default function Feed() {
 
