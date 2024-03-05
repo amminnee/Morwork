@@ -8,8 +8,8 @@ export default function NavItem(props) {
     console.log(active)
 
     return (
-        <NavLink to={props.url} className={`nav-item ${({isActive}) => (
-            isActive && props.text!=="Post" && 'active'
+        <NavLink to={props.url} className={`${props.post} nav-item ${({isActive}) => (
+            (isActive && props.text!=="Post") ? 'active' : ''
         )} ${props.hidden && 'hidden'}`} onClick={props.show}>
                 {props.fill && <Icon    
                     icon={active ? props.fill : props.line} 

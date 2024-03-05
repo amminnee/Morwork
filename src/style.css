@@ -1,3 +1,11 @@
+:root {
+    --primary: #835415;
+    --secondary: #635D59;
+    --background: #FFF8F4;
+    --blue: #2058FF;
+}
+
+
 
 /* main layou */
 .main-cont {
@@ -19,6 +27,9 @@
 .active.nav-item p {
     font-weight: bold;
 }
+.active.nav-item.nav-post p {
+    font-weight: normal;
+}
 .nav-item {
     height: 60px;
     padding: 0 20px;
@@ -26,6 +37,7 @@
     align-items: center;
     gap: 10px;
 }
+
 .nav-item:hover {
     cursor: pointer;
     background-color: rgb(243, 243, 243);
@@ -287,7 +299,7 @@
 }
 .shortInfo-job {
     display: flex;
-    align-items: center;
+    align-items: start;
     gap: 10px;
 }
 .title-job-container p {
@@ -295,6 +307,10 @@
 }
 .shortInfo-job img{
     width: 60px;
+}
+.info-job {
+    display: grid;
+    row-gap: 1px;
 }
 .bottom-job{
     display: flex;
@@ -476,6 +492,138 @@
 /* job details */
 
 
+
+/* User profile style */
+.user-profile-page {
+    width: 100%;
+    display: grid;
+    row-gap: 10px;
+}
+
+.user-header {
+    background-color: white;
+}
+.user-profile-cont {
+    width: 100%;
+    padding: 4px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    bottom: 0px;
+    box-sizing: border-box;
+}
+.cover-cont {
+    position: relative;
+}
+.user-profile-cont .avatar {
+    width: 80px;
+    height: 80px;
+}
+.edit-button {
+    width: 40px;
+    height: 40px;
+    background-color: var(--background);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size:x-large;
+    transition: all 400ms;
+}
+.edit-button:hover {
+    cursor: pointer;
+    /* transform: scale(1.06); */
+    box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3);
+}
+.user-info {
+    padding: 10px;
+}
+.user-info .primary-button{
+    margin-top: 20px;
+}
+
+.profile-selector {
+    display: flex;
+    height: 40px;
+    background-color: white;
+}
+.profile-selector .item {
+    height: 100%;
+    flex: 1; 
+    text-align: center center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 500ms ;
+    box-sizing: border-box;
+}
+.profile-selector .item.on {
+    border-bottom: 3px solid var(--blue);
+}
+.profile-selector .item:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+.details-section .user-details {
+    display: none;
+}
+.user-details.show {
+    display: grid;
+    row-gap: 10px;
+}
+
+.user-profile-section {
+    background-color: white;
+    padding: 12px;
+}
+.user-profile-section .section-content {
+    margin-top: 10px;
+}
+.title-cont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.title-cont .icon {
+    font-size: x-large;
+    color: var(--secondary);
+}
+.title-cont .icons-cont {
+    display: flex;
+    gap: 10px;
+}
+.title-cont .icon:hover {
+    color: black;
+    cursor: pointer;
+}
+
+.posts-feed {
+    display: none;
+}
+.posts-feed.show {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    background-color: white;
+    padding: 10px 0;
+}
+.posts-feed .post {
+    max-width: 600px;
+    border: 1px solid rgb(245, 244, 244);
+}
+
+.jobItem.profile img {
+    width: 50px;
+    height: 50px;
+}
+.skill {
+    padding: 6px 0;
+}
 
 
 

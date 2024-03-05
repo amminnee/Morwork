@@ -26,6 +26,7 @@ export default function Navbar(props) {
                     line="zondicons:add-outline"
                     fill="zondicons:add-solid"
                     show={props.showNewPost}
+                    post="nav-post"
                 />
                 <NavItem
                     url="/messages"

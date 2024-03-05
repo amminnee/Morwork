@@ -4,6 +4,7 @@ import Header from "./header";
 import { Outlet } from "react-router-dom";
 import NewPost from "./NewPost";
 
+
 export default function Main() {
     // this state decides weither the newPost window is visible
     const [newPost, setNewPost] = React.useState("hidden")
