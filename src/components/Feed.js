@@ -2,12 +2,26 @@ import React from "react"
 import Post from "./Post"
 import postPhoto from "../post-photo.jpg"
 import SideInfo from "./SideInfo";
+import PostSkeleton from "./PostSkeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 export default function Feed() {
+
+    const [isLoading, setIsLoading] = React.useState(true)
+
+    React.useEffect(() => {
+        const initialLoadingTimeout = setTimeout(() => {
+            setIsLoading(false);
+        }, 3000);
+
+        return () => clearTimeout(initialLoadingTimeout);
+    }, []);
+
+
     return (
         <div className="home-page">
             <div className="post-feed">
-                <Post 
+                {isLoading ? <PostSkeleton /> : <Post 
                     username="Amine Edarkaoui"
                     title="Software engineer"
                     time="21h"
@@ -18,8 +32,8 @@ export default function Feed() {
                     photo={postPhoto}
                     likes="23"
                     comments="6"
-                />
-                <Post 
+                />}
+                {isLoading ? <PostSkeleton /> : <Post 
                     username="Amine Edarkaoui"
                     title="Software engineer"
                     time="21h"
@@ -30,8 +44,8 @@ export default function Feed() {
                     photo={postPhoto}
                     likes="23"
                     comments="6"
-                />
-                <Post 
+                />}
+                {isLoading ? <PostSkeleton /> : <Post 
                     username="Amine Edarkaoui"
                     title="Software engineer"
                     time="21h"
@@ -42,8 +56,8 @@ export default function Feed() {
                     photo={postPhoto}
                     likes="23"
                     comments="6"
-                />
-                <Post 
+                />}
+                {isLoading ? <PostSkeleton /> : <Post 
                     username="Amine Edarkaoui"
                     title="Software engineer"
                     time="21h"
@@ -54,7 +68,9 @@ export default function Feed() {
                     photo={postPhoto}
                     likes="23"
                     comments="6"
-                />
+                />}
+                
+                
             </div>
             <SideInfo />
         </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import JobItem from "./jobItem";
+import JobSkeleton from "./JobSkeleton";
 
 export default function Jobs(){
 
@@ -40,13 +41,23 @@ export default function Jobs(){
     const jobElaments = jobs.map(job => <JobItem id={job.id} content={job.content}
         salary={job.salary} postHour={job.postHour} />)
 
+        const [isLoading, setIsLoading] = React.useState(true)
+
+        React.useEffect(() => {
+            const initialLoadingTimeout = setTimeout(() => {
+                setIsLoading(false);
+            }, 3000);
+    
+            return () => clearTimeout(initialLoadingTimeout);
+        }, []);
+
     return(
         <div className="Jobs-container radius">
             <div className="title-job-container">
                 <h1 className="large-title jobs-title">Jobs in Morocco</h1>
                 <p className="large label">Explore Jobs near you</p>
             </div>
-            {jobElaments}
+            {isLoading ? <JobSkeleton /> : jobElaments}
         </div>
     )
 }
