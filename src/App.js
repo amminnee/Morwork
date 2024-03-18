@@ -1,12 +1,10 @@
 import React from "react";
-import Main from "./components/Main";
-import Jobs from "./components/jobs";
-import Notification from "./components/Notification";
-import { createBrowserRouter, Route, RouterProvider } from "react-router-dom"
-import Feed from "./components/Feed";
-import SideInfo from "./components/SideInfo";
-import NewPost from "./components/NewPost";
-import UserProfile from "./components/UserProfile";
+import Main from "./components/main-components/Main";
+import Jobs from "./components/jobs/Jobs";
+import Notification from "./components/notifications/Notification";
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import Feed from "./components/post-feed/Feed";
+import UserProfile from "./components/profile-page/UserProfile";
 
 export default () => {
     // router sets all the paths of the app and assigns them to a component

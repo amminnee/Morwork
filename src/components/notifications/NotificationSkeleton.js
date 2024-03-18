@@ -1,5 +1,4 @@
 import React from "react";
-import avatar from "../avatar.jfif";
 import Skeleton from 'react-loading-skeleton';
 
 const NotificationSkeleton = () => {

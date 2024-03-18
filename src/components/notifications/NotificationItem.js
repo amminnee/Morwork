@@ -1,5 +1,5 @@
 import React from "react";
-import avatar from "../avatar.jfif"
+import avatar from "../../avatar.jfif"
 
 export default function NotificationItem(){
 

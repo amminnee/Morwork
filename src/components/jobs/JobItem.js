@@ -1,5 +1,5 @@
 import React from "react";
-import image from "../wedo.png"
+import image from "../../wedo.png"
 
 export default function JobItem(props){
 
@@ -25,28 +25,24 @@ export default function JobItem(props){
                             <p className="medium-title">Java Developper</p>
                             <p className="small-text">Facebook</p>
                             <p className="medium-label">Casablanca Maarif</p>
-                    </div>
+                        </div>
                     </div>
                     <div className="small-label">full time</div>
                 </div>
+                {jobId === props.id &&
+                <div className="job-detail-container">
+                    <p className="medium-title">Job description</p>
+                    <div className="jobDetail normal-text">
+                       {props.content}
+                    </div>
+                </div>
+                }
                 <div className="bottom-job">
                     <div className="blue-button apply-now"><i class="fa-solid fa-arrow-right"></i> Apply now</div>
                     <div className="primary-button" onClick={() => moreInfoClick(props.id)}>{buttonText}</div>
                 </div>
             </div>
-            {jobId === props.id &&
-            <div className="jobDetailContainer">
-                <div className="separator"></div>
-                <h1 className="medium-title">Détails</h1>
-                <div className="jobDetail medium-text">
-                    {props.content}
-                </div>
-                <div className="supplementaireInfo ">
-                    <div className="postHour"><span>{props.postHour}</span> <i class="fa-solid fa-stopwatch"></i></div>
-                    <div className="salary"><span> {props.salary} </span>DH <i class="fa-solid fa-coins"></i></div>
-                </div>
-            </div>
-            }
+            
             <div className="separator"></div>
         </div>
         

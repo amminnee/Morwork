@@ -332,7 +332,6 @@
 
 .more-details{
     color: var(--primary);
-    font-size: 17px;
 }
 
 
@@ -470,12 +469,11 @@
 
 
 /* job details */
-.jobDetail{
-    width: 95%;
-    margin: auto;
-    padding: 8px;
-    padding-bottom: 11px;
-    line-height: 1.3;
+.job-detail-container {
+    margin: 10px;
+}
+.job-detail-container .medium-title {
+    margin: 10px 0;
 }
 .supplementaireInfo{
     display: flex;

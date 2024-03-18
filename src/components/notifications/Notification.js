@@ -8,7 +8,7 @@ export default function Notification(props){
     React.useEffect(() => {
         const initialLoadingTimeout = setTimeout(() => {
             setIsLoading(false);
-        }, 3000);
+        }, 1000);
 
         return () => clearTimeout(initialLoadingTimeout);
     }, []);

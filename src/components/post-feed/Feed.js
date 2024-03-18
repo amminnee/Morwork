@@ -1,7 +1,7 @@
 import React from "react"
 import Post from "./Post"
-import postPhoto from "../post-photo.jpg"
-import SideInfo from "./SideInfo";
+import postPhoto from "../../post-photo.jpg"
+import SideInfo from "../main-components/SideInfo";
 import PostSkeleton from "./PostSkeleton";
 import 'react-loading-skeleton/dist/skeleton.css'
 
@@ -12,7 +12,7 @@ export default function Feed() {
     React.useEffect(() => {
         const initialLoadingTimeout = setTimeout(() => {
             setIsLoading(false);
-        }, 3000);
+        }, 1000);
 
         return () => clearTimeout(initialLoadingTimeout);
     }, []);

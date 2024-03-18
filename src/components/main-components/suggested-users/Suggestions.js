@@ -1,6 +1,6 @@
 import React from "react";
 import UserLine from "./UserLine";
-import avatar from "../avatar.jfif"
+import avatar from "../../../avatar.jfif"
 
 export default function Suggestions() {
     return (

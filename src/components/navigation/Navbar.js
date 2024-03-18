@@ -1,7 +1,7 @@
 import React from "react";
 import NavItem from "./NavItem";
-import avatar from '../avatar.jfif'
-import { NavLink, useLocation } from "react-router-dom";
+import avatar from '../../avatar.jfif'
+import { useLocation } from "react-router-dom";
 
 export default function Navbar(props) {
 

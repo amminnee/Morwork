@@ -1,8 +1,8 @@
 import React from "react";
-import Navbar from "./Navbar";
-import Header from "./header";
+import Navbar from "../navigation/Navbar";
+import Header from "../navigation/header";
 import { Outlet } from "react-router-dom";
-import NewPost from "./NewPost";
+import NewPost from "../post-feed/NewPost";
 
 
 export default function Main() {

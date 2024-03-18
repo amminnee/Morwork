@@ -1,9 +1,9 @@
 import React from "react";
-import cover from "../cybertruck.jpg"
-import avatar from "../avatar.jfif"
+import cover from "../../cybertruck.jpg"
+import avatar from "../../avatar.jfif"
 import { Icon } from "@iconify/react";
-import Post from "./Post";
-import postPhoto from "../post-photo.jpg"
+import Post from "../post-feed/Post";
+import postPhoto from "../../post-photo.jpg"
 import ProfileExp from "./ProfileExp";
 import ProfileEdu from "./ProfileEdu";
 

@@ -1,6 +1,6 @@
 import React from "react"
 import { Icon } from "@iconify/react"
-import avatar from "../avatar.jfif"
+import avatar from "../../avatar.jfif"
 import PostInteraction from "./PostInteraction";
 
 export default function Post(props) {
