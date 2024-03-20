@@ -1,5 +1,5 @@
 import React from "react";
-import ProfileCard from "../navigation/ProfileCard";
+import ProfileCard from "./ProfileCard";
 import Suggestions from "./suggested-users/Suggestions";
 import cybertruck from "../../cybertruck.jpg"
 import avatar from "../../avatar.jfif"

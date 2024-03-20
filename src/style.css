@@ -625,6 +625,60 @@
 
 
 
+/* Login page style */
+.login-card {
+    background-color: white;
+    width: 90%;
+    max-width: 500px;
+    margin: auto;
+    padding: 50px 20px;
+    display: grid;
+    gap: 50px;
+    min-height: 60vh;
+}
+
+.logo {
+    color: var(--primary);
+    font-size: 40px;
+    font-weight: 700;
+    margin: 0 auto;
+}
+
+.name-cont {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
+}
+.name-cont .field {
+    width: 100%;
+}
+
+.login-fields {
+    display: grid;
+    gap: 10px;
+}
+.login-fields .large-title {
+    margin: 10px;
+}
+.login-fields .next {
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.no-acc {
+    margin: auto;
+}
+
+.link {
+    color: var(--blue);
+}
+
+
+
+
+
+
 /* All PC layou style should be above 👆👆 */
 /* Mobile layout */
 @media screen and (max-width: 600px) {
