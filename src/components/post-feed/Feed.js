@@ -1,79 +1,76 @@
-import React from "react"
-import Post from "./Post"
-import postPhoto from "../../post-photo.jpg"
-import SideInfo from "../main-components/SideInfo";
+import React from "react";
+import Post from "./Post";
+import SideInfo from "../main-components/SideInfo"
 import PostSkeleton from "./PostSkeleton";
-import 'react-loading-skeleton/dist/skeleton.css'
+import 'react-loading-skeleton/dist/skeleton.css';
+import { getPosts } from "../../api/app";
 
 export default function Feed() {
+    const [posts, setPosts] = React.useState([]);
+    const [isLoading, setIsLoading] = React.useState(true);
 
-    const [isLoading, setIsLoading] = React.useState(true)
+    React.useEffect(
+        () => {
+            getPosts()
+            .then(res=>{
+                setPosts(res.data)
+                setIsLoading(false)
+            })
+            .catch(err=>console.log(err))
+        }
+        ,[])
 
-    React.useEffect(() => {
-        const initialLoadingTimeout = setTimeout(() => {
-            setIsLoading(false);
-        }, 1000);
 
-        return () => clearTimeout(initialLoadingTimeout);
-    }, []);
+    const formatPostTime = (postDate) => {
+        const currentDate = new Date();
+        const postDateTime = new Date(postDate);
+        const elapsedTimeInMilliseconds = currentDate - postDateTime;
+
+        const seconds = Math.floor(elapsedTimeInMilliseconds / 1000);
+        if (seconds < 60) {
+            return `${seconds}s`;
+        }
+
+        const minutes = Math.floor(seconds / 60);
+        if (minutes < 60) {
+            return `${minutes}m`;
+        }
+
+        const hours = Math.floor(minutes / 60);
+        if (hours < 24) {
+            return `${hours}h`;
+        }
+
+        const days = Math.floor(hours / 24);
+        return `${days}d`;
+    };
 
 
     return (
         <div className="home-page">
             <div className="post-feed">
-                {isLoading ? <PostSkeleton /> : <Post 
-                    username="Amine Edarkaoui"
-                    title="Software engineer"
-                    time="21h"
-                    text="Dear Network
-                    I’m happy to annouce that I have just passed my final exam in computer science, finishing with it my long extended career in IT, which have taken a long part of my life in the past five years.
-                    
-                    I’m also thrilled to thank all my classmates and professors for there unconditioned support and help throughout my journey."
-                    photo={postPhoto}
-                    likes="23"
-                    comments="6"
-                />}
-                {isLoading ? <PostSkeleton /> : <Post 
-                    username="Amine Edarkaoui"
-                    title="Software engineer"
-                    time="21h"
-                    text="Dear Network
-                    I’m happy to annouce that I have just passed my final exam in computer science, finishing with it my long extended career in IT, which have taken a long part of my life in the past five years.
-                    
-                    I’m also thrilled to thank all my classmates and professors for there unconditioned support and help throughout my journey."
-                    photo={postPhoto}
-                    likes="23"
-                    comments="6"
-                />}
-                {isLoading ? <PostSkeleton /> : <Post 
-                    username="Amine Edarkaoui"
-                    title="Software engineer"
-                    time="21h"
-                    text="Dear Network
-                    I’m happy to annouce that I have just passed my final exam in computer science, finishing with it my long extended career in IT, which have taken a long part of my life in the past five years.
-                    
-                    I’m also thrilled to thank all my classmates and professors for there unconditioned support and help throughout my journey."
-                    photo={postPhoto}
-                    likes="23"
-                    comments="6"
-                />}
-                {isLoading ? <PostSkeleton /> : <Post 
-                    username="Amine Edarkaoui"
-                    title="Software engineer"
-                    time="21h"
-                    text="Dear Network
-                    I’m happy to annouce that I have just passed my final exam in computer science, finishing with it my long extended career in IT, which have taken a long part of my life in the past five years.
-                    
-                    I’m also thrilled to thank all my classmates and professors for there unconditioned support and help throughout my journey."
-                    photo={postPhoto}
-                    likes="23"
-                    comments="6"
-                />}
-                
-                
+                {isLoading ? (
+                    <>
+                        <PostSkeleton />
+                        <PostSkeleton />
+                    </>
+                ) : (
+                    posts.map(post => (
+                        <Post 
+                            key={post.id}
+                            username={post.username}
+                            title={post.title}
+                            time={formatPostTime(post.date)}
+                            text={post.content}
+                            photo={post.image}
+                            likes={post.likes}
+                            comments={post.comments}
+                        />
+                        
+                    )) 
+                )}
             </div>
             <SideInfo />
         </div>
-        
-    )
+    );
 }

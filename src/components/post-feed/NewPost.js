@@ -1,8 +1,34 @@
 import React from "react";
-
+import { newPost } from "../../api/app";
 
 export default function NewPost(props){
 
+    const [content, setContent] = React.useState("");
+    const [photo, setPhoto] = React.useState(null);
+
+    function handleImage(event){
+        const file = event.target.files[0]
+        setPhoto(file)
+    }
+
+    const postData = new FormData();
+    React.useEffect(() => {
+        
+        postData.append("content", content);
+        postData.append("image", photo);
+    }, [content, photo]);
+    
+
+    async function handleSubmit(event) {
+        try {
+            await newPost(postData);
+            setContent(""); 
+            setPhoto(null); 
+        } catch (error) {
+            console.error("Error submitting post:", error);
+        }
+    }
+    
     return(
         <div className={`darkBackground ${props.isVisible}`} onClick={props.hide}>
             <div className="new-post-content elevation-5 radius" onClick={(event) => event.stopPropagation()}>
@@ -12,18 +38,21 @@ export default function NewPost(props){
                 </div>
                 <form>
                     <div className="">
-                        <textarea className="large-text" placeholder="What the hell do you want to talk about?">
+                        <textarea className="large-text" placeholder="What do you want to talk about?" onChange={(event) => setContent(event.target.value)}>
                         </textarea>
                     </div>
                     <div>
-                        <label for="file"><i class="fa-solid fa-file"></i></label>
-                        <input type="file" id="file"/>
+                        <label htmlFor="file"><i class="fa-solid fa-file"></i></label>
+                        <input type="file" id="file" onChange={(event) => handleImage(event)}/>
+                        {photo && photo.type.startsWith("image") && <img width={42} height={42} src={URL.createObjectURL(photo)} />}
+                        {photo && photo.type.startsWith("video") && <video width={42} height={42} src={URL.createObjectURL(photo)}></video>}
                     </div>
                     <div>
-                        <button className="on-button radius">Poster</button>
+                        <button className="on-button radius" onClick={(event) => handleSubmit(event)}>Poster</button>
                     </div>
                 </form>
             </div>
         </div>
     )
 }
+
