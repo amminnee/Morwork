@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
     "@iconify-icons/bx": "^1.2.6",
     "@iconify-icons/bxs": "^1.2.6",
     "@iconify-icons/majesticons": "^1.2.6",
@@ -10,6 +12,8 @@
     "@iconify-icons/teenyicons": "^1.2.4",
     "@iconify-icons/zondicons": "^1.2.3",
     "@iconify/react": "^4.1.1",
+    "@mui/material": "^5.15.13",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.17",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -19,6 +23,7 @@
     "react-loading-skeleton": "^3.4.0",
     "react-router-dom": "^6.22.2",
     "react-scripts": "5.0.1",
+    "styled-components": "^6.1.8",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
