@@ -1,10 +1,15 @@
-import { Button, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../auth/AuthProvider";
 
 export default function LoginPage() {
     const auth = useAuth()
+
+    const [isLoading, setLoading] = useState(false)
+    const [emailError, setEmailError] = useState(null)
+    const [passwordError, setPasswordError] = useState(null)
     const [formData, setData] = useState(
         {
             email:"",
@@ -19,10 +24,36 @@ export default function LoginPage() {
         }))
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
+        setEmailError(null)
+        setPasswordError(null)
 
-        auth.loginAction(formData)
+        if (formData.email.length == 0) {
+                    setEmailError("Empty field!")
+                    return
+        }
+        if (formData.password.length == 0) {
+            setPasswordError("Empty field!")
+            return
+        }
+
+        
+        setLoading(true)
+
+        const body = await auth.loginAction(formData)
+        console.log("status:  " + body.status)
+        if (body.status == 401) {
+            if (body.data.includes("password")) {
+                setPasswordError(body.data)
+            }
+            if (body.data.includes("User")) {
+                setEmailError(body.data)
+            }
+        }
+
+        setLoading(false)
+
     }
 
     return (
@@ -31,16 +62,36 @@ export default function LoginPage() {
             <div className="login-fields">
                 <p className="large-title">Login</p>
                 <form className="login-fields" onSubmit={handleSubmit}>
-                    <TextField variant="outlined" label="Email" type="email" name="email" onChange={handleChange} value={formData.email} />
-                    <TextField variant="outlined" label="Password" type="password" name="password" onChange={handleChange} value={formData.password} />
-                    <Button 
+                    <TextField 
+                        variant="outlined" 
+                        label="Email" 
+                        type="email" 
+                        name="email" 
+                        onChange={handleChange} 
+                        value={formData.email} 
+                        error={emailError}
+                        helperText={emailError}
+                    />
+                    <TextField 
+                        variant="outlined" 
+                        label="Password" 
+                        type="password" 
+                        name="password" 
+                        onChange={handleChange} 
+                        value={formData.password} 
+                        error={passwordError}
+                        helperText={passwordError}
+                    />
+                    
+                    <LoadingButton 
                         className="auth-btn" 
                         color="primary" 
                         variant="contained" 
                         type="submit"
+                        loading={isLoading}
                     >
                             Login
-                    </Button>
+                    </LoadingButton>
                 </form>
                 
                 <p className="no-acc">

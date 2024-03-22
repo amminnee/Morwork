@@ -16,7 +16,7 @@ export default function NewPost(props){
                         </textarea>
                     </div>
                     <div>
-                        <label for="file"><i class="fa-solid fa-file"></i></label>
+                        <label htmlFor="file"><i class="fa-solid fa-file"></i></label>
                         <input type="file" id="file"/>
                     </div>
                     <div>
