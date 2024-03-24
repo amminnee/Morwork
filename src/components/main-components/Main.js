@@ -33,6 +33,7 @@ export default function Main() {
         <div className="main-cont">
             <Navbar
                 showNewPost={() => setNewPost("")}
+                isScrolling={scrolling}
             />
             <Outlet /> 
             {/* // outlet is the component that gets loaded based on url path defined in route (look in App.js) */}
