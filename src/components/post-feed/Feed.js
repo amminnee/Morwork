@@ -9,16 +9,19 @@ export default function Feed() {
     const [posts, setPosts] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(true);
 
+
     React.useEffect(
         () => {
             getPosts()
             .then(res=>{
                 setPosts(res.data)
                 setIsLoading(false)
+                console.log(res.data)
             })
             .catch(err=>console.log(err))
         }
         ,[])
+
 
 
     const formatPostTime = (postDate) => {
@@ -58,16 +61,15 @@ export default function Feed() {
                     posts.map(post => (
                         <Post 
                             key={post.id}
-                            username={post.username}
+                            username={`${post.firstName} ${post.lastName}`}
                             title={post.title}
                             time={formatPostTime(post.date)}
                             text={post.content}
                             photo={post.image}
                             likes={post.likes}
                             comments={post.comments}
-                        />
-                        
-                    )) 
+                        /> 
+                    ))
                 )}
             </div>
             <SideInfo />

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Icon } from "@iconify/react";
 import avatar from "../../elon.jpeg";
 import PostInteraction from "./PostInteraction";
+import axios from "axios";
+
 
 export default function Post(props) {
   const [expanded, setExpanded] = useState(false);
@@ -45,6 +47,21 @@ export default function Post(props) {
     }
   }, [videoRef.current, isVideoPlaying]);
 
+
+  // function getMedia(name) {
+  //   axios.get(`http://localhost:8081/${name}`, {
+  //     headers: {
+  //       "ngrok-skip-browser-warning": "true",
+  //       Authorization: `Bearer ${localStorage.getItem("site")}`
+  //     }
+  //   })
+  //   .then(res => console.log(res))
+  //   .catch(err => console.error(err));
+  // }
+  
+  // getMedia(props.photo);
+  
+
   return (
     <div className="radius post">
       <div className="top-section">
@@ -71,6 +88,7 @@ export default function Post(props) {
       </div>
       {props.photo && !props.photo.endsWith("mp4") && <img src={`http://localhost:8081/${props.photo}`} className="post-media" alt="Post media" />}
       {props.photo && props.photo.endsWith("mp4") && <video ref={videoRef} src={`http://localhost:8081/${props.photo}`} className="post-media" controls muted></video>}
+
       <div className="info-section">
         <p className="medium-label">{props.likes} likes</p>
         <p className="medium-label">{props.comments} comments</p>

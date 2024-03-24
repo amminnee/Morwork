@@ -7,15 +7,16 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate()
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(localStorage.getItem("user_id") || null);
   const [token, setToken] = useState(localStorage.getItem("site") || "");
   const loginAction = async (data) => {
     try {
       const res = await api.post("/auth/authenticate", data);
         if (res.data) {
-        setUser(res.data.user);
+        setUser(res.data.user_id);
         setToken(res.data.access_token);
         localStorage.setItem("site", res.data.access_token);
+        localStorage.setItem("user_id", res.data.user_id);
         navigate("/");
         return;
         }
@@ -43,5 +44,6 @@ const AuthProvider = ({ children }) => {
 export default AuthProvider;
 
 export const useAuth = () => {
+  console.log(useContext(AuthContext))
   return useContext(AuthContext);
 }

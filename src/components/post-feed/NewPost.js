@@ -1,5 +1,6 @@
 import React from "react";
 import { newPost } from "../../api/app";
+import {useAuth} from "../../auth/AuthProvider"
 
 export default function NewPost(props){
 
@@ -10,14 +11,14 @@ export default function NewPost(props){
         const file = event.target.files[0]
         setPhoto(file)
     }
-
+    
+    const {user} = useAuth();
     const postData = new FormData();
     React.useEffect(() => {
-        
         postData.append("content", content);
         postData.append("image", photo);
+        postData.append("author", user)
     }, [content, photo]);
-    
 
     async function handleSubmit(event) {
         try {
