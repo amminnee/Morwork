@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
-import { userCard } from "../../api/requests";
+import { userCard } from "../../api/app";
 
 export default function ProfileCard() {
     const [isLoading, setLoading] = useState(true)

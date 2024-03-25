@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const postApi = axios.create({
+export const api = axios.create({
     baseURL: "http://localhost:8081/morwork/api/v1",
     headers: {
         "ngrok-skip-browser-warning": "true"
@@ -10,7 +10,7 @@ export const postApi = axios.create({
 export const getPosts = () => {
     const token = localStorage.getItem("token");
     if (token) {
-        return postApi.get("/post", {
+        return api.get("/post", {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -24,7 +24,7 @@ export const newPost = (postData) => {
     const token = localStorage.getItem("token");
     if (token) {
         try {
-            return postApi.post("/post/newPost", postData, {
+            return api.post("/post/newPost", postData, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -46,7 +46,7 @@ export const likePost = (postId, userId) => {
         const formData = new FormData();
         formData.append('userId', userId);
         
-        return postApi.post(`/post/${postId}/like`, formData, {
+        return api.post(`/post/${postId}/like`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'multipart/form-data' 
@@ -64,7 +64,7 @@ export const getLikes = (id) =>{
     if (token) {
 
         
-        return postApi.get(`/post/likes/${id}`, {
+        return api.get(`/post/likes/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 
@@ -74,4 +74,17 @@ export const getLikes = (id) =>{
         return Promise.reject(new Error("Token not available"));
     }
 
+}
+
+export const userCard = async () => {
+    try {
+        const res = await api.post(
+            "/user/user-card",
+            {id: localStorage.getItem('userId')},
+            {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        )
+        return res.data
+    } catch(err) {
+        console.error(err)
+    }
 }
