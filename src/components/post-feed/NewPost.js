@@ -18,7 +18,6 @@ export default function NewPost(props){
         postData.append("content", content);
         postData.append("image", photo);
         postData.append("author", user)
-        console.log(user)
     }, [content, photo]);
 
     async function handleSubmit(event) {

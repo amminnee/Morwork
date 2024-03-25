@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Icon } from "@iconify/react";
 import avatar from "../../elon.jpeg";
 import PostInteraction from "./PostInteraction";
-import axios from "axios";
+import { getPosts, likePost, getLikes } from "../../api/app";
+
 
 
 export default function Post(props) {
@@ -10,6 +11,9 @@ export default function Post(props) {
   const MAX_CONTENT_LENGTH = 100;
   const videoRef = useRef(null);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [likeText, setLikeText] = useState("Like")
+  const [likesCount, setLikesCount] = useState(0)
+
 
   const handleToggleExpansion = () => {
     setExpanded(!expanded);
@@ -60,6 +64,48 @@ export default function Post(props) {
   // }
   
   // getMedia(props.photo);
+
+
+  const handleLikePost = () => {
+    likePost(props.id, Number(localStorage.getItem("userId")))
+    .then(()=>{
+      setLikeText(currentLikeText => currentLikeText === "Like" ? "Liked" : "Like")
+      setLikesCount(prevLikesCount => likeText === "Like" ? prevLikesCount + 1 : prevLikesCount - 1);
+    })
+
+  }
+
+  useEffect(() => {
+    if(likeText ==="liked"){
+      test()
+    }
+
+    getLikes(props.id)
+      .then(res => {
+        const userLiked = res.data.some(like => like.userId === Number(localStorage.getItem("userId")));
+        console.log(userLiked+"   "+props.id)
+        if (userLiked) {
+          setLikeText("Liked");
+        } else {
+          setLikeText("Like");
+        }
+        setLikesCount(res.data.length)
+      })
+      .catch(error => {
+        console.error("Error fetching likes:", error);
+      });
+  }, []);
+  
+
+  function test(){
+    let t;
+    props.likes.map(like =>{
+      if(like.userId === Number(localStorage.getItem("userId")) && like.postId === props.id){
+        t=like.id
+        console.log("t= "+t)
+      }
+    })
+  }
   
 
   return (
@@ -90,11 +136,11 @@ export default function Post(props) {
       {props.photo && props.photo.endsWith("mp4") && <video ref={videoRef} src={`http://localhost:8081/${props.photo}`} className="post-media" controls muted></video>}
 
       <div className="info-section">
-        <p className="medium-label">{props.likes} likes</p>
+        <p className="medium-label">{likesCount} likes</p>
         <p className="medium-label">{props.comments} comments</p>
       </div>
       <div className="interaction-section">
-        <PostInteraction icon="bx:like" text="Like" />
+        <PostInteraction icon="bx:like" text={likeText} style={likeText === "Liked" ? { color: "blue"} : null} onClick={handleLikePost} />
         <PostInteraction icon="material-symbols:comment-outline" text="Comment" />
         <PostInteraction icon="zondicons:repost" text="Repost" />
         <PostInteraction icon="ph:share-fat-bold" text="Share" />

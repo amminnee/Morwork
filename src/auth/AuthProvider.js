@@ -48,6 +48,6 @@ const AuthProvider = ({ children }) => {
 export default AuthProvider;
 
 export const useAuth = () => {
-  console.log(useContext(AuthContext))
+  //console.log(useContext(AuthContext))
   return useContext(AuthContext);
 }

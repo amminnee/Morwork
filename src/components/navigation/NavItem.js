@@ -5,7 +5,6 @@ import { NavLink, useLocation } from "react-router-dom";
 export default function NavItem(props) {
     const path = useLocation().pathname
     const active = (path===props.url && props.text!=="Post")
-    console.log(active)
 
     return (
         <NavLink 

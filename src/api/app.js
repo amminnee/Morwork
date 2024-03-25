@@ -20,8 +20,6 @@ export const getPosts = () => {
     }
 };
 
-
-
 export const newPost = (postData) => {
     const token = localStorage.getItem("site");
     if (token) {
@@ -34,3 +32,41 @@ export const newPost = (postData) => {
         return Promise.reject(new Error("Token not available"));
     }
 };
+
+export const likePost = (postId, userId) => {
+    console.log("ok: " + postId + " " + userId);
+    const token = localStorage.getItem("site");
+    
+    if (token) {
+        const formData = new FormData();
+        formData.append('userId', userId);
+        
+        return postApi.post(`/post/${postId}/like`, formData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data' 
+            }
+        });
+    } else {
+        return Promise.reject(new Error("Token not available"));
+    }
+};
+
+
+export const getLikes = (id) =>{
+    const token = localStorage.getItem("site");
+    
+    if (token) {
+
+        
+        return postApi.get(`/post/likes/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                
+            }
+        });
+    } else {
+        return Promise.reject(new Error("Token not available"));
+    }
+
+}

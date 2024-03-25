@@ -22,7 +22,7 @@ export default function Feed() {
         }
         ,[])
 
-
+        console.log("the user on local"+localStorage.getItem("userId"))
 
     const formatPostTime = (postDate) => {
         const currentDate = new Date();
@@ -68,7 +68,10 @@ export default function Feed() {
                             photo={post.image}
                             likes={post.likes}
                             comments={post.comments}
-                        /> 
+                            id={post.id}
+                            user={post.userId}
+                            />
+                            
                     ))
                 )}
             </div>
