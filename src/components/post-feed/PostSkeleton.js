@@ -20,7 +20,7 @@ const PostSkeleton = () => {
             <div className="text-section">
                 <Skeleton count={1} />
             </div>
-            <Skeleton height={200} className="post-media" />
+            <Skeleton height={300} className="post-media" />
             <div className="info-section">
                 <Skeleton width={100} />
                 <Skeleton width={120} />

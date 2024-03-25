@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const postApi = axios.create({
-    baseURL: "http://localhost:8081/morwork/api/v1",
+    baseURL: "http://192.168.140.47:8081/morwork/api/v1",
     headers: {
         "ngrok-skip-browser-warning": "true"
     }
