@@ -29,9 +29,9 @@ export default function LoginPage() {
         setEmailError(null)
         setPasswordError(null)
 
-        if (formData.email.length == 0) {
-                    setEmailError("Empty field!")
-                    return
+        if (formData.email.length === 0) {
+            setEmailError("Empty field!")
+            return
         }
         if (formData.password.length == 0) {
             setPasswordError("Empty field!")
