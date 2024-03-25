@@ -52,19 +52,6 @@ export default function Post(props) {
   }, [videoRef.current, isVideoPlaying]);
 
 
-  // function getMedia(name) {
-  //   axios.get(`http://localhost:8081/${name}`, {
-  //     headers: {
-  //       "ngrok-skip-browser-warning": "true",
-  //       Authorization: `Bearer ${localStorage.getItem("site")}`
-  //     }
-  //   })
-  //   .then(res => console.log(res))
-  //   .catch(err => console.error(err));
-  // }
-  
-  // getMedia(props.photo);
-
 
   const handleLikePost = () => {
     likePost(props.id, Number(localStorage.getItem("userId")))

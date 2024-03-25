@@ -15,9 +15,9 @@ const AuthProvider = ({ children }) => {
     try {
       const res = await api.post("/auth/authenticate", data);
         if (res.data) {
-        setUser(res.data.user);
+        setUserId(res.data.user_id);
         setToken(res.data.access_token);
-        localStorage.setItem("site", res.data.access_token);
+        localStorage.setItem("token", res.data.access_token);
         localStorage.setItem("userId", res.data.user_id);
         navigate("/");
       }

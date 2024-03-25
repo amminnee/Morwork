@@ -8,7 +8,7 @@ export const postApi = axios.create({
 });
 
 export const getPosts = () => {
-    const token = localStorage.getItem("site");
+    const token = localStorage.getItem("token");
     if (token) {
         return postApi.get("/post", {
             headers: {
@@ -21,13 +21,18 @@ export const getPosts = () => {
 };
 
 export const newPost = (postData) => {
-    const token = localStorage.getItem("site");
+    const token = localStorage.getItem("token");
     if (token) {
-        return postApi.post("/post/newPost", postData, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
+        try {
+            return postApi.post("/post/newPost", postData, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+        } catch(err) {
+            console.error(err)
+        }
+        
     } else {
         return Promise.reject(new Error("Token not available"));
     }
@@ -35,7 +40,7 @@ export const newPost = (postData) => {
 
 export const likePost = (postId, userId) => {
     console.log("ok: " + postId + " " + userId);
-    const token = localStorage.getItem("site");
+    const token = localStorage.getItem("token");
     
     if (token) {
         const formData = new FormData();
@@ -54,7 +59,7 @@ export const likePost = (postId, userId) => {
 
 
 export const getLikes = (id) =>{
-    const token = localStorage.getItem("site");
+    const token = localStorage.getItem("token");
     
     if (token) {
 
