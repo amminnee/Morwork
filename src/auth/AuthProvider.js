@@ -13,12 +13,12 @@ const AuthProvider = ({ children }) => {
 
   const loginAction = async (data) => {
     try {
-      const res = await api.post("/auth/authenticate", data)
-      if (res.data) {
-        setUserId(res.data.user_id);
+      const res = await api.post("/auth/authenticate", data);
+        if (res.data) {
+        setUser(res.data.user);
         setToken(res.data.access_token);
-        localStorage.setItem("token", res.data.access_token)
-        localStorage.setItem("userId", res.data.user_id)
+        localStorage.setItem("site", res.data.access_token);
+        localStorage.setItem("userId", res.data.user_id);
         navigate("/");
       }
       return res.data;
@@ -74,5 +74,6 @@ const AuthProvider = ({ children }) => {
 export default AuthProvider;
 
 export const useAuth = () => {
+  //console.log(useContext(AuthContext))
   return useContext(AuthContext);
 }
