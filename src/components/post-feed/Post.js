@@ -119,7 +119,7 @@ export default function Post(props) {
           <span className="medium-label" onClick={handleToggleExpansion} style={{ cursor: "pointer" }}> See more</span>
         )}
       </div>
-      {props.photo && !props.photo.endsWith("mp4") && <img src={`http://localhost:8081/${props.photo}`} className="post-media" alt="Post media" />}
+      {props.photo && !props.photo.endsWith("mp4") && <img src={`http://localhost:8081/media/${props.photo}`} className="post-media" alt="Post media" />}
       {props.photo && props.photo.endsWith("mp4") && <video ref={videoRef} src={`http://localhost:8081/${props.photo}`} className="post-media" controls muted></video>}
 
       <div className="info-section">
@@ -127,7 +127,7 @@ export default function Post(props) {
         <p className="medium-label">{props.comments} comments</p>
       </div>
       <div className="interaction-section">
-        <PostInteraction icon="bx:like" text={likeText} style={likeText === "Liked" ? { color: "blue"} : null} onClick={handleLikePost} />
+        <PostInteraction icon={likeText === "Liked" ? "bxs:like" : "bx:like"} text={likeText} style={likeText === "Liked" ? { color: "blue"} : null} onClick={handleLikePost} />
         <PostInteraction icon="material-symbols:comment-outline" text="Comment" />
         <PostInteraction icon="zondicons:repost" text="Repost" />
         <PostInteraction icon="ph:share-fat-bold" text="Share" />
