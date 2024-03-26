@@ -24,36 +24,15 @@ export default function Feed() {
 
         console.log("the user on local"+localStorage.getItem("userId"))
 
-    const formatPostTime = (postDate) => {
-        const currentDate = new Date();
-        const postDateTime = new Date(postDate);
-        const elapsedTimeInMilliseconds = currentDate - postDateTime;
-
-        const seconds = Math.floor(elapsedTimeInMilliseconds / 1000);
-        if (seconds < 60) {
-            return `${seconds}s`;
-        }
-
-        const minutes = Math.floor(seconds / 60);
-        if (minutes < 60) {
-            return `${minutes}m`;
-        }
-
-        const hours = Math.floor(minutes / 60);
-        if (hours < 24) {
-            return `${hours}h`;
-        }
-
-        const days = Math.floor(hours / 24);
-        return `${days}d`;
-    };
-
 
     return (
         <div className="home-page">
             <div className="post-feed">
                 {isLoading ? (
                     <>
+                        <PostSkeleton />
+                        <PostSkeleton />
+                        <PostSkeleton />
                         <PostSkeleton />
                         <PostSkeleton />
                     </>
@@ -79,3 +58,27 @@ export default function Feed() {
         </div>
     );
 }
+
+export const formatPostTime = (postDate) => {
+    const currentDate = new Date();
+    const postDateTime = new Date(postDate);
+    const elapsedTimeInMilliseconds = currentDate - postDateTime;
+
+    const seconds = Math.floor(elapsedTimeInMilliseconds / 1000);
+    if (seconds < 60) {
+        return `${seconds}s`;
+    }
+
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) {
+        return `${minutes}m`;
+    }
+
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) {
+        return `${hours}h`;
+    }
+
+    const days = Math.floor(hours / 24);
+    return `${days}d`;
+};

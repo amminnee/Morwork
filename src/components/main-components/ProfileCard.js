@@ -45,7 +45,7 @@ export default function ProfileCard() {
                         { isLoading ?
                             <Skeleton height={10} width={100} />
                             :
-                            <p className="medium-label">{userData.title}</p>
+                            <p className="large-label" style={{textAlign:'center'}}>{userData.title}</p>
                         }
                         
                     </div>

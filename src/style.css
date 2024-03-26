@@ -24,21 +24,24 @@
 
 
 /* Navbar style */
-.navbar {
-    display: flex;
-    flex-direction: column;
-    padding: 10px 0;
-    background-color: white;
-    width: 220px;
-    height: calc(100% - 90px);
-    position: fixed;
-    top: 60px;
-    z-index: 100;
+@media (min-width:600px) {
+    .navbar {
+        display: flex;
+        flex-direction: column;
+        padding: 10px 0;
+        background-color: white;
+        width: 220px;
+        height: calc(100% - 90px);
+        position: fixed;
+        top: 60px;
+        z-index: 100;
+    }
+    .navbar.scroll {
+        top: 10px;
+        height: calc(100% - 40px);
+    }  
 }
-.navbar.scroll {
-    top: 10px;
-    height: calc(100% - 40px);
-}
+
 .active.nav-item p {
     font-weight: bold;
 }
@@ -95,6 +98,7 @@
 }
 .post-feed {
     width: 100%;
+    overflow: hidden;
     display: grid;
     gap: 10px;
 }
@@ -649,6 +653,10 @@
     border: 1px solid rgb(245, 244, 244);
 }
 
+.post .text-section {
+    margin-bottom: 6px;
+}
+
 .jobItem.profile img {
     width: 50px;
     height: 50px;
@@ -727,18 +735,19 @@
 @media screen and (max-width: 600px) {
 
     /* navbar style */
-    .navbar, .navbar.scroll {
+    .navbar {
         height: 50px;
         width: 100%;
+        background-color: white;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
         position: fixed;
         bottom: 0;
-        top: calc(100% - 50px);
         padding: 0;
         margin: 0;
+        z-index: 100;
     }
     .nav-item {
         flex-direction: column;

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const postApi = axios.create({
+export const api = axios.create({
     baseURL: "http://192.168.140.47:8081/morwork/api/v1",
     headers: {
         "ngrok-skip-browser-warning": "true"
@@ -78,13 +78,24 @@ export const getLikes = (id) =>{
 
 export const userCard = async () => {
     try {
-        const res = await api.post(
-            "/user/user-card",
-            {id: localStorage.getItem('userId')},
+        const res = await api.get(
+            `/user/user-card?id=${localStorage.getItem('userId')}`,
             {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
         )
         return res.data
     } catch(err) {
+        console.error(err)
+    }
+}
+
+export const userProfile = () => {
+    try {
+        return api.get(
+            `/user/user-profile?id=${localStorage.getItem('userId')}`,
+            {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        )
+    } catch(err) {
+        console.log("fuuuucking error")
         console.error(err)
     }
 }

@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import cover from "../../cybertruck.jpg"
-import avatar from "../../avatar.jfif"
+import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import Post from "../post-feed/Post";
 import postPhoto from "../../post-photo.jpg"
@@ -8,16 +6,29 @@ import ProfileExp from "./ProfileExp";
 import ProfileEdu from "./ProfileEdu";
 import Skeleton from "react-loading-skeleton";
 import PostSkeleton from "../post-feed/PostSkeleton";
+import { userProfile } from "../../api/app";
+import { formatPostTime } from "../post-feed/Feed";
 
 
 export default function UserProfile(props) {
     // 0 for profile and 1 for posts
     const [currentTab, setCurrentTab] = useState(parseInt(localStorage.getItem("currentTab")) || 0)
     const [isLoading, setLoading] = useState(true)
+    const [userData, setUserData] = useState(null)
+
     const changeTab = (tab) => {
         localStorage.setItem("currentTab", tab)
         setCurrentTab(tab)
     }
+
+    useEffect(() => {
+        const getProfile = async () => {
+            const response = await userProfile()
+            setUserData(response.data)
+            setLoading(false)
+        }
+        getProfile()
+    }, [])
 
     return (
         <div className="user-profile-page">
@@ -27,7 +38,7 @@ export default function UserProfile(props) {
                         { isLoading ?
                             <Skeleton height={240} />
                             :
-                            <img src={cover} className="radius" />
+                            <img src={userData.coverPicture} className="radius" />
                         }
                         
                     </div>
@@ -35,7 +46,7 @@ export default function UserProfile(props) {
                         { isLoading ?
                             <Skeleton className="avatar" />
                             :
-                            <img src={avatar} className="avatar" />
+                            <img src={userData.profilePicture} className="avatar" />
                         }
                         
                         { !isLoading &&
@@ -52,19 +63,19 @@ export default function UserProfile(props) {
                             { isLoading ?
                                 <Skeleton height={30} width={150} />
                                 :
-                                <p className="medium-title">Amine Edarkaoui</p>
+                                <p className="medium-title">{userData.firstName} {userData.lastName}</p>
                             }
                             { isLoading ?
                                 <Skeleton height={10} width={180} />
                                 :
-                                <p className="medium-label">Software engineering student</p>
+                                <p className="medium-label">{userData.title}</p>
                             }
                             
                         </div>
                         { isLoading ?
                                 <Skeleton className="primary-button" height={20} width={80} />
                                 :
-                                <p className="primary-button">46 follower</p>
+                                <p className="primary-button">{userData.followersNum} follower</p>
                         }
                         
                     </div>
@@ -101,7 +112,7 @@ export default function UserProfile(props) {
                                 <Skeleton className="primary-button" height={15} count={6} />
                                 :
                                 <p className="normal-text">
-                                    But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful.
+                                    {userData.about}
                                 </p>
                             }
                             
@@ -131,9 +142,9 @@ export default function UserProfile(props) {
                             </div>
                             :
                             <div className="section-content">
-                                <ProfileExp />
-                                <ProfileExp />
-                                <ProfileExp />
+                                {userData.experiences.map(
+                                    experience => <ProfileExp {...experience} />
+                                )}
                             </div>
                         }
                         
@@ -156,13 +167,14 @@ export default function UserProfile(props) {
                         </div>
                         { isLoading ?
                             <div className="section-content">
-                                <ProfileExp isLoading={isLoading} />
-                                <ProfileExp isLoading={isLoading} />
+                                <ProfileEdu isLoading={isLoading} />
+                                <ProfileEdu isLoading={isLoading} />
                             </div>
                             :
                             <div className="section-content">
-                                <ProfileEdu />
-                                <ProfileEdu />
+                                {userData.education.map(
+                                    edu => <ProfileEdu {...edu} />
+                                )}
                             </div>
                         }
                         
@@ -190,9 +202,9 @@ export default function UserProfile(props) {
                             
                             :
                             <div className="section-content">
-                                <p className="small-title skill">Java Spring</p>
-                                <p className="small-title skill">React JS</p>
-                                <p className="small-title skill">Oracle</p>
+                                {userData.skills.map(
+                                    skill => <p className="small-title skill">{skill.name}</p>
+                                )}
                             </div>
                         }
                         
@@ -211,24 +223,20 @@ export default function UserProfile(props) {
                         
                         :
                         <>
-                            <Post 
-                                username="Amine Edarkaoui"
-                                title="Software engineer"
-                                time="21h"
-                                text="Dear Network I’m happy to annouce that I have just passed my final exam in computer science, finishing with it my long extended career in IT, which have taken a long part of my life in the past five years. I’m also thrilled to thank all my classmates and professors for there unconditioned support and help throughout my journey."
-                                photo={postPhoto}
-                                likes="23"
-                                comments="6"
-                            />
-                            <Post 
-                                username="Amine Edarkaoui"
-                                title="Software engineer"
-                                time="21h"
-                                text="Dear Network I’m happy to annouce that I have just passed my final exam in computer science, finishing with it my long extended career in IT, which have taken a long part of my life in the past five years. I’m also thrilled to thank all my classmates and professors for there unconditioned support and help throughout my journey."
-                                photo={postPhoto}
-                                likes="23"
-                                comments="6"
-                            />
+                            {userData.posts.map(
+                                post => <Post 
+                                    key={post.id}
+                                    username={`${userData.firstName} ${userData.lastName}`}
+                                    title={userData.title}
+                                    time={formatPostTime(post.date)}
+                                    text={post.content}
+                                    photo={post.image}
+                                    likes={post.likes}
+                                    comments={post.comments}
+                                    id={post.id}
+                                    user={post.userId}
+                                />
+                            )}
                         </>
                     }
                     

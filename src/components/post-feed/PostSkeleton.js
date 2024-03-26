@@ -26,26 +26,7 @@ const PostSkeleton = () => {
                 <Skeleton width={120} />
             </div>
             <div className="interaction-section">
-                <div className="skeleton-interaction">
-                    <Skeleton circle width={24} height={24} />
-                    <Skeleton width={50} />
-                </div>
-                <div className="skeleton-interaction">
-                    <Skeleton circle width={24} height={24} />
-                    <Skeleton width={70} />
-                </div>
-                <div className="skeleton-interaction">
-                    <Skeleton circle width={24} height={24} />
-                    <Skeleton width={80} />
-                </div>
-                <div className="skeleton-interaction">
-                    <Skeleton circle width={24} height={24} />
-                    <Skeleton width={70} />
-                </div>
-                <div className="skeleton-interaction">
-                    <Skeleton circle width={24} height={24} />
-                    <Skeleton width={50} />
-                </div>
+                <Skeleton height={20} />
             </div>
         </div>
     );

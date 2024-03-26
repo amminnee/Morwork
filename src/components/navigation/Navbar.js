@@ -43,7 +43,7 @@ export default function Navbar(props) {
                     fill="mingcute:notification-fill"
                 />
                 <NavItem
-                    url="/profile"
+                    url={`profile/${localStorage.getItem('userId')}`}
                     text="Profile"
                     img={avatar}
                 />
