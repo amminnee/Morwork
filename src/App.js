@@ -9,6 +9,7 @@ import SignUp from "./components/authentication/SignUp";
 import AuthProvider from "./auth/AuthProvider";
 import PrivateRoute from "./auth/PrivateRoute";
 import Jobs from "./components/jobs/Jobs";
+import CommentPage from "./components/post-feed/CommentPage";
 
 export default () => {
 
@@ -20,6 +21,7 @@ export default () => {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route element={<PrivateRoute />}>
+              <Route path="/comments/:postId" element={<CommentPage />} />
                 <Route element={<Main />}>
                     <Route path="/" element={<Feed />} />
                     <Route path="/jobs" element={<Jobs />} />

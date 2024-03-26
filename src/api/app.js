@@ -88,3 +88,33 @@ export const userCard = async () => {
         console.error(err)
     }
 }
+
+export const getPostById = (postId)=>{
+    const token = localStorage.getItem("token");
+    if (token) {
+        
+        return api.get(`/post/${postId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+    } else {
+        return Promise.reject(new Error("Token not available"));
+    }
+}
+
+export const newComment = (postId, userId, content)=>{
+    const token = localStorage.getItem("token");
+    const data = new FormData();
+    data.append("postId", postId)
+    data.append("userId", userId)
+    data.append("content", content)
+
+    if(token){
+        return api.post("/post/newComment", data,{
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+    }
+}

@@ -48,6 +48,7 @@ export default function Feed() {
         return `${days}d`;
     };
 
+    posts.map(post => console.log(post.comments))
 
     return (
         <div className="home-page">
