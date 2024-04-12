@@ -11,6 +11,7 @@ import PrivateRoute from "./auth/PrivateRoute";
 import Jobs from "./components/jobs/Jobs";
 import Settings from "./components/settings/Settings";
 import ProfileSettings from "./components/settings/ProfileSettings";
+import CommentPage from "./components/post-feed/CommentPage";
 
 export default () => {
 
@@ -25,6 +26,7 @@ export default () => {
                 <Route element={<Settings/>} path="/settings">
                   <Route element={<ProfileSettings />} path="/settings/profile" />
                 </Route>
+              <Route path="/comments/:postId" element={<CommentPage />} />
                 <Route element={<Main />}>
                     <Route path="/" element={<Feed />} />
                     <Route path="/jobs" element={<Jobs />} />

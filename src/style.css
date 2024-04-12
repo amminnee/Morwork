@@ -135,7 +135,7 @@
 .text-section p{
     margin: 0 10px;
     word-wrap: break-word;
-    width: 407px;
+    width: 358px;
 }
 
 .text-section .normal-text {
@@ -762,7 +762,69 @@
 
 
 
+/* comment page */
+.comment-page{
+    width: 85%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}
 
+.comments-container{
+    background-color: #FFF;
+    position: relative;
+    overflow-y: auto;
+    scrollbar-width: none;
+    height: 465px;
+    margin-bottom: 55px;
+
+}
+.comment-input-container{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: #FFF;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 100px;
+    width: 100%;
+}
+.comment-input-container input{
+    border: none;
+    outline: none;
+    font-size: 16px;
+    padding: 11px;
+}
+.comment-input-container button{
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+.comment-input-container button:hover{
+    background: #eee;
+}
+
+/* comment page */
+
+/* Reply */
+.reply-container{
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    z-index: 100;
+    padding: 10px;
+    color: #8d8d8d;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100% - 20px);
+    margin-bottom: 8px;
+    background-color: #FFF;
+}
+/* Reply */
 
 
 
@@ -866,6 +928,17 @@
         border-radius: 12px;
     }
 
+    .comment-page{
+        width: 100%;
+        grid-template-columns: 1fr;
+    }
+    .comments-container{
+        width: 100%;
+        overflow-y: initial;
+        height: auto;
+    }
+   
+
 }
 
 
@@ -911,5 +984,15 @@
         border-radius: 12px;
         font-size: 13px;
     }
+    .comment-page{
+        width: 100%;
+    }
+
+    .comments-container{
+        width: 100%;
+        overflow-y: initial;
+        height: auto;
+    }
+
 }
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Icon } from "@iconify/react";
 import PostInteraction from "./PostInteraction";
 import { getPosts, likePost, getLikes } from "../../api/app";
+import { NavLink } from "react-router-dom";
 
 
 
@@ -60,7 +61,7 @@ export default function Post(props) {
     })
 
   }
-
+  
   useEffect(() => {
     if(likeText ==="liked"){
       test()
@@ -69,7 +70,6 @@ export default function Post(props) {
     getLikes(props.id)
       .then(res => {
         const userLiked = res.data.some(like => like.userId === Number(localStorage.getItem("userId")));
-        console.log(userLiked+"   "+props.id)
         if (userLiked) {
           setLikeText("Liked");
         } else {
@@ -92,7 +92,7 @@ export default function Post(props) {
       }
     })
   }
-  
+
 
   return (
     <div className="radius post">
@@ -119,15 +119,15 @@ export default function Post(props) {
         )}
       </div>
       {props.photo && !props.photo.endsWith("mp4") && <img src={`http://localhost:8081/media/${props.photo}`} className="post-media" alt="Post media" />}
-      {props.photo && props.photo.endsWith("mp4") && <video ref={videoRef} src={`http://localhost:8081/${props.photo}`} className="post-media" controls muted></video>}
+      {props.photo && props.photo.endsWith("mp4") && <video ref={videoRef} src={`http://localhost:8081/media/${props.photo}`} className="post-media" controls muted></video>}
 
       <div className="info-section">
         <p className="medium-label">{likesCount} likes</p>
-        <p className="medium-label">{props.comments} comments</p>
+        <p className="medium-label">{props.comments.length} comments</p>
       </div>
       <div className="interaction-section">
         <PostInteraction icon={likeText === "Liked" ? "bxs:like" : "bx:like"} text={likeText} style={likeText === "Liked" ? { color: "blue"} : null} onClick={handleLikePost} />
-        <PostInteraction icon="material-symbols:comment-outline" text="Comment" />
+        <NavLink to={`/comments/${props.id}`} style={{textDecoration: "none", width:"90px"}}><PostInteraction icon="material-symbols:comment-outline" text="Comment" /></NavLink>
         <PostInteraction icon="zondicons:repost" text="Repost" />
         <PostInteraction icon="ph:share-fat-bold" text="Share" />
         <PostInteraction icon="mingcute:bookmark-line" text="Save" />

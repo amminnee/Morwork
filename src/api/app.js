@@ -88,6 +88,99 @@ export const userCard = async () => {
     }
 }
 
+export const getPostById = (postId)=>{
+    const token = localStorage.getItem("token");
+    if (token) {
+        
+        return api.get(`/post/${postId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+    } else {
+        return Promise.reject(new Error("Token not available"));
+    }
+}
+
+export const getAllCommentLikesByPostId = (postId)=>{
+    const token = localStorage.getItem("token");
+    if (token) {
+        
+        return api.get(`/post/${postId}/commentLikes`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+    } else {
+        return Promise.reject(new Error("Token not available"));
+    }
+}
+
+export const newComment = (postId, userId, content)=>{
+    const token = localStorage.getItem("token");
+    const data = new FormData();
+    data.append("postId", postId)
+    data.append("userId", userId)
+    data.append("content", content)
+
+    if(token){
+        return api.post("/post/newComment", data,{
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+    }
+}
+
+
+export const likeComment = (commentId, userId)=>{
+    const token = localStorage.getItem("token");
+    const data = new FormData();
+    data.append("userId", userId);
+    if(token){
+        return api.post(`/post/likeComment/${commentId}`, data, {
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        })
+    }
+}
+
+
+export const newReply = (commentId, userId, content) => {
+    const token = localStorage.getItem("token")
+
+    if(token){
+        const data = new FormData()
+        data.append("userId", userId)
+        data.append("commentId", commentId)
+        data.append("content", content)
+
+        return api.post("/post/newReply", data,{
+            headers:{
+                Authorization: `Bearer ${token}`
+            }
+        })
+    }
+}
+
+export const likeReply = (replyId, userId)=>{
+    const token = localStorage.getItem("token");
+    if(token){
+        const data = new FormData();
+        data.append("replyId", replyId)
+        data.append("userId", userId)
+        return api.post("/post/likeReply", data, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+    }
+    
+}
+
+
+
 export const userProfile = (userId) => {
     try {
         return api.get(
