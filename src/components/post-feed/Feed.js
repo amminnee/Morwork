@@ -1,28 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Post from "./Post";
-import SideInfo from "../main-components/SideInfo"
+import SideInfo from "../main-components/SideInfo";
 import PostSkeleton from "./PostSkeleton";
 import 'react-loading-skeleton/dist/skeleton.css';
 import { getPosts } from "../../api/app";
 
 export default function Feed() {
-    const [posts, setPosts] = React.useState([]);
-    const [isLoading, setIsLoading] = React.useState(true);
+    const [posts, setPosts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [displayedPosts, setDisplayedPosts] = useState(4); 
+    const [loadingMore, setLoadingMore] = useState(false);
 
-
-    React.useEffect(
-        () => {
-            getPosts()
-            .then(res=>{
-                setPosts(res.data)
-                setIsLoading(false)
-                console.log(res.data)
+    useEffect(() => {
+        getPosts()
+            .then(res => {
+                setPosts(res.data);
+                setIsLoading(false);
             })
-            .catch(err=>console.log(err))
-        }
-        ,[])
+            .catch(err => console.log(err));
 
-        console.log("the user on local"+localStorage.getItem("userId"))
+        const handleScroll = () => {
+            const { scrollTop, clientHeight, scrollHeight } = document.documentElement || document.body;
+            
+            const bottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+        
+            if (bottom && !loadingMore) {
+                if (displayedPosts >= posts.length) {
+                    console.log("All posts displayed");
+                    return;
+                }
+                setLoadingMore(true);
+                setTimeout(() => {
+                    setDisplayedPosts(prev => prev + 4); 
+                    setLoadingMore(false);
+                }, 1000); 
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [displayedPosts, loadingMore, posts.length]);
 
     const formatPostTime = (postDate) => {
         const currentDate = new Date();
@@ -48,8 +68,6 @@ export default function Feed() {
         return `${days}d`;
     };
 
-    posts.map(post => console.log(post.comments))
-
     return (
         <div className="home-page">
             <div className="post-feed">
@@ -59,8 +77,8 @@ export default function Feed() {
                         <PostSkeleton />
                     </>
                 ) : (
-                    posts.map(post => (
-                        <Post 
+                    posts.slice(0, displayedPosts).map(post => (
+                        <Post
                             key={post.id}
                             username={`${post.firstName} ${post.lastName}`}
                             title={post.title}
@@ -71,10 +89,10 @@ export default function Feed() {
                             comments={post.comments}
                             id={post.id}
                             user={post.userId}
-                            />
-                            
+                        />
                     ))
                 )}
+                {loadingMore && <PostSkeleton />}
             </div>
             <SideInfo />
         </div>

@@ -1,14 +1,18 @@
 import React from "react";
-import { getPostById, newComment } from "../../api/app";
+import { getAllCommentLikesByPostId, getCommentById, getPostById, likeComment, newComment, newReply } from "../../api/app";
 import { useParams } from "react-router-dom";
 import Post from "./Post";
 import Header from "../navigation/header";
 import CommentElement from "./CommentElement";
+import { Icon } from "@iconify/react/dist/iconify.js";
 
 export default function CommentPage(){
 
     const [commentContent, setCommentContent] = React.useState("")
     const [comments, setComments] = React.useState([])
+    const [commentLikes, setCommentLikes] = React.useState([])
+    const [replyTo, setReplyto] = React.useState(null)
+
 
 
 
@@ -52,6 +56,17 @@ export default function CommentPage(){
     }
 
     const handleNewComment = () => {
+
+        if(replyTo){
+            console.log("commentId: "+replyTo.commentId+" userId: "+localStorage.getItem("userId")+" content: "+commentContent)
+            newReply(replyTo.commentId, Number(localStorage.getItem("userId")), commentContent)
+            .then(res => console.log(res.data))
+            window.location.reload()
+            return;
+        }
+
+
+
         newComment(postId.postId, Number(localStorage.getItem("userId")), commentContent)
             .then(() => {
                 return getPostById(postId.postId)
@@ -63,7 +78,7 @@ export default function CommentPage(){
             .then(({ post, comments }) => {
                 setPost(post);
                 setComments(comments);
-                setCommentContent(""); // Clear the comment content input
+                setCommentContent(""); 
             })
             .catch((error) => console.error("Failed to add comment:", error));
     };
@@ -71,7 +86,25 @@ export default function CommentPage(){
     
     React.useEffect(()=>console.log(comments),[comments])
     
+    React.useEffect(() => {
+        getAllCommentLikesByPostId(postId.postId)
+            .then(res => {
+                console.log(res.data);
+                setCommentLikes(res.data)
+            })
+            .catch(error => {
+                console.error("Failed to fetch comment likes:", error);
+            });
+    }, [postId.postId]);
 
+    
+    const handleReply = (username, commentId) => {
+        setReplyto({username, commentId})
+    }
+
+    const handleCancelReply = ()=>{
+        setReplyto(null)
+    }
 
     return(
         <div style={{display: "flex", justifyContent: "center" , alignItems: "center"}}>
@@ -93,19 +126,33 @@ export default function CommentPage(){
             />
             }
             </div>
-            <div className="comments-container radius" >
+            <div style={{position:"relative", background:"#FFF"}}>
+                <div className="comments-container radius">
 
-                {
-                    comments.map(comment => (
-                    <CommentElement 
-                    user={comment.user}
-                    author={`${comment.user.firstName} ${comment.user.lastName}`} 
-                    content={comment.content} 
-                    replies={comment.replies}
-                    likes={comment.likes}
-                    date={formatPostTime(comment.date)}
-                    />))
-                }
+                    {
+                        comments.map(comment => (
+                        <CommentElement 
+                        id={comment.id}
+                        user={comment.user}
+                        author={`${comment.user.firstName} ${comment.user.lastName}`} 
+                        content={comment.content} 
+                        replies={comment.replies}
+                        likes={comment.likes}
+                        //commentLikes={commentLikes}
+                        postId={postId.postId}
+                        onReply={handleReply}
+                        formatTime={formatPostTime}
+                        date={formatPostTime(comment.date)}
+                        />))
+                    }
+                
+                </div>
+                {replyTo && (
+                        <div className="reply-container">
+                            <div>Replying to: <b style={{color:"#000"}}>{replyTo.username}</b></div>
+                            <Icon icon="ic:round-cancel" className="cancel-icon" onClick={handleCancelReply} style={{cursor:"pointer", fontSize:"17px"}} />
+                        </div>
+                )}
                 <div className="comment-input-container" >
                     <input type="text" placeholder="leave a comment" name="comment" className="commentInput" onChange={(event)=>handleCommentContent(event)} value={commentContent}/>
                     <button className="primary-button comment-btn radius" onClick={()=>handleNewComment()}>Comment</button>

@@ -62,7 +62,7 @@ export default function Post(props) {
     })
 
   }
-
+  
   useEffect(() => {
     if(likeText ==="liked"){
       test()
@@ -71,7 +71,6 @@ export default function Post(props) {
     getLikes(props.id)
       .then(res => {
         const userLiked = res.data.some(like => like.userId === Number(localStorage.getItem("userId")));
-        console.log(userLiked+"   "+props.id)
         if (userLiked) {
           setLikeText("Liked");
         } else {
@@ -94,7 +93,7 @@ export default function Post(props) {
       }
     })
   }
-  
+
 
   return (
     <div className="radius post">

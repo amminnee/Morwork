@@ -1,5 +1,6 @@
 import React from "react";
-import image from "../../wedo.png"
+import image from "../../morwork.png"
+import image2 from "../../image.png"
 
 export default function JobItem(props){
 
@@ -20,11 +21,11 @@ export default function JobItem(props){
             <div className="jobItem">
                 <div className="top-job">
                     <div className="shortInfo-job">
-                        <img src={image} />
+                        <img src={props.company === "Oracle" ? image2 : image} />
                         <div className="info-job">
-                            <p className="medium-title">Java Developper</p>
-                            <p className="small-text">Facebook</p>
-                            <p className="medium-label">Casablanca Maarif</p>
+                            <p className="medium-title">{props.title}</p>
+                            <p className="small-text">{props.company}</p>
+                            <p className="medium-label">{props.location}</p>
                         </div>
                     </div>
                     <div className="small-label">full time</div>
@@ -44,6 +45,7 @@ export default function JobItem(props){
             </div>
             
             <div className="separator"></div>
+            
         </div>
         
     )
