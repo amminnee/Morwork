@@ -107,7 +107,7 @@ export default function CommentPage(){
     }
 
     return(
-        <div style={{display: "flex", justifyContent: "center" , alignItems: "center"}}>
+        <div style={{display: "flex", justifyContent: "center" , alignItems: "center", margin:"auto", width:"100%"}}>
         <Header isVisible={true}/>
         <div className="comment-page">
             <div className="post-container">

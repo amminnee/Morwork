@@ -128,9 +128,9 @@ export default function CommentElement(props){
                 </div>
                 <div className="options">
                     {liked ?
-                        <PostInteraction icon="bxs:like" style={{width: "45px", color: "blue"}} onClick={handleLikeComment} />
+                        <PostInteraction icon="bxs:like" style={{width: "45px", color: "blue", marginLeft:"55px"}} onClick={handleLikeComment} />
                         :
-                        <PostInteraction icon="bx:like" style={{width: "45px"}} onClick={handleLikeComment} />
+                        <PostInteraction icon="bx:like" style={{width: "45px", marginLeft:"55px"}} onClick={handleLikeComment} />
                     }
                 </div>
             </div>
