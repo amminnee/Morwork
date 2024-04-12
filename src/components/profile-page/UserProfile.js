@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import Post from "../post-feed/Post";
-import postPhoto from "../../post-photo.jpg"
 import ProfileExp from "./ProfileExp";
 import ProfileEdu from "./ProfileEdu";
 import Skeleton from "react-loading-skeleton";
 import PostSkeleton from "../post-feed/PostSkeleton";
 import { userProfile } from "../../api/app";
+import { useParams } from "react-router-dom";
 import { formatPostTime } from "../post-feed/Feed";
 
 
@@ -16,6 +16,8 @@ export default function UserProfile(props) {
     const [isLoading, setLoading] = useState(true)
     const [userData, setUserData] = useState(null)
 
+    const {userId} = useParams()
+
     const changeTab = (tab) => {
         localStorage.setItem("currentTab", tab)
         setCurrentTab(tab)
@@ -23,7 +25,7 @@ export default function UserProfile(props) {
 
     useEffect(() => {
         const getProfile = async () => {
-            const response = await userProfile()
+            const response = await userProfile(userId)
             setUserData(response.data)
             setLoading(false)
         }

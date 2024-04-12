@@ -1,5 +1,4 @@
 import React from "react"
-import image from "../../est.png"
 import Skeleton from "react-loading-skeleton"
 
 export default function ProfileEdu(props) {
@@ -10,7 +9,7 @@ export default function ProfileEdu(props) {
                     { props.isLoading ?
                         <Skeleton height={60} width={60} />
                         :
-                        <img src={image} />
+                        <img src="" />
                     }
                     
                     <div className="info-job">

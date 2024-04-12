@@ -1,5 +1,4 @@
 import React from "react";
-import image from "../../wedo.png"
 
 export default function JobItem(props){
 
@@ -20,7 +19,7 @@ export default function JobItem(props){
             <div className="jobItem">
                 <div className="top-job">
                     <div className="shortInfo-job">
-                        <img src={image} />
+                        <img src="" />
                         <div className="info-job">
                             <p className="medium-title">Java Developper</p>
                             <p className="small-text">Facebook</p>

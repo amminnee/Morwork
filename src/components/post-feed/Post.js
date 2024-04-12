@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Icon } from "@iconify/react";
-import avatar from "../../elon.jpeg";
 import PostInteraction from "./PostInteraction";
 import { getPosts, likePost, getLikes } from "../../api/app";
 
@@ -99,7 +98,7 @@ export default function Post(props) {
     <div className="radius post">
       <div className="top-section">
         <div className="user-profile">
-          <img className="avatar" src={avatar} alt="User avatar" />
+          <img className="avatar" src="" alt="User avatar" />
           <div className="user-info">
             <p className="medium-title">{props.username}</p>
             <p className="medium-label">{props.title}</p>

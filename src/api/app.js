@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: "http://192.168.140.47:8081/morwork/api/v1",
+    baseURL: "http://localhost:8081/morwork/api/v1",
     headers: {
         "ngrok-skip-browser-warning": "true"
     }
@@ -88,14 +88,21 @@ export const userCard = async () => {
     }
 }
 
-export const userProfile = () => {
+export const userProfile = (userId) => {
     try {
         return api.get(
-            `/user/user-profile?id=${localStorage.getItem('userId')}`,
+            `/user/user-profile?id=${userId}`,
             {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
         )
     } catch(err) {
         console.log("fuuuucking error")
         console.error(err)
     }
+}
+
+export const getPhoto = () => {
+    return api.get(
+        `/user/user-photo?id=${localStorage.getItem('userId')}`,
+        {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+    )
 }

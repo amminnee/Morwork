@@ -649,7 +649,7 @@
     padding: 10px 0;
 }
 .posts-feed .post {
-    max-width: 600px;
+    max-width: 550px;
     border: 1px solid rgb(245, 244, 244);
 }
 
@@ -715,6 +715,52 @@
 .link {
     color: var(--blue);
 }
+
+
+/* Text Header section */
+.text-header {
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    box-sizing: border-box;
+    gap: 20px;
+    background-color: white;
+    height: 60px;
+    width: 100%;
+}
+
+
+/* Settings section */
+
+.settings-page {
+    position: sticky;
+    background-color: white;
+    top: 60px;
+    height: calc(100vh - 70px);
+    width: inherit;
+}
+
+.settings-icon {
+    font-size: 70px;
+    color: black;
+    font-weight: 900;
+}
+.settings-cont {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 100px;
+    border: 1px solid grey;
+    width: 130px;
+    height: 130px;
+    border-radius: 100px;
+}
+
+
+
+
 
 
 

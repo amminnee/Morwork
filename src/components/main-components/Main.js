@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../navigation/Navbar";
-import Header from "../navigation/header";
+import Header from "../navigation/Header";
 import { Outlet } from "react-router-dom";
 import NewPost from "../post-feed/NewPost";
 
@@ -29,7 +29,7 @@ export default function Main() {
 
     return (
         <>
-        <Header isVisible={!scrolling} />
+        <Header isVisible={!scrolling} searchBar={true} />
         <div className="main-cont">
             <Navbar
                 showNewPost={() => setNewPost("")}

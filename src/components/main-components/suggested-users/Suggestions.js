@@ -1,6 +1,5 @@
 import React from "react";
 import UserLine from "./UserLine";
-import avatar from "../../../avatar.jfif"
 
 export default function Suggestions() {
     return (
@@ -8,17 +7,17 @@ export default function Suggestions() {
             <p className="small-title">Suggested for you</p>
             <div>
                 <UserLine 
-                    avatar={avatar}
+                    avatar=""
                     username="Amine Edarkaoui"
                     title="software engineer"
                 />
                 <UserLine 
-                    avatar={avatar}
+                    avatar=""
                     username="Amine Edarkaoui"
                     title="software engineer"
                 />
                 <UserLine 
-                    avatar={avatar}
+                    avatar=""
                     username="Amine Edarkaoui"
                     title="software engineer"
                 />

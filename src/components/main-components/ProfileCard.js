@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { userCard } from "../../api/app";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileCard() {
     const [isLoading, setLoading] = useState(true)
     const [userData, setUserData] = useState(null)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -53,7 +56,12 @@ export default function ProfileCard() {
                     { isLoading ?
                         <Skeleton height={20} width={100} />
                         :
-                        <button className="blue-button text-button">Visit profile</button>
+                        <button 
+                            className="blue-button text-button"
+                            onClick={() => navigate(`profile/${localStorage.getItem("userId")}`)}
+                        >
+                            Visit profile
+                        </button>
                     }
                     
                 </div>

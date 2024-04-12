@@ -33,7 +33,7 @@ export default function LoginPage() {
             setEmailError("Empty field!")
             return
         }
-        if (formData.password.length == 0) {
+        if (formData.password.length === 0) {
             setPasswordError("Empty field!")
             return
         }

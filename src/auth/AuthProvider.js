@@ -1,7 +1,6 @@
 import { useContext, createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axiosConfig"
-import axios from "axios";
 
 const AuthContext = createContext();
 
@@ -74,6 +73,5 @@ const AuthProvider = ({ children }) => {
 export default AuthProvider;
 
 export const useAuth = () => {
-  //console.log(useContext(AuthContext))
   return useContext(AuthContext);
 }
