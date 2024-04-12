@@ -183,6 +183,15 @@
     color: var(--secondary);
 }
 
+.avatar.cont {
+    position: relative;
+}
+
+.edit-button.profile {
+    position: absolute;
+    right: -15px;
+    bottom: 0px;
+}
 
 
 /* SideInfo Style */
@@ -557,8 +566,8 @@
     height: 80px;
 }
 .edit-button {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     background-color: var(--background);
     border-radius: 50%;
     display: flex;
@@ -570,9 +579,13 @@
 }
 .edit-button:hover {
     cursor: pointer;
-    /* transform: scale(1.06); */
-    box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
 }
+.edit-button:active {
+    cursor: pointer;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0);
+}
+
 .user-info {
     padding: 10px;
 }

@@ -8,6 +8,7 @@ import PostSkeleton from "../post-feed/PostSkeleton";
 import { userProfile } from "../../api/app";
 import { useParams } from "react-router-dom";
 import { formatPostTime } from "../post-feed/Feed";
+import { Menu, MenuItem } from "@mui/material";
 
 
 export default function UserProfile(props) {
@@ -15,12 +16,23 @@ export default function UserProfile(props) {
     const [currentTab, setCurrentTab] = useState(parseInt(localStorage.getItem("currentTab")) || 0)
     const [isLoading, setLoading] = useState(true)
     const [userData, setUserData] = useState(null)
+    const [isCurrentUser, setCurrentUser] = useState()
+    const [profileAnchorEl, setProfileAnchorEl] = useState(null)
+    const [coverAnchorEl, setCoverAnchorEl] = useState(null)
+
+    const profileOpen = Boolean(profileAnchorEl)
+    const coverOpen = Boolean(coverAnchorEl)
 
     const {userId} = useParams()
 
     const changeTab = (tab) => {
         localStorage.setItem("currentTab", tab)
         setCurrentTab(tab)
+    }
+    
+    const handleClose = () => {
+        setProfileAnchorEl(null)
+        setCoverAnchorEl(null)
     }
 
     useEffect(() => {
@@ -29,6 +41,7 @@ export default function UserProfile(props) {
             setUserData(response.data)
             setLoading(false)
         }
+        setCurrentUser(() => localStorage.getItem('userId') === userId)
         getProfile()
     }, [])
 
@@ -48,14 +61,56 @@ export default function UserProfile(props) {
                         { isLoading ?
                             <Skeleton className="avatar" />
                             :
-                            <img src={userData.profilePicture} className="avatar" />
+                            <div className="avatar cont">
+                                <img src={userData.profilePicture} className="avatar" />
+                                {
+                                    isCurrentUser &&
+                                    <div className="edit-button profile" onClick={(event) => setProfileAnchorEl(event.currentTarget)}>
+                                        <Icon icon="material-symbols:edit-outline" />
+                                    </div>
+                                }
+                                <Menu
+                                    id="profile-menu"
+                                    anchorEl={profileAnchorEl}
+                                    open={profileOpen}
+                                    onClose={handleClose}
+                                    anchorOrigin={{
+                                        vertical: 'bottom',
+                                        horizontal: 'left',
+                                    }}
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'left',
+                                    }}
+                                >
+                                    <MenuItem>Change profile picture</MenuItem>
+                                    <MenuItem>Delete profile picture</MenuItem>
+                                </Menu>
+                            </div>
                         }
                         
-                        { !isLoading &&
-                            <div className="edit-button">
+                        { !isLoading && isCurrentUser &&
+                            <div className="edit-button" onClick={(event) => setCoverAnchorEl(event.currentTarget)} >
                                 <Icon icon="material-symbols:edit-outline" />
                             </div>
                         }
+                        <Menu
+                            id="cover-menu"
+                            anchorEl={coverAnchorEl}
+                            open={coverOpen}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                        >
+                            <MenuItem>Change cover picture</MenuItem>
+                            <MenuItem>Delete cover picture</MenuItem>
+                        </Menu>
                         
                     </div>
                 </div>
@@ -103,7 +158,7 @@ export default function UserProfile(props) {
                                 :
                                 <p className="large-title">About</p>
                             }
-                            { !isLoading &&
+                            { !isLoading && isCurrentUser &&
                                 <Icon className="icon" icon="material-symbols:edit-outline" />
                             }
                             
@@ -128,7 +183,7 @@ export default function UserProfile(props) {
                                 :
                                 <p className="large-title">Experiences</p>
                             }
-                            { !isLoading &&
+                            { !isLoading && isCurrentUser &&
                                 <div className="icons-cont">
                                     <Icon className="icon" icon="ic:baseline-plus" />
                                     <Icon className="icon" icon="material-symbols:edit-outline" />
@@ -159,7 +214,7 @@ export default function UserProfile(props) {
                                 :
                                 <p className="large-title">Education</p>
                             }
-                            { !isLoading &&
+                            { !isLoading && isCurrentUser &&
                                 <div className="icons-cont">
                                     <Icon className="icon" icon="ic:baseline-plus" />
                                     <Icon className="icon" icon="material-symbols:edit-outline" />
@@ -189,7 +244,7 @@ export default function UserProfile(props) {
                                 :
                                 <p className="large-title">Skills</p>
                             }
-                            { !isLoading &&
+                            { !isLoading && isCurrentUser &&
                                 <div className="icons-cont">
                                     <Icon className="icon" icon="ic:baseline-plus" />
                                     <Icon className="icon" icon="material-symbols:edit-outline" />
