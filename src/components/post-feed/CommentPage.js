@@ -2,7 +2,7 @@ import React from "react";
 import { getAllCommentLikesByPostId, getCommentById, getPostById, likeComment, newComment, newReply } from "../../api/app";
 import { useParams } from "react-router-dom";
 import Post from "./Post";
-import Header from "../navigation/header";
+import Header from "../navigation/Header";
 import CommentElement from "./CommentElement";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
