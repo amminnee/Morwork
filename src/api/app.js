@@ -38,13 +38,14 @@ export const newPost = (postData) => {
     }
 };
 
-export const likePost = (postId, userId) => {
+export const likePost = (postId, userId, postType) => {
     console.log("ok: " + postId + " " + userId);
     const token = localStorage.getItem("token");
     
     if (token) {
         const formData = new FormData();
         formData.append('userId', userId);
+        formData.append("postType", postType)
         
         return api.post(`/post/${postId}/like`, formData, {
             headers: {
@@ -88,11 +89,11 @@ export const userCard = async () => {
     }
 }
 
-export const getPostById = (postId)=>{
+export const getPostById = (postId, postType)=>{
     const token = localStorage.getItem("token");
     if (token) {
         
-        return api.get(`/post/${postId}`, {
+        return api.get(`/post/${postId}/${postType}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
@@ -116,13 +117,14 @@ export const getAllCommentLikesByPostId = (postId)=>{
     }
 }
 
-export const newComment = (postId, userId, content)=>{
+export const newComment = (postId, userId, content,postType)=>{
     const token = localStorage.getItem("token");
     const data = new FormData();
     data.append("postId", postId)
     data.append("userId", userId)
     data.append("content", content)
-
+    data.append("postType", postType)
+    
     if(token){
         return api.post("/post/newComment", data,{
             headers: {
@@ -198,4 +200,124 @@ export const getPhoto = () => {
         `/user/user-photo?id=${localStorage.getItem('userId')}`,
         {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
     )
+}
+
+
+export const deleteComment = (commentId) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        return api.delete(`/post/${commentId}/comment`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+    } else {
+        return Promise.reject(new Error("Token not available"));
+    }
+};
+export const deleteStandartPost = (postId, postType) => {
+    const token = localStorage.getItem("token");
+    const data = new FormData();
+    data.append("postType", postType)
+    console.log(postType)
+    if (token) {
+        return api.delete(`/post/${postId}/Post/${postType}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+    } else {
+        return Promise.reject(new Error("Token not available"));
+    }
+};
+export const deleteReply = (replyId) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        return api.delete(`/post/${replyId}/reply`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+    } else {
+        return Promise.reject(new Error("Token not available"));
+    }
+};
+export const updateComment = (commentId, content) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        const data = new FormData()
+        data.append("updatedContent", content)
+        return api.put(`/post/${commentId}/comment`,data, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+    } else {
+        return Promise.reject(new Error("Token not available"));
+    }
+};
+export const updateReply = (replyId, content) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        const data = new FormData()
+        data.append("updatedContent", content)
+        return api.put(`/post/${replyId}/reply`,data, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+    } else {
+        return Promise.reject(new Error("Token not available"));
+    }
+};
+export const updateStandartPost = (postId, content, image) => {
+    console.log(postId)
+    const token = localStorage.getItem("token");
+    if (token) {
+        const data = new FormData()
+        data.append("content", content)
+        data.append("image", image)
+        return api.put(`/post/${postId}`,data, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+    } else {
+        return Promise.reject(new Error("Token not available"));
+    }
+};
+
+
+export const savePost = (userId, postId, postType) => {
+    const token = localStorage.getItem("token");
+    if(token){
+        const data = new FormData();
+        data.append("userId", userId)
+        data.append("postId", postId)
+        data.append("postType", postType)
+        
+        return api.post("/post/savePost", data,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+    }else{
+        return Promise.reject(new Error("Token not available"))
+    }
+}
+
+export const repost = (userId, postId) => {
+    const token = localStorage.getItem("token");
+    if(token){
+        const data = new FormData()
+        data.append("userId", userId)
+        data.append("postId", postId)
+        return api.post("/post/repost", data,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+    }else{
+        return Promise.reject(new Error("Token not available"))
+    }
 }

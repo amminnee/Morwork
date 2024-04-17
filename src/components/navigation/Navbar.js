@@ -23,7 +23,7 @@ export default function Navbar(props) {
     },[])
     return (
         <div>
-            <div className={`navbar radius elevation-1 ${props.isScrolling && "scroll"}`}>
+            <div className={`nav-bar radius elevation-1 ${props.isScrolling && "scroll"}`}>
                 <NavItem
                     url="/"
                     text="Home"

@@ -26,7 +26,7 @@ export default function Feed() {
         
             if (bottom && !loadingMore) {
                 if (displayedPosts >= posts.length) {
-                    console.log("All posts displayed");
+                    console.log("Les post Lmla7 salaw")
                     return;
                 }
                 setLoadingMore(true);
@@ -67,7 +67,7 @@ export default function Feed() {
         const days = Math.floor(hours / 24);
         return `${days}d`;
     };
-
+    
     return (
         <div className="home-page">
             <div className="post-feed">
@@ -81,6 +81,7 @@ export default function Feed() {
                     </>
                 ) : (
                     posts.slice(0, displayedPosts).map(post => (
+                        post.type === "STANDART_POST" ?
                         <Post
                             key={post.id}
                             username={`${post.firstName} ${post.lastName}`}
@@ -92,6 +93,27 @@ export default function Feed() {
                             comments={post.comments}
                             id={post.id}
                             user={post.userId}
+                            saves={post.saves}
+                            reposts={post.reposts}
+                            postType={post.type}
+                        />
+                        :
+                        <Post
+                            key={post.id}
+                            username={`${post.firstName} ${post.lastName}`}
+                            title={post.title}
+                            time={formatPostTime(post.date)}
+                            text={post.originalPost.content}
+                            photo={post.originalPost.image}
+                            //likes={post.likes}
+                            comments={post.comments}
+                            id={post.id}
+                            user={post.userId}
+                            saves={post.saves}
+                            originalPost={post.originalPost}
+                            originalUserName={`${post.originalPost.firstName} ${post.originalPost.lastName}`}
+                            reposts={post.reposts}
+                            postType={post.type}
                         />
                     ))
                 )}

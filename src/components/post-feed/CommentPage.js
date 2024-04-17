@@ -17,10 +17,10 @@ export default function CommentPage(){
 
 
     const postId = useParams()
-    console.log(postId.postId)
+    const postType = useParams()
     const [post, setPost] = React.useState(null)
     React.useEffect(()=>{
-        getPostById(postId.postId).then(res => {
+        getPostById(postId.postId, postType.postType).then(res => {
             setPost(prevPost => res.data)
             const sortedComments = res.data.comments.sort((a, b) => new Date(b.date) - new Date(a.date));
             setComments(sortedComments);
@@ -67,10 +67,11 @@ export default function CommentPage(){
 
 
 
-        newComment(postId.postId, Number(localStorage.getItem("userId")), commentContent)
+        newComment(postId.postId, Number(localStorage.getItem("userId")), commentContent, postType.postType)
             .then(() => {
-                return getPostById(postId.postId)
+                return getPostById(postId.postId, postType.postType)
                     .then((res) => {
+                        console.log(res)
                         const sortedComments = res.data.comments.sort((a, b) => new Date(b.date) - new Date(a.date));
                         return { post: res.data, comments: sortedComments };
                     });
@@ -106,30 +107,51 @@ export default function CommentPage(){
         setReplyto(null)
     }
 
+
     return(
         <div style={{display: "flex", justifyContent: "center" , alignItems: "center", margin:"auto", width:"100%"}}>
         <Header isVisible={true}/>
         <div className="comment-page">
             <div className="post-container">
-            {
-            post != null &&
-            <Post
-            username={`${post.firstName} ${post.lastName}`}
-            title={post.title}
-            time={formatPostTime(post.date)}
-            text={post.content}
-            photo={post.image}
-            likes={post.likes}
-            comments={post.comments}
-            id={post.id}
-            user={post.userId}
-            />
-            }
+            {post && post.type === "STANDART_POST" ? (
+                        <Post
+                            key={post.id}
+                            username={`${post.firstName} ${post.lastName}`}
+                            title={post.title}
+                            time={formatPostTime(post.date)}
+                            text={post.content}
+                            photo={post.image}
+                            likes={post.likes}
+                            comments={post.comments}
+                            id={post.id}
+                            user={post.userId}
+                            saves={post.saves}
+                            reposts={post.reposts}
+                            postType={post.type}
+                        />
+                    ) : (post &&
+                        <Post
+                            key={post.id}
+                            username={`${post.firstName} ${post.lastName}`}
+                            title={post.title}
+                            time={formatPostTime(post.date)}
+                            text={post.originalPost.content}
+                            photo={post.originalPost.image}
+                            comments={post.comments}
+                            id={post.id}
+                            user={post.userId}
+                            saves={post.saves}
+                            originalPost={post.originalPost}
+                            originalUserName={`${post.originalPost.firstName} ${post.originalPost.lastName}`}
+                            reposts={post.reposts}
+                            postType={post.type}
+                        />
+                    )}
             </div>
             <div style={{position:"relative", background:"#FFF"}}>
                 <div className="comments-container radius">
 
-                    {
+                    { 
                         comments.map(comment => (
                         <CommentElement 
                         id={comment.id}
@@ -144,7 +166,8 @@ export default function CommentPage(){
                         formatTime={formatPostTime}
                         date={formatPostTime(comment.date)}
                         />))
-                    }
+                        }
+                        
                 
                 </div>
                 {replyTo && (
