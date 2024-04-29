@@ -5,6 +5,7 @@ import Post from "./Post";
 import Header from "../navigation/Header";
 import CommentElement from "./CommentElement";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import Alert from 'react-bootstrap/Alert';
 
 export default function CommentPage(){
 
@@ -19,13 +20,24 @@ export default function CommentPage(){
     const postId = useParams()
     const postType = useParams()
     const [post, setPost] = React.useState(null)
-    React.useEffect(()=>{
-        getPostById(postId.postId, postType.postType).then(res => {
-            setPost(prevPost => res.data)
-            const sortedComments = res.data.comments.sort((a, b) => new Date(b.date) - new Date(a.date));
-            setComments(sortedComments);
-        })
-    }, [postId])
+    const [error, setError] = React.useState(null); // State for holding error messages
+
+    React.useEffect(() => {
+        getPostById(postId.postId, postType.postType)
+            .then(res => {
+                setPost(res.data);
+                const sortedComments = res.data.comments.sort((a, b) => new Date(b.date) - new Date(a.date));
+                setComments(sortedComments);
+            })
+            .catch(error => {
+                if (error.response && error.response.status === 404) {
+                    setError("Post not found");
+                } else {
+                    setError("An error occurred while fetching the post.");
+                }
+            });
+    }, [postId, postType]);
+    
     const formatPostTime = (postDate) => {
         const currentDate = new Date();
         const postDateTime = new Date(postDate);
@@ -58,10 +70,8 @@ export default function CommentPage(){
     const handleNewComment = () => {
 
         if(replyTo){
-            console.log("commentId: "+replyTo.commentId+" userId: "+localStorage.getItem("userId")+" content: "+commentContent)
             newReply(replyTo.commentId, Number(localStorage.getItem("userId")), commentContent)
-            .then(res => console.log(res.data))
-            window.location.reload()
+            .then(window.location.reload())
             return;
         }
 
@@ -71,7 +81,6 @@ export default function CommentPage(){
             .then(() => {
                 return getPostById(postId.postId, postType.postType)
                     .then((res) => {
-                        console.log(res)
                         const sortedComments = res.data.comments.sort((a, b) => new Date(b.date) - new Date(a.date));
                         return { post: res.data, comments: sortedComments };
                     });
@@ -85,12 +94,11 @@ export default function CommentPage(){
     };
     
     
-    React.useEffect(()=>console.log(comments),[comments])
+
     
     React.useEffect(() => {
         getAllCommentLikesByPostId(postId.postId)
             .then(res => {
-                console.log(res.data);
                 setCommentLikes(res.data)
             })
             .catch(error => {
@@ -111,7 +119,7 @@ export default function CommentPage(){
     return(
         <div style={{display: "flex", justifyContent: "center" , alignItems: "center", margin:"auto", width:"100%"}}>
         <Header isVisible={true}/>
-        <div className="comment-page">
+        {error === null ? <div className="comment-page">
             <div className="post-container">
             {post && post.type === "STANDART_POST" ? (
                         <Post
@@ -128,6 +136,7 @@ export default function CommentPage(){
                             saves={post.saves}
                             reposts={post.reposts}
                             postType={post.type}
+                            userId={post.userId}
                         />
                     ) : (post &&
                         <Post
@@ -145,10 +154,13 @@ export default function CommentPage(){
                             originalUserName={`${post.originalPost.firstName} ${post.originalPost.lastName}`}
                             reposts={post.reposts}
                             postType={post.type}
+                            userId={post.originalPost.userId}
+                            repostUser={post.userId}
                         />
                     )}
             </div>
-            <div style={{position:"relative", background:"#FFF"}}>
+            
+                <div style={{position:"relative", background:"#FFF"}}>
                 <div className="comments-container radius">
 
                     { 
@@ -181,7 +193,16 @@ export default function CommentPage(){
                     <button className="primary-button comment-btn radius" onClick={()=>handleNewComment()}>Comment</button>
                 </div>
             </div>
+            
         </div>
+        :
+        <Alert variant="danger" style={{width:"50%", margin:"30px 0"}}>
+                <Alert.Heading>Ach kadir al akh</Alert.Heading>
+                <p>
+                {error}
+                </p>
+        </Alert>
+        }
         </div>
     )
 }

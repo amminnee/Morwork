@@ -5,6 +5,7 @@ import { deleteComment, deleteReply, getAllCommentLikesByPostId, likeComment, li
 import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {  Modal, Button } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 
 function Reply(props){
     const [isLiked, setIsLiked] = useState(false);
@@ -30,9 +31,8 @@ function Reply(props){
     };
 
     const handleUpdate = (replyId) => {
-        console.log("ID: "+replyId+" Edited Content: "+editedContent)
+        
         updateReply(replyId, editedContent)
-        .then(res => console.log(res))
         .then(window.location.reload())
     };
 
@@ -58,7 +58,10 @@ function Reply(props){
                 <div className="user-profile">
                     <img className="avatar" width={30} height={30} src={`http://localhost:8081/media/${props.user.profilePicture}`} alt="User avatar" />
                     <div className="user-info">
-                        <p className="small-title">{props.userName}</p>
+                    <NavLink to={`/profile/${props.user.id}`} style={{textDecoration:"none"}}>
+                           <p className="small-title">{props.userName}</p>
+                    </NavLink>
+                        
                         <p className="small-label">{`${props.user.title}`}</p>
                     </div>
                 </div>
@@ -95,7 +98,6 @@ function Reply(props){
                     </Button>
                     <Button variant="danger" onClick={()=>{
                         deleteReply(props.reply.id)
-                        .then(res => console.log(res))
                         .then(window.location.reload())
                         }}>
                         Delete
@@ -174,9 +176,7 @@ export default function CommentElement(props){
     };
 
     const handleUpdate = (commentId) => {
-        console.log("ID: "+commentId+" Edited Content: "+editedContent)
         updateComment(commentId, editedContent)
-        .then(res => console.log(res))
         .then(window.location.reload())
     };
 
@@ -200,7 +200,7 @@ export default function CommentElement(props){
 
     const handleLikeReply = (id) => {
         likeReply(id, Number(localStorage.getItem("userId")))
-            .then(res => console.log(res));
+        
     }
 
     useEffect(() => {
@@ -222,7 +222,7 @@ export default function CommentElement(props){
     function handleReply(){
         console.log("Reply to "+props.author);
     }
-    
+
     
 
     return(
@@ -231,7 +231,10 @@ export default function CommentElement(props){
                 <div className="user-profile">
                     <img className="avatar" width={40} height={40} src={`http://localhost:8081/media/${props.user.profilePicture}`} alt="User avatar" />
                     <div className="user-info">
-                        <p className="medium-title">{props.author}</p>
+                        <NavLink to={`/profile/${props.user.id}`}  style={{textDecoration:"none"}}>
+                            <p className="medium-title">{props.author}</p>
+                        </NavLink>
+                        
                         <p className="medium-label">{"Java Developper"}</p>
                     </div>
                 </div>
@@ -268,7 +271,6 @@ export default function CommentElement(props){
                     </Button>
                     <Button variant="danger" onClick={()=>{
                         deleteComment(props.id)
-                        .then(res => console.log(res))
                         .then(window.location.reload())
                         }}>
                         Delete

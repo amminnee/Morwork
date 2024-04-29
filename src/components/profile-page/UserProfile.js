@@ -35,7 +35,7 @@ export default function UserProfile(props) {
         getProfile()
     }, [])
 
-    console.log(userData)
+
 
     return (
         <div className="user-profile-page">

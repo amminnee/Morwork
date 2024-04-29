@@ -54,7 +54,7 @@
     
     display: flex;
     align-items: center;
-    
+    position: relative;
     gap: 20px;
 }
 .nav-item:nth-child(7) {
@@ -76,6 +76,7 @@
     height: 22px;
     width: 22px;
 }
+
 .nav-item .avatar {
     width: 26px;
     aspect-ratio: 1/1;
@@ -814,7 +815,7 @@
 /* Reply */
 .reply-container{
     position: absolute;
-    bottom: 30px;
+    bottom: 39px;
     left: 0;
     z-index: 100;
     padding: 10px;
@@ -823,7 +824,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: calc(100% - 20px);
+    width: 100%;
     margin-bottom: 8px;
     background-color: #FFF;
 }
@@ -875,6 +876,21 @@
     margin: 10px 0;
 }
   
+/* .notifIcon{
+    background: red;
+} */
+.count{
+    min-width: 15px;
+    height: 15px;
+    background-color: red;
+    position: absolute;
+    border-radius: 50%;
+    top: 14px;
+    left: 18px;
+    color: #FFF;
+    font-size: 10px;
+    text-align: center;
+}
 
 
 @media screen and (max-width: 1000px) {

@@ -5,7 +5,7 @@ import PostSkeleton from "./PostSkeleton";
 import 'react-loading-skeleton/dist/skeleton.css';
 import { getPosts } from "../../api/app";
 
-export default function Feed() {
+export default function Feed(props) {
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [displayedPosts, setDisplayedPosts] = useState(4); 
@@ -67,7 +67,7 @@ export default function Feed() {
         const days = Math.floor(hours / 24);
         return `${days}d`;
     };
-    
+
     return (
         <div className="home-page">
             <div className="post-feed">
@@ -80,6 +80,7 @@ export default function Feed() {
                         <PostSkeleton />
                     </>
                 ) : (
+                    
                     posts.slice(0, displayedPosts).map(post => (
                         post.type === "STANDART_POST" ?
                         <Post
@@ -96,6 +97,7 @@ export default function Feed() {
                             saves={post.saves}
                             reposts={post.reposts}
                             postType={post.type}
+                            userId={post.userId}
                         />
                         :
                         <Post
@@ -114,6 +116,8 @@ export default function Feed() {
                             originalUserName={`${post.originalPost.firstName} ${post.originalPost.lastName}`}
                             reposts={post.reposts}
                             postType={post.type}
+                            userId={post.originalPost.userId}
+                            repostUser={post.userId}
                         />
                     ))
                 )}

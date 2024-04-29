@@ -13,8 +13,33 @@ import Jobs from "./components/jobs/Jobs";
 import Settings from "./components/settings/Settings";
 import ProfileSettings from "./components/settings/ProfileSettings";
 import CommentPage from "./components/post-feed/CommentPage";
+import { getNotificationsByUserId } from "./api/app";
 
 export default () => {
+
+  const [notifications, setNotification] = React.useState([])
+
+  React.useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+        const fetchNotifications = () => {
+            getNotificationsByUserId(Number(userId))
+                .then((res) => {
+                    setNotification(res.data);
+                })
+                .catch((error) => {
+                    console.error("Error fetching notifications:", error);
+                });
+        };
+
+        fetchNotifications();
+
+        const intervalId = setInterval(fetchNotifications, 9000);
+
+        return () => clearInterval(intervalId);
+    }
+}, []);
+
 
     return (
         <div className="app">
@@ -31,7 +56,7 @@ export default () => {
                 <Route element={<Main />}>
                     <Route path="/" element={<Feed />} />
                     <Route path="/jobs" element={<Jobs />} />
-                    <Route path="/notifications" element={<Notification />} />
+                    <Route path="/notifications" element={<Notification notifications={notifications} />} />
                     <Route path="/profile/:userId" element={<UserProfile />} />
                 </Route>
               </Route>

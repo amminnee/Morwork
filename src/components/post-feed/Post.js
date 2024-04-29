@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {  Modal, Button } from "react-bootstrap";
 import EditPostModal from "./EditPostModal";
 import { formatPostTime } from "./Feed";
+import ListGroup from 'react-bootstrap/ListGroup';
 
 
 export default function Post(props) {
@@ -23,7 +24,7 @@ export default function Post(props) {
   const [showDropDown, setShowDropDown] = useState(false) 
 
   const [isSaved, setIsSaved] = useState(false);
-
+  const [showLikes, setShowLikes] = useState(false)
 
   
 
@@ -95,12 +96,14 @@ export default function Post(props) {
     .then(res => console.log(res))
 
   }
+  const [userLikes, setUserLikes] = useState([])
   
   useEffect(() => {
 
     getLikes(props.id)
       .then(res => {
-        const userLiked = res.data.some(like => like.userId === Number(localStorage.getItem("userId")));
+        setUserLikes(res.data)
+        const userLiked = res.data.some(like => like.user.id === Number(localStorage.getItem("userId")));
         if (userLiked) {
           setLikeText("Liked");
         } else {
@@ -112,7 +115,7 @@ export default function Post(props) {
         console.error("Error fetching likes:", error);
       });
 
-      //save .. to do
+      //save .... TODO!!!!!!
       const postSaved = props.saves.some(save => save.user.id === Number(localStorage.getItem("userId")))
       setIsSaved(postSaved)
   }, []);
@@ -122,7 +125,7 @@ export default function Post(props) {
     savePost(Number(localStorage.getItem("userId")), props.id, props.postType)
     .then(res => console.log(res))
     .then(setIsSaved(prevIsSaved => prevIsSaved ? false : true))
-    
+    setShowDropDown(false)
   }
   
   const handleRepost = () => {
@@ -131,9 +134,17 @@ export default function Post(props) {
     .then(res => console.log(res))
     .then(window.location.reload())
   }
+  console.log(userLikes)
+
+  const handleLikesPage = () => {
+
+    userLikes.map(like => console.log(like.user.firstName))
+    setShowLikes(true)
+  }
+  const handleCloseLikes = () =>{
+    setShowLikes(false)
+  }
   
-
-
   return (
     <div className="radius post">
       <div className="top-section">
@@ -146,7 +157,7 @@ export default function Post(props) {
           <p className="small-title">
               {props.postType === "REPOSTED" && (
                   <>
-                      {props.username} <span className="small-text" >has reposted</span>
+                      <NavLink to={`/profile/${props.repostUser}`} style={{textDecoration:"none", color:"#000"}}>{props.username}</NavLink> <span className="small-text" >has reposted</span>
                   </>
               )}
           </p>
@@ -156,10 +167,13 @@ export default function Post(props) {
           </div>
           
         </div>}
-          <div className="user-profile">
+        <div className="user-profile">
           <img className="avatar" src={`http://localhost:8081/media/avatar.jpg`} alt="User avatar" />
           <div className="user-info">
-            <p className="medium-title">{props.postType === "REPOSTED" ? props.originalUserName : props.username}</p>
+            <NavLink to={`/profile/${props.userId}`} style={{textDecoration:"none"}}>
+              <p className="medium-title">{props.postType === "REPOSTED" ? props.originalUserName : props.username}</p>
+            </NavLink>
+            
             <p className="medium-label">{props.postType === "REPOSTED" ? props.originalPost.title : props.title}</p>
             <p className="small-label">{props.postType === "REPOSTED" ? formatPostTime(props.originalPost.date) : props.time}</p>
           </div>
@@ -220,9 +234,12 @@ export default function Post(props) {
       {props.photo && props.photo.endsWith("mp4") && <video ref={videoRef} src={`http://localhost:8081/media/${props.photo}`} className="post-media" controls muted></video>}
 
       <div className="info-section">
-        <p className="medium-label">{likesCount} likes</p>
+        <p className="medium-label" style={{cursor:"pointer"}} onClick={() => handleLikesPage()}>{likesCount} likes</p>
         <div style={{display:"flex", alignItems:"center", gap:"10px"}}>
-         <p className="medium-label">{props.comments.length} comments</p> 
+        <NavLink to={`/comments/${props.id}/${props.postType}`} style={{textDecoration: "none"}}>
+          <p className="medium-label">{props.comments.length} comments</p>
+        </NavLink>
+          
          <p className="medium-label">{props.reposts && props.reposts.length} repost</p> 
         </div>
         
@@ -242,6 +259,35 @@ export default function Post(props) {
         image={props.photo}
         postId={props.id}
       />
+
+    <Modal
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      show={showLikes}
+      onHide={handleCloseLikes}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Likes
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <ListGroup>
+          {userLikes.map(like => (
+            <div className="user-profile">
+            <img className="avatar" src={`http://localhost:8081/media/avatar.jpg`} alt="User avatar" width={33} height={33} />
+            <div className="user-info">
+              <NavLink to={`/profile/${like.user.id}`} style={{textDecoration:"none"}}>
+                <p className="medium-title">{`${like.user.firstName} ${like.user.lastName}`}</p>
+              </NavLink>
+            </div>
+          </div>
+          ))}
+      </ListGroup>
+      </Modal.Body>
+      
+    </Modal>
     </div>
   );
 }

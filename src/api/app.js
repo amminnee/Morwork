@@ -321,3 +321,47 @@ export const repost = (userId, postId) => {
         return Promise.reject(new Error("Token not available"))
     }
 }
+
+export const getUserById = (id) => {
+    const token = localStorage.getItem("token");
+    if(token){
+        return api.get(`/user/${id}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+    }else{
+        return Promise.reject(new Error("Token not available"))
+    }
+}
+
+export const getNotificationsByUserId = (userId) =>{
+    const token = localStorage.getItem("token")
+    if(token){
+        const data = new FormData()
+        data.append("userId", userId)
+        return api.get(`/notification/${userId}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+    }
+}
+
+export const updateToSeen = () => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+
+        return api.put(`/notification/notif`, null, config);
+    } else {
+        return Promise.reject(new Error("Token not available"));
+    }
+};
+
+

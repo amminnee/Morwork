@@ -1,25 +1,50 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../navigation/Navbar";
 import Header from "../navigation/Header";
 import { Outlet } from "react-router-dom";
 import NewPost from "../post-feed/NewPost";
-
+import { getNotificationsByUserId } from "../../api/app";
 
 export default function Main() {
-    // this state decides weither the newPost window is visible
-    const [newPost, setNewPost] = React.useState("hidden")
-
-    const [scrolling, setScrolling] = React.useState(false);
-    const [prevScrollPos, setPrevScrollPos] = React.useState(0);
-
-    const handleScroll = () => {
-        const currentScrollPos = window.pageYOffset;
-
-        setScrolling(prevScrollPos < currentScrollPos);
-        setPrevScrollPos(currentScrollPos);
-    };
+    const [newPost, setNewPost] = useState("hidden");
+    const [scrolling, setScrolling] = useState(false);
+    const [prevScrollPos, setPrevScrollPos] = useState(0);
+    const [notifications, setNotifications] = useState([]);
+    const [unseenNotificationCount, setUnseenNotificationCount] = useState(0);
 
     React.useEffect(() => {
+        const userId = localStorage.getItem("userId");
+        if (userId) {
+            const fetchNotifications = () => {
+                getNotificationsByUserId(Number(userId))
+                    .then((res) => {
+                        setNotifications(res.data);
+                        const count = res.data.reduce((count, notification) => {
+                            return count + (notification.seen ? 0 : 1);
+                        }, 0);
+                        setUnseenNotificationCount(prev => count);
+                    })
+                    .catch((error) => {
+                        console.error("Error fetching notifications:", error);
+                    });
+            };
+    
+            fetchNotifications();
+            
+            const intervalId = setInterval(fetchNotifications, 7000);
+    
+            return () => clearInterval(intervalId);
+        }
+    }, []);
+    
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollPos = window.pageYOffset;
+            setScrolling(prevScrollPos < currentScrollPos);
+            setPrevScrollPos(currentScrollPos);
+        };
+
         window.addEventListener("scroll", handleScroll);
 
         return () => {
@@ -27,21 +52,22 @@ export default function Main() {
         };
     }, [prevScrollPos]);
 
+    const restartNotificationCounter = () => {
+        setUnseenNotificationCount(0); 
+    };
+
     return (
         <>
-        <Header isVisible={!scrolling} searchBar={true} />
-        <div className="main-cont">
-            <Navbar
-                showNewPost={() => setNewPost("")}
-                isScrolling={scrolling}
-            />
-            <Outlet /> 
-            {/* // outlet is the component that gets loaded based on url path defined in route (look in App.js) */}
-            <NewPost 
-                isVisible={newPost}
-                hide={() => setNewPost("hidden")}
-            />
-        </div>
+            <Header isVisible={!scrolling} searchBar={true} />
+            <div className="main-cont">
+                <Navbar
+                    showNewPost={() => setNewPost("")}
+                    isScrolling={scrolling}
+                    NotificationCount={unseenNotificationCount} 
+                />
+                <Outlet context={{ restartNotificationCounter }} />
+                <NewPost isVisible={newPost} hide={() => setNewPost("hidden")} />
+            </div>
         </>
-    )
+    );
 }
