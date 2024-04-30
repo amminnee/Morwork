@@ -2,28 +2,42 @@ import React, { useEffect, useState } from "react";
 import NavItem from "./NavItem";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../../auth/AuthProvider";
-import { getPhoto } from "../../api/app";
+import { getNotificationsByUserId, getPhoto, getUserById, userProfile } from "../../api/app";
 
 export default function Navbar(props) {
     const auth = useAuth()
 
     const [avatar, setAvatar] = useState(null)
+    const [notifications, setNotification] = useState([])
     
     useEffect(() => {
         const getAvatar = async () => {
             try {
                 const data = await getPhoto()
                 setAvatar(data.data.image)
-                console.log("photo: " + data.data.image)
             } catch(err){
                 console.error(err)
             }
         }
         getAvatar()
     },[])
+
+    useEffect(() => {
+        const userId = localStorage.getItem("userId");
+        if (userId) {
+            getNotificationsByUserId(Number(userId))
+                .then((res) => {
+                    setNotification(res.data);
+                })
+                .catch((error) => {
+                    console.error("Error fetching notifications:", error);
+                });
+        }
+    }, []);
+
     return (
         <div>
-            <div className={`navbar radius elevation-1 ${props.isScrolling && "scroll"}`}>
+            <div className={`nav-bar radius elevation-1 ${props.isScrolling && "scroll"}`}>
                 <NavItem
                     url="/"
                     text="Home"
@@ -56,6 +70,8 @@ export default function Navbar(props) {
                     text="Notifications"
                     line="mingcute:notification-line"
                     fill="mingcute:notification-fill"
+                    notifications={notifications}
+                    notificationCount={props.NotificationCount}
                 />
                 <NavItem
                     url={`profile/${localStorage.getItem('userId')}`}

@@ -4,7 +4,6 @@ import JobSkeleton from "./JobSkeleton";
 
 export default function Jobs(){
 
-    console.log(localStorage.getItem("token"))
     const jobs = [ // (temp data) 
         {
         id: 1,

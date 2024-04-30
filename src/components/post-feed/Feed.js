@@ -5,7 +5,7 @@ import PostSkeleton from "./PostSkeleton";
 import 'react-loading-skeleton/dist/skeleton.css';
 import { getPosts } from "../../api/app";
 
-export default function Feed() {
+export default function Feed(props) {
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [displayedPosts, setDisplayedPosts] = useState(4); 
@@ -26,7 +26,7 @@ export default function Feed() {
         
             if (bottom && !loadingMore) {
                 if (displayedPosts >= posts.length) {
-                    console.log("All posts displayed");
+                    console.log("Les post Lmla7 salaw")
                     return;
                 }
                 setLoadingMore(true);
@@ -80,7 +80,9 @@ export default function Feed() {
                         <PostSkeleton />
                     </>
                 ) : (
+                    
                     posts.slice(0, displayedPosts).map(post => (
+                        post.type === "STANDART_POST" ?
                         <Post
                             key={post.id}
                             username={`${post.firstName} ${post.lastName}`}
@@ -92,6 +94,30 @@ export default function Feed() {
                             comments={post.comments}
                             id={post.id}
                             user={post.userId}
+                            saves={post.saves}
+                            reposts={post.reposts}
+                            postType={post.type}
+                            userId={post.userId}
+                        />
+                        :
+                        <Post
+                            key={post.id}
+                            username={`${post.firstName} ${post.lastName}`}
+                            title={post.title}
+                            time={formatPostTime(post.date)}
+                            text={post.originalPost.content}
+                            photo={post.originalPost.image}
+                            //likes={post.likes}
+                            comments={post.comments}
+                            id={post.id}
+                            user={post.userId}
+                            saves={post.saves}
+                            originalPost={post.originalPost}
+                            originalUserName={`${post.originalPost.firstName} ${post.originalPost.lastName}`}
+                            reposts={post.reposts}
+                            postType={post.type}
+                            userId={post.originalPost.userId}
+                            repostUser={post.userId}
                         />
                     ))
                 )}

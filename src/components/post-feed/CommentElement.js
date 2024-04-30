@@ -1,11 +1,46 @@
 import { Icon } from "@iconify/react";
 import React, { useState, useEffect } from "react";
 import PostInteraction from "./PostInteraction";
-import { getAllCommentLikesByPostId, likeComment, likeReply } from "../../api/app";
+import { deleteComment, deleteReply, getAllCommentLikesByPostId, likeComment, likeReply, updateComment, updateReply } from "../../api/app";
+import Dropdown from 'react-bootstrap/Dropdown';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {  Modal, Button } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 
 function Reply(props){
     const [isLiked, setIsLiked] = useState(false);
     const [likesReplyCount, setReplyCount] = useState(props.reply.likes.length);
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [showDropDown, setShowDropDown] = useState(false)
+    const [editMode, setEditMode] = useState(false);
+    const [editedContent, setEditedContent] = useState(props.reply.content);
+
+
+    const toggleDropDown = () => {
+        setShowDropDown(!showDropDown)
+    }
+
+    const toggleEditMode = () => {
+        toggleDropDown()
+        setEditMode(prevMode => !prevMode)
+
+    };
+
+    const handleContentChange = (event) => {
+        setEditedContent(event.target.value);
+    };
+
+    const handleUpdate = (replyId) => {
+        
+        updateReply(replyId, editedContent)
+        .then(window.location.reload())
+    };
+
+  const handleCloseDeleteConfirmation = () => setShowDeleteConfirmation(false);
+  const handleshowDeleteConfirmation = () => {
+    toggleDropDown()
+    setShowDeleteConfirmation(true)
+};
 
     useEffect(() => {
         props.reply.likes.some((like) => like.user.id === Number(localStorage.getItem("userId"))) ?
@@ -23,21 +58,76 @@ function Reply(props){
                 <div className="user-profile">
                     <img className="avatar" width={30} height={30} src={`http://localhost:8081/media/${props.user.profilePicture}`} alt="User avatar" />
                     <div className="user-info">
-                        <p className="small-title">{props.userName}</p>
+                    <NavLink to={`/profile/${props.user.id}`} style={{textDecoration:"none"}}>
+                           <p className="small-title">{props.userName}</p>
+                    </NavLink>
+                        
                         <p className="small-label">{`${props.user.title}`}</p>
                     </div>
                 </div>
                 <div className="options">
                     <p className="small-label">{props.formatTime(props.reply.date)}</p>
-                    <Icon icon="tabler:dots" />
+                    <Dropdown show={showDropDown} onToggle={toggleDropDown}>
+                    <Dropdown.Toggle style={{ background: 'none', border: 'none' }}>
+                        <Icon icon="tabler:dots" style={{ cursor: "pointer", color:"black" }} />
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu className="my-dropdown-menu">
+                        {
+                        props.user.id === Number(localStorage.getItem("userId")) &&
+                        <>
+                            <div className="dropdown-option delete-option" onClick={handleshowDeleteConfirmation}>Delete</div>
+                            <div className="dropdown-option update-option" onClick={toggleEditMode}>Update</div>
+                        </>
+                        }
+                        
+                        <div className="dropdown-option save-option">Save</div>
+                    </Dropdown.Menu>
+                </Dropdown>
+
+                <Modal show={showDeleteConfirmation} onHide={handleCloseDeleteConfirmation}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Delete Confirmation</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                    Are you sure you want to delete this Comment?
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseDeleteConfirmation}>
+                        Cancel
+                    </Button>
+                    <Button variant="danger" onClick={()=>{
+                        deleteReply(props.reply.id)
+                        .then(window.location.reload())
+                        }}>
+                        Delete
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
                 </div>
             </div>
 
-            <div className="text-section" style={{display: "flex", alignItems:"end"}}>
-                <div style={{minWidth: "60%", paddingLeft:"55px"}}>
-                    <p className="normal-text" style={{minWidth: "93%", marginTop: "-6px", marginBottom: "3px",marginLeft:"-10px"}}>
+            <div className="text-section" style={{display: "grid",gridTemplateColumns:"1fr 45px", alignItems:"end", justifyContent:"space-between"}}>
+                <div style={{minWidth: "60%", marginLeft:"35px"}}>
+                {editMode ? ( 
+                    <div style={{display:"flex", alignItems:"end", justifyContent:"space-between", width:"112%"}}>
+                        
+                        <textarea
+                            className="normal-text"
+                            style={{border:"0",paddingTop:"0",marginTop:"0", outline:"none", width: "93%", resize:"none", background:"#fff",height:"75px"}}
+                            value={editedContent}
+                            onChange={handleContentChange}
+                        />
+                        <div className="primary-button radius save-edit-comment-btn" onClick={()=>handleUpdate(props.reply.id)} style={{marginRight:"38px"}}>save</div>
+                    </div>
+                    
+                ) : (
+                    <div className="text-section">
+                        <p className="normal-text" style={{minWidth: "93%", marginTop: "-4px", marginBottom: "3px"}}>
                         {props.reply.content}
                     </p>
+                    </div>
+                )}
                     <div className="options" style={{marginLeft: "-20px"}}>
                         <p className="small-label">{likesReplyCount} likes</p>
                     </div>
@@ -60,10 +150,42 @@ function Reply(props){
     )
 }
 
+// ---------
+
 export default function CommentElement(props){
     const [liked, setLiked] = useState(false);
     const [likesCount, setLikesCount] = useState(props.likes.length);
     const [showAllReplies, setShowAllReplies] = useState(false);
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [editMode, setEditMode] = useState(false);
+    const [editedContent, setEditedContent] = useState(props.content);
+    const [showDropDown, setShowDropDown] = useState(false)
+
+    const toggleDropDown = () => {
+        setShowDropDown(!showDropDown)
+    }
+
+    const toggleEditMode = () => {
+        toggleDropDown()
+        setEditMode(prevMode => !prevMode)
+
+    };
+
+    const handleContentChange = (event) => {
+        setEditedContent(event.target.value);
+    };
+
+    const handleUpdate = (commentId) => {
+        updateComment(commentId, editedContent)
+        .then(window.location.reload())
+    };
+
+  const handleCloseDeleteConfirmation = () => setShowDeleteConfirmation(false);
+  const handleshowDeleteConfirmation = () => {
+    setShowDeleteConfirmation(true)
+    toggleDropDown()
+    };
+
 
     const handleLikeComment = () => {
         likeComment(props.id, Number(localStorage.getItem("userId")))
@@ -78,7 +200,7 @@ export default function CommentElement(props){
 
     const handleLikeReply = (id) => {
         likeReply(id, Number(localStorage.getItem("userId")))
-            .then(res => console.log(res));
+        
     }
 
     useEffect(() => {
@@ -101,36 +223,96 @@ export default function CommentElement(props){
         console.log("Reply to "+props.author);
     }
 
+    
+
     return(
-        <div className="comment">
+        <div className="comment" style={{margin:"0"}}>
             <div className="top-section">
                 <div className="user-profile">
                     <img className="avatar" width={40} height={40} src={`http://localhost:8081/media/${props.user.profilePicture}`} alt="User avatar" />
                     <div className="user-info">
-                        <p className="medium-title">{props.author}</p>
+                        <NavLink to={`/profile/${props.user.id}`}  style={{textDecoration:"none"}}>
+                            <p className="medium-title">{props.author}</p>
+                        </NavLink>
+                        
                         <p className="medium-label">{"Java Developper"}</p>
                     </div>
                 </div>
                 <div className="options">
-                    <p className="small-label">{props.date}</p>
-                    <Icon icon="tabler:dots" />
-                </div>
+                <p className="small-label">{props.date}</p>
+                <Dropdown show={showDropDown} onToggle={toggleDropDown}>
+                    <Dropdown.Toggle style={{ background: 'none', border: 'none' }}>
+                        <Icon icon="tabler:dots" style={{ cursor: "pointer", color:"black" }} />
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu className="my-dropdown-menu">
+                        {
+                        props.user.id === Number(localStorage.getItem("userId")) &&
+                        <>
+                            <div className="dropdown-option delete-option" onClick={handleshowDeleteConfirmation}>Delete</div>
+                            <div className="dropdown-option update-option" onClick={toggleEditMode}>Update</div>
+                        </>
+                        }
+                        
+                        <div className="dropdown-option save-option">Save</div>
+                    </Dropdown.Menu>
+                </Dropdown>
+
+                <Modal show={showDeleteConfirmation} onHide={handleCloseDeleteConfirmation}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Delete Confirmation</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                    Are you sure you want to delete this Comment?
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseDeleteConfirmation}>
+                        Cancel
+                    </Button>
+                    <Button variant="danger" onClick={()=>{
+                        deleteComment(props.id)
+                        .then(window.location.reload())
+                        }}>
+                        Delete
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
+
+                
             </div>
 
-            <div className="text-section" style={{display: "flex", alignItems:"end"}}>
-                <div style={{minWidth: "60%", paddingLeft:"55px"}}>
-                    <p className="normal-text" style={{minWidth: "93%", marginTop: "-4px", marginBottom: "3px"}}>
+            </div>
+
+            <div className="text-section" style={{display: "grid",gridTemplateColumns:"1fr 100px", alignItems:"end"}}>
+                <div style={{minWidth: "60%", paddingLeft:"52px"}}>
+                {editMode ? ( 
+                    <div style={{display:"flex", alignItems:"end", justifyContent:"space-between", width:"112%"}}>
+                        
+                        <textarea
+                            className="normal-text"
+                            style={{border:"0",paddingTop:"0",marginTop:"0", outline:"none", width: "93%", resize:"none", background:"#fff",height:"75px"}}
+                            value={editedContent}
+                            onChange={handleContentChange}
+                        />
+                        <div className="primary-button radius save-edit-comment-btn" onClick={()=>handleUpdate(props.id)}>save</div>
+                    </div>
+                    
+                ) : (
+                    <div className="text-section">
+                        <p className="normal-text" style={{minWidth: "93%", marginTop: "-4px", marginBottom: "3px"}}>
                         {props.content}
                     </p>
+                    </div>
+                )}
                     <div className="options" style={{marginLeft: "-5px"}}>
                         <p className="small-label">{likesCount} Likes | <span style={{cursor:"pointer"}} onClick={()=>props.onReply(props.author, props.id)}> {props.replies.length === 0 ? "" : props.replies.length} Reply</span> </p>
                     </div>
                 </div>
-                <div className="options">
+                <div className="options" style={{marginLeft:"55px"}}>
                     {liked ?
-                        <PostInteraction icon="bxs:like" style={{width: "45px", color: "blue", marginLeft:"55px"}} onClick={handleLikeComment} />
+                        <PostInteraction icon="bxs:like" style={{width: "45px", color: "blue"}} onClick={handleLikeComment} />
                         :
-                        <PostInteraction icon="bx:like" style={{width: "45px", marginLeft:"55px"}} onClick={handleLikeComment} />
+                        <PostInteraction icon="bx:like" style={{width: "45px"}} onClick={handleLikeComment} />
                     }
                 </div>
             </div>

@@ -42,6 +42,9 @@ export default function UserProfile(props) {
 
     const profileOpen = Boolean(profileAnchorEl)
     const coverOpen = Boolean(coverAnchorEl)
+    const [posts, setPosts] = useState([])
+
+
 
     const {userId} = useParams()
 
@@ -446,10 +449,11 @@ export default function UserProfile(props) {
                         :
                         <>
                             {userData.posts.map(
-                                post => <Post 
+                                post => post.type === "STANDART_POST" ?
+                                <Post
                                     key={post.id}
-                                    username={`${userData.firstName} ${userData.lastName}`}
-                                    title={userData.title}
+                                    username={`${post.firstName} ${post.lastName}`}
+                                    title={post.title}
                                     time={formatPostTime(post.date)}
                                     text={post.content}
                                     photo={post.image}
@@ -457,7 +461,29 @@ export default function UserProfile(props) {
                                     comments={post.comments}
                                     id={post.id}
                                     user={post.userId}
+                                    saves={post.saves}
+                                    reposts={post.reposts}
+                                    postType={post.type}
                                 />
+                                :
+                                <Post
+                                    key={post.id}
+                                    username={`${post.firstName} ${post.lastName}`}
+                                    title={post.title}
+                                    time={formatPostTime(post.date)}
+                                    text={post.originalPost.content}
+                                    photo={post.originalPost.image}
+                                    //likes={post.likes}
+                                    comments={post.comments}
+                                    id={post.id}
+                                    user={post.userId}
+                                    saves={post.saves}
+                                    originalPost={post.originalPost}
+                                    originalUserName={`${post.originalPost.firstName} ${post.originalPost.lastName}`}
+                                    reposts={post.reposts}
+                                    postType={post.type}
+                                />
+                                
                             )}
                         </>
                     }
