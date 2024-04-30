@@ -3,13 +3,17 @@ import Skeleton from "react-loading-skeleton"
 
 export default function ProfileExp(props) {
     return(
-        <div className="jobItem profile">
+        <div className="jobItem profile" style={{width:'100%'}}>
             <div className="top-job">
                 <div className="shortInfo-job">
                     { props.isLoading ?
                         <Skeleton height={60} width={60} />
                         :
-                        <img src={props.company.image} />
+                        <img src={
+                            props.company!==null? 
+                            props.company.image :
+                            props.image
+                        } />
                     }
                     
                     <div className="info-job">
@@ -22,7 +26,11 @@ export default function ProfileExp(props) {
                         { props.isLoading ?
                             <Skeleton height={15} width={80} />
                             :
-                            <p className="small-text">{props.company.name}</p>
+                            <p className="small-text">{
+                                props.company!==null? 
+                                props.company.name :
+                                props.companyLabel
+                            }</p>
                         }
                         
                         { props.isLoading ?
@@ -44,6 +52,10 @@ export default function ProfileExp(props) {
                 }
                
             </div>
+            {
+                props.isDesc &&
+                <p className="normal-text">{props.description}</p>
+            }
         </div>
     )
 }

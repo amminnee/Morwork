@@ -3,13 +3,13 @@ import Skeleton from "react-loading-skeleton"
 
 export default function ProfileEdu(props) {
     return(
-        <div className="jobItem profile">
+        <div className="jobItem profile" style={{width:'100%'}}>
             <div className="top-job">
                 <div className="shortInfo-job">
                     { props.isLoading ?
                         <Skeleton height={60} width={60} />
                         :
-                        <img src="" />
+                        <img src={props.company ? props.company.image : props.image} />
                     }
                     
                     <div className="info-job">
@@ -22,7 +22,7 @@ export default function ProfileEdu(props) {
                         { props.isLoading ?
                             <Skeleton height={15} width={80} />
                             :
-                            <p className="small-text">{props.school}</p>
+                            <p className="small-text">{props.company ? props.company.name : props.school}</p>
                         }
                         
                         { props.isLoading ?
@@ -37,7 +37,7 @@ export default function ProfileEdu(props) {
                     </div>    
                 </div>
             </div>
-
+            
         </div>
     )
 }

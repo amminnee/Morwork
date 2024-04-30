@@ -33,7 +33,7 @@ export default function Feed() {
                 setTimeout(() => {
                     setDisplayedPosts(prev => prev + 4); 
                     setLoadingMore(false);
-                }, 1000); 
+                }, 300); 
             }
         };
 

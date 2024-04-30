@@ -55,7 +55,7 @@
     align-items: center;
     gap: 10px;
 }
-.nav-item:nth-child(7) {
+.nav-item:nth-child(6) {
     margin-top: auto;
 }
 .nav-item:last-child {
@@ -562,8 +562,8 @@
     position: relative;
 }
 .user-profile-cont .avatar {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
 }
 .edit-button {
     width: 30px;
@@ -765,7 +765,7 @@
     justify-content: center;
     gap: 10px;
     margin-bottom: 100px;
-    border: 1px solid grey;
+    border: 3px solid lightgray;
     width: 130px;
     height: 130px;
     border-radius: 100px;
@@ -838,6 +838,55 @@
     background-color: #FFF;
 }
 /* Reply */
+
+
+/* Popup windoo */
+
+.popup-window {
+    width: 90%;
+    background-color: white;
+    padding: 10px;
+    max-width: 600px;
+    max-height: 600px;
+    margin-bottom: 50px;
+    border-radius: 12px;
+    animation: popup-animation 0.2s ease forwards;
+}
+
+@keyframes popup-animation {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.preview {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+}
+
+.skill-line {
+    display:flex; 
+    justify-content:space-between; 
+    align-items:center; 
+    padding:0 10px;
+    margin: 0 30px;
+    height: 40px;
+}
+
+
+/* Popup window */
+
+
+
 
 
 
@@ -949,6 +998,13 @@
         width: 100%;
         overflow-y: initial;
         height: auto;
+    }
+
+
+    /* profile */
+    .user-profile-cont .avatar {
+        width: 80px;
+        height: 80px;
     }
    
 

@@ -1,14 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react";
 import Post from "../post-feed/Post";
 import ProfileExp from "./ProfileExp";
 import ProfileEdu from "./ProfileEdu";
 import Skeleton from "react-loading-skeleton";
 import PostSkeleton from "../post-feed/PostSkeleton";
-import { userProfile } from "../../api/app";
+import { deleteUserCoverPicture, deleteUserProfile, deleteUserProfilePicture, followUser, getFollowStatus, unfollowUser, userProfile } from "../../api/app";
 import { useParams } from "react-router-dom";
 import { formatPostTime } from "../post-feed/Feed";
-import { Menu, MenuItem } from "@mui/material";
+import { Button, Menu, MenuItem } from "@mui/material";
+import UploadProfile from "./UploadProfile";
+import UploadCover from "./UploadCover";
+import EditAbout from "./EditAbout";
+import EditSkills from "./EditSkills";
+import AddExperience from "./AddExperence";
+import EditExperiences from "./EditExperiences";
+import AddEducation from "./AddEducation";
+import EditEducation from "./EditEducation";
 
 
 export default function UserProfile(props) {
@@ -19,11 +27,25 @@ export default function UserProfile(props) {
     const [isCurrentUser, setCurrentUser] = useState()
     const [profileAnchorEl, setProfileAnchorEl] = useState(null)
     const [coverAnchorEl, setCoverAnchorEl] = useState(null)
+    const [showProfileWindow, setShowProfileWindow] = useState("hidden")
+    const [showCoverWindow, setShowCoverWindow] = useState("hidden")
+    const [showAboutWindow, setShowAboutWindow] = useState("hidden")
+    const [showSkillsWindow, setShowSkillsWindow] = useState("hidden")
+    const [showAddExperienceWindow, setShowAddExperienceWindow] = useState("hidden")
+    const [showAddEducationWindow, setShowAddEducationWindow] = useState("hidden")
+    const [showEditExperiencesWindow, setShowEditExperiencesWindow] = useState("hidden")
+    const [showEditEducationWindow, setShowEditEducationWindow] = useState("hidden")
+    const [updateProfile, setUpdateProfile] = useState(false)
+    const [experience, setExperience] = useState(null)
+    const [education, setEducation] = useState(null)
+    const [isFollowed, setIsFollowed] = useState(false)
 
     const profileOpen = Boolean(profileAnchorEl)
     const coverOpen = Boolean(coverAnchorEl)
 
     const {userId} = useParams()
+
+    
 
     const changeTab = (tab) => {
         localStorage.setItem("currentTab", tab)
@@ -35,15 +57,72 @@ export default function UserProfile(props) {
         setCoverAnchorEl(null)
     }
 
+    const deleteProfilePicture = async () => {
+        const res = await deleteUserProfilePicture()
+        if (res instanceof Error) {
+            console.log(res)
+        } else {
+            handleClose()
+            setUpdateProfile(prev => !prev)
+        }
+    }
+    
+    const deleteCoverPicture = async () => {
+        const res = await deleteUserCoverPicture()
+        if (res instanceof Error) {
+            console.log(res)
+        } else {
+            handleClose()
+            setUpdateProfile(prev => !prev)
+        }
+    }
+
+    const updateExp = (exp) => {
+        setExperience(exp)
+        setShowAddExperienceWindow('visible')
+    }
+    const updateEdu = (edu) => {
+        setEducation(edu)
+        setShowAddEducationWindow('visible')
+    }
+
+    const followStatus = async () => {
+        if (!isCurrentUser) {
+            const isFollowed = await getFollowStatus(userId);
+            setIsFollowed(isFollowed)
+        }
+    }
+
+    const handleFollow = async () => {
+        if (!isFollowed) {
+            console.log("follow")
+            const res = await followUser(userId)
+        } else {
+            console.log("unfollow")
+            const res = await unfollowUser(userId)
+        }
+        followStatus()
+        setUpdateProfile(prev => !prev)
+    }
+
+
     useEffect(() => {
         const getProfile = async () => {
             const response = await userProfile(userId)
             setUserData(response.data)
+
+            if (!isCurrentUser) {
+                const isFollowed = await getFollowStatus(userId)
+            }
+
             setLoading(false)
+            
+            setCurrentUser(() => localStorage.getItem('userId') === userId)
+            followStatus()
         }
-        setCurrentUser(() => localStorage.getItem('userId') === userId)
+        
         getProfile()
-    }, [])
+    }, [updateProfile])
 
     return (
         <div className="user-profile-page">
@@ -83,9 +162,17 @@ export default function UserProfile(props) {
                                         horizontal: 'left',
                                     }}
                                 >
-                                    <MenuItem>Change profile picture</MenuItem>
-                                    <MenuItem>Delete profile picture</MenuItem>
+                                    <MenuItem onClick={() => {handleClose(); setShowProfileWindow(() => "visible")}}>
+                                        Change profile picture
+                                    </MenuItem>
+                                    <MenuItem onClick={deleteProfilePicture}>Delete profile picture</MenuItem>
                                 </Menu>
+                                <UploadProfile 
+                                    isVisible={showProfileWindow} 
+                                    hideWindow={() => setShowProfileWindow(() => "hidden")}
+                                    updateProfile={() => setUpdateProfile(prev => !prev)}
+                                />
+                                
                             </div>
                         }
                         
@@ -108,9 +195,15 @@ export default function UserProfile(props) {
                                 horizontal: 'right',
                             }}
                         >
-                            <MenuItem>Change cover picture</MenuItem>
-                            <MenuItem>Delete cover picture</MenuItem>
+                            <MenuItem onClick={() => {handleClose(); setShowCoverWindow(() => "visible")}}>Change cover picture</MenuItem>
+                            <MenuItem onClick={deleteCoverPicture}>Delete cover picture</MenuItem>
                         </Menu>
+                        <UploadCover
+                            isVisible={showCoverWindow} 
+                            hideWindow={() => setShowCoverWindow(() => "hidden")}
+                            updateProfile={() => setUpdateProfile(prev => !prev)}
+                        />
+
                         
                     </div>
                 </div>
@@ -137,6 +230,18 @@ export default function UserProfile(props) {
                         
                     </div>
                 </div>
+                { !isCurrentUser && !isLoading &&
+                    <div style={{display:"flex", justifyContent:"end", padding:"0 20px 20px 20px"}}>
+                        <Button
+                            variant="contained"
+                            sx={{background: isFollowed && "#c5c6c9", ":hover": {background: isFollowed && "#c5c6c9"}}}
+                            onClick={handleFollow}
+                        >
+                            {isFollowed? "Unfollow" : "Follow"}
+                        </Button>
+                    </div>
+                }
+                
             </div>
             
 
@@ -159,11 +264,20 @@ export default function UserProfile(props) {
                                 <p className="large-title">About</p>
                             }
                             { !isLoading && isCurrentUser &&
-                                <Icon className="icon" icon="material-symbols:edit-outline" />
+                                <Icon onClick={() => setShowAboutWindow('visible')} className="icon" icon="material-symbols:edit-outline" />
                             }
                             
                         </div>
-
+                        { !isLoading &&  showAboutWindow !== 'hidden' &&
+                           <EditAbout 
+                                isVisible={showAboutWindow}
+                                content={() => userData && userData.about}
+                                hideWindow={() => setShowAboutWindow('hidden')}
+                                updateProfile={() => setUpdateProfile(prev => !prev)}
+                            />
+ 
+                        }
+                        
                         <div className="section-content">
                             { isLoading ?
                                 <Skeleton className="primary-button" height={15} count={6} />
@@ -185,12 +299,34 @@ export default function UserProfile(props) {
                             }
                             { !isLoading && isCurrentUser &&
                                 <div className="icons-cont">
-                                    <Icon className="icon" icon="ic:baseline-plus" />
-                                    <Icon className="icon" icon="material-symbols:edit-outline" />
+                                    <Icon onClick={() => setShowAddExperienceWindow('visible')} className="icon" icon="ic:baseline-plus" />
+                                    <Icon onClick={() => {setShowEditExperiencesWindow('visible')}} className="icon" icon="material-symbols:edit-outline" />
                                 </div>
                             }
                             
                         </div>
+                        { showAddExperienceWindow !== 'hidden' &&
+                            <AddExperience 
+                                isVisible='visible'
+                                hideWindow={() => setShowAddExperienceWindow('hidden')}
+                                updateProfile={() => setUpdateProfile(prev => !prev)}
+                                experience={experience}
+                                resetExp={() => setExperience(null)}
+                                showEditExp={() => {setShowEditExperiencesWindow('visible')}}
+                            />
+                        }
+                        { showEditExperiencesWindow !== 'hidden' &&
+                           <EditExperiences 
+                                isVisible={showEditExperiencesWindow}
+                                experiences={userData && userData.experiences}
+                                hideWindow={() => setShowEditExperiencesWindow('hidden')}
+                                updateProfile={() => setUpdateProfile(prev => !prev)}
+                                addExperience={() => setShowAddExperienceWindow('visible')}
+                                updateExp={(exp) => updateExp(exp)}
+                            />
+ 
+                        }
+                        
                         { isLoading ?
                             <div className="section-content">
                                 <ProfileExp isLoading={isLoading} />
@@ -200,7 +336,7 @@ export default function UserProfile(props) {
                             :
                             <div className="section-content">
                                 {userData.experiences.map(
-                                    experience => <ProfileExp {...experience} />
+                                    experience => <ProfileExp key={experience.id} {...experience} />
                                 )}
                             </div>
                         }
@@ -216,8 +352,8 @@ export default function UserProfile(props) {
                             }
                             { !isLoading && isCurrentUser &&
                                 <div className="icons-cont">
-                                    <Icon className="icon" icon="ic:baseline-plus" />
-                                    <Icon className="icon" icon="material-symbols:edit-outline" />
+                                    <Icon onClick={() => setShowAddEducationWindow('visible')} className="icon" icon="ic:baseline-plus" />
+                                    <Icon onClick={() => setShowEditEducationWindow('visible')} className="icon" icon="material-symbols:edit-outline" />
                                 </div>
                             }
                             
@@ -234,6 +370,27 @@ export default function UserProfile(props) {
                                 )}
                             </div>
                         }
+                        { showAddEducationWindow !== 'hidden' &&
+                            <AddEducation 
+                                isVisible='visible'
+                                hideWindow={() => setShowAddEducationWindow('hidden')}
+                                updateProfile={() => setUpdateProfile(prev => !prev)}
+                                education={education}
+                                resetEdu={() => setEducation(null)}
+                                showEditEdu={() => {setShowEditEducationWindow('visible')}}
+                            />
+                        }
+                        { showEditEducationWindow !== 'hidden' &&
+                           <EditEducation 
+                                isVisible={showEditEducationWindow}
+                                education={userData && userData.education}
+                                hideWindow={() => setShowEditEducationWindow('hidden')}
+                                updateProfile={() => setUpdateProfile(prev => !prev)}
+                                addEducation={() => setShowAddEducationWindow('visible')}
+                                updateEdu={(edu) => updateEdu(edu)}
+                            />
+ 
+                        }
                         
                     </div>
 
@@ -246,8 +403,7 @@ export default function UserProfile(props) {
                             }
                             { !isLoading && isCurrentUser &&
                                 <div className="icons-cont">
-                                    <Icon className="icon" icon="ic:baseline-plus" />
-                                    <Icon className="icon" icon="material-symbols:edit-outline" />
+                                    <Icon onClick={() => setShowSkillsWindow('visible')} className="icon" icon="material-symbols:edit-outline" />
                                 </div>
                             }
                             
@@ -257,12 +413,21 @@ export default function UserProfile(props) {
                                 <Skeleton  width={160} height={15} count={4} />
                             </div>
                             
-                            :
+                            :   
                             <div className="section-content">
                                 {userData.skills.map(
                                     skill => <p className="small-title skill">{skill.name}</p>
                                 )}
                             </div>
+                        }
+                        { !isLoading && showSkillsWindow !== 'hidden' &&
+                           <EditSkills 
+                                isVisible={showSkillsWindow}
+                                userSkills={() => userData && userData.skills}
+                                hideWindow={() => setShowSkillsWindow('hidden')}
+                                updateProfile={() => setUpdateProfile(prev => !prev)}
+                            />
+ 
                         }
                         
                     </div>

@@ -23,7 +23,7 @@ body {
   }
   
 ::-webkit-scrollbar-track {
-    background-color: var(--background);
+    background-color: white;
 }
 /* style all buttons */
 button:hover {

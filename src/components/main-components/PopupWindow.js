@@ -5,15 +5,15 @@ import React from "react";
 export default function PopupWindow(props){
 
     return(
-        <div className={`darkBackground ${props.isVisible}`} onClick={props.hide}>
-            <div className="new-post-content elevation-5 radius" onClick={(event) => event.stopPropagation()}>
+        <div className={`darkBackground ${props.isVisible}`}>
+            <div className={`popup-window elevation-5 ${props.isVisible}`} onClick={(event) => event.stopPropagation()}>
                 <div className="new-post-header">
-                    <h1 className="large-title">props.title</h1>
+                    <h1 className="large-title">{props.title}</h1>
                     <IconButton onClick={props.hide}>
                         <Close />
                     </IconButton>
                 </div>
-                 
+                {props.children}
             </div>
         </div>
     )

@@ -36,7 +36,6 @@ export default function Main() {
                 isScrolling={scrolling}
             />
             <Outlet /> 
-            {/* // outlet is the component that gets loaded based on url path defined in route (look in App.js) */}
             <NewPost 
                 isVisible={newPost}
                 hide={() => setNewPost("hidden")}
