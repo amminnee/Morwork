@@ -145,7 +145,7 @@ export default function AddExperience(props) {
             hide={hideWindow}
             title="Add a new experience"
         >
-            <div style={{display:"flex", flexDirection:"column", margin:"0 20px", maxHeight:500, overflowY:"scroll"}}>
+            <div style={{display:"flex", flexDirection:"column", margin:"0 20px", maxHeight:510, overflowY:"scroll"}}>
                 <label style={{marginTop:10, marginBottom:4}} htmlFor="title" className="medium-label">Title</label>
                 <TextField 
                     id='title'

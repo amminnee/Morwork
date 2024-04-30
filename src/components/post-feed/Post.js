@@ -237,7 +237,7 @@ export default function Post(props) {
         <p className="medium-label" style={{cursor:"pointer"}} onClick={() => handleLikesPage()}>{likesCount} likes</p>
         <div style={{display:"flex", alignItems:"center", gap:"10px"}}>
         <NavLink to={`/comments/${props.id}/${props.postType}`} style={{textDecoration: "none"}}>
-          <p className="medium-label">{props.comments.length} comments</p>
+          <p className="medium-label">{props.comments && props.comments.length} comments</p>
         </NavLink>
           
          <p className="medium-label">{props.reposts && props.reposts.length} repost</p> 

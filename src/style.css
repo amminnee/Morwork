@@ -844,52 +844,6 @@
 /* Reply */
 
 
-/* Popup windoo */
-
-.popup-window {
-    width: 90%;
-    background-color: white;
-    padding: 10px;
-    max-width: 600px;
-    max-height: 600px;
-    margin-bottom: 50px;
-    border-radius: 12px;
-    animation: popup-animation 0.2s ease forwards;
-}
-
-@keyframes popup-animation {
-    from {
-        transform: scale(0.5);
-        opacity: 0;
-    }
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-.preview {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    width: 150px;
-    height: 150px;
-    overflow: hidden;
-}
-
-.skill-line {
-    display:flex; 
-    justify-content:space-between; 
-    align-items:center; 
-    padding:0 10px;
-    margin: 0 30px;
-    height: 40px;
-}
-
-
-/* Popup window */
-
-
 
 
 
@@ -900,7 +854,7 @@
     background-color: white;
     padding: 10px;
     max-width: 600px;
-    max-height: 600px;
+    max-height: 630px;
     margin-bottom: 50px;
     border-radius: 12px;
     animation: popup-animation 0.2s ease forwards;

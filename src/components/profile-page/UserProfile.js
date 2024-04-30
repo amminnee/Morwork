@@ -6,7 +6,7 @@ import ProfileEdu from "./ProfileEdu";
 import Skeleton from "react-loading-skeleton";
 import PostSkeleton from "../post-feed/PostSkeleton";
 import { deleteUserCoverPicture, deleteUserProfile, deleteUserProfilePicture, followUser, getFollowStatus, unfollowUser, userProfile } from "../../api/app";
-import { useParams } from "react-router-dom";
+import { json, useParams } from "react-router-dom";
 import { formatPostTime } from "../post-feed/Feed";
 import { Button, Menu, MenuItem } from "@mui/material";
 import UploadProfile from "./UploadProfile";
@@ -112,6 +112,7 @@ export default function UserProfile(props) {
     useEffect(() => {
         const getProfile = async () => {
             const response = await userProfile(userId)
+            console.log(JSON.stringify(response.data, null, 2))
             setUserData(response.data)
 
             if (!isCurrentUser) {
@@ -449,7 +450,7 @@ export default function UserProfile(props) {
                         :
                         <>
                             {userData.posts.map(
-                                post => post.type === "STANDART_POST" ?
+                                post => {console.log(post.type);return post.type === "STANDART_POST" ?
                                 <Post
                                     key={post.id}
                                     username={`${post.firstName} ${post.lastName}`}
@@ -473,7 +474,7 @@ export default function UserProfile(props) {
                                     time={formatPostTime(post.date)}
                                     text={post.originalPost.content}
                                     photo={post.originalPost.image}
-                                    //likes={post.likes}
+                                    // likes={post.likes}
                                     comments={post.comments}
                                     id={post.id}
                                     user={post.userId}
@@ -483,7 +484,7 @@ export default function UserProfile(props) {
                                     reposts={post.reposts}
                                     postType={post.type}
                                 />
-                                
+                                }
                             )}
                         </>
                     }
