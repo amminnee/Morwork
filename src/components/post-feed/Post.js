@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Icon } from "@iconify/react";
 import PostInteraction from "./PostInteraction";
-import { getPosts, likePost, getLikes, deleteStandartPost, updateStandartPost, savePost, getSaves, repost } from "../../api/app";
+import { getPosts, likePost, getLikes, deleteStandartPost, updateStandartPost, savePost, getSaves, repost, getFollowStatus, unfollowUser, followUser } from "../../api/app";
 import { NavLink } from "react-router-dom";
 
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -25,7 +25,7 @@ export default function Post(props) {
 
   const [isSaved, setIsSaved] = useState(false);
   const [showLikes, setShowLikes] = useState(false)
-
+  const [followed, setFollowed] = useState()
   
 
 
@@ -118,6 +118,9 @@ export default function Post(props) {
       //save .... TODO!!!!!!
       const postSaved = props.saves.some(save => save.user.id === Number(localStorage.getItem("userId")))
       setIsSaved(postSaved)
+
+      getFollowStatus(props.userId)
+      .then(res => res ? setFollowed(true) : setFollowed(false))
   }, []);
 
   const handleSavePost = () => {
@@ -138,11 +141,25 @@ export default function Post(props) {
 
   const handleLikesPage = () => {
 
-    userLikes.map(like => console.log(like.user.firstName))
-    setShowLikes(true)
+    
+    if(userLikes.length > 0){
+      userLikes.map(like => console.log(like.user.firstName))
+      setShowLikes(true)
+    }
+    
   }
   const handleCloseLikes = () =>{
     setShowLikes(false)
+  }
+
+  const handleFollow = () => {
+    if(followed){
+      unfollowUser(props.userId)
+      .then(setFollowed(false))
+    }else{
+      followUser(props.userId)
+      .then(setFollowed(true))
+    }
   }
   
   return (
@@ -152,7 +169,7 @@ export default function Post(props) {
         {props.postType === "REPOSTED" &&
          
         <div className="user-profile" style={{height:"50px"}}>
-          <img className="avatar" style={{height:"30px", width:"30px"}} src={`http://localhost:8081/media/avatar.jpg`} alt="User avatar" />
+          <img className="avatar" style={{height:"30px", width:"30px"}} src={props.userImage === null ? `http://localhost:8081/media/avatar.jpg` : `http://localhost:8081/media/${props.userImage}`} alt="User avatar" />
           <div className="user-info">
           <p className="small-title">
               {props.postType === "REPOSTED" && (
@@ -168,7 +185,7 @@ export default function Post(props) {
           
         </div>}
         <div className="user-profile">
-          <img className="avatar" src={`http://localhost:8081/media/avatar.jpg`} alt="User avatar" />
+          <img className="avatar" src={props.userImage === null ? `http://localhost:8081/media/avatar.jpg` : (props.postType === "REPOSTED" ? `http://localhost:8081/media/${props.OriginalUserImage}` :  `http://localhost:8081/media/${props.userImage}`)} alt="User avatar" />
           <div className="user-info">
             <NavLink to={`/profile/${props.userId}`} style={{textDecoration:"none"}}>
               <p className="medium-title">{props.postType === "REPOSTED" ? props.originalUserName : props.username}</p>
@@ -181,7 +198,7 @@ export default function Post(props) {
         </div>
         
         <div className="options">
-          <button className="primary-button text-button">Follow</button>
+          {Number(localStorage.getItem("userId")) !== props.userId && <button className="primary-button text-button" onClick={() => handleFollow()}>{followed ? "Followed" : "Follow"}</button>}
           <Dropdown show={showDropDown} onToggle={toggleDropDown}>
                     <Dropdown.Toggle style={{ background: 'none', border: 'none' }}>
                         <Icon icon="tabler:dots" style={{ cursor: "pointer", color:"black" }} />
@@ -276,7 +293,7 @@ export default function Post(props) {
         <ListGroup>
           {userLikes.map(like => (
             <div className="user-profile">
-            <img className="avatar" src={`http://localhost:8081/media/avatar.jpg`} alt="User avatar" width={33} height={33} />
+            <img className="avatar" src={props.userImage === null ? `http://localhost:8081/media/avatar.jpg` : `http://localhost:8081/media/${props.userImage}`} alt="User avatar" width={33} height={33} />
             <div className="user-info">
               <NavLink to={`/profile/${like.user.id}`} style={{textDecoration:"none"}}>
                 <p className="medium-title">{`${like.user.firstName} ${like.user.lastName}`}</p>

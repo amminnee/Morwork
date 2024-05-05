@@ -67,7 +67,7 @@ export default function Feed(props) {
         const days = Math.floor(hours / 24);
         return `${days}d`;
     };
-
+    console.log(posts)
     return (
         <div className="home-page">
             <div className="post-feed">
@@ -98,6 +98,7 @@ export default function Feed(props) {
                             reposts={post.reposts}
                             postType={post.type}
                             userId={post.userId}
+                            userImage={post.userProfilePicture}
                         />
                         :
                         <Post
@@ -118,6 +119,8 @@ export default function Feed(props) {
                             postType={post.type}
                             userId={post.originalPost.userId}
                             repostUser={post.userId}
+                            OriginalUserImage={post.originalPost.userProfilePicture}
+                            userImage={post.userProfilePicture}
                         />
                     ))
                 )}

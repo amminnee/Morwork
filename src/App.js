@@ -14,6 +14,7 @@ import Settings from "./components/settings/Settings";
 import ProfileSettings from "./components/settings/ProfileSettings";
 import CommentPage from "./components/post-feed/CommentPage";
 import { getNotificationsByUserId } from "./api/app";
+import MessagesPage from "./components/messages/MessagesPage";
 
 export default () => {
 
@@ -53,11 +54,13 @@ export default () => {
                   <Route element={<ProfileSettings />} path="/settings/profile" />
                 </Route>
               <Route path="/comments/:postId/:postType" element={<CommentPage />} />
+              <Route path="/messages" element={<MessagesPage />}></Route>
                 <Route element={<Main />}>
                     <Route path="/" element={<Feed />} />
                     <Route path="/jobs" element={<Jobs />} />
                     <Route path="/notifications" element={<Notification notifications={notifications} />} />
                     <Route path="/profile/:userId" element={<UserProfile />} />
+                    
                 </Route>
               </Route>
             </Routes>
