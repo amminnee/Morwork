@@ -115,7 +115,7 @@ export default function CommentPage(){
         setReplyto(null)
     }
 
-
+    console.log(post)
     return(
         <div style={{display: "flex", justifyContent: "center" , alignItems: "center", margin:"auto", width:"100%"}}>
         <Header isVisible={true}/>
@@ -137,6 +137,7 @@ export default function CommentPage(){
                             reposts={post.reposts}
                             postType={post.type}
                             userId={post.userId}
+                            userImage={post.userProfilePicture}
                         />
                     ) : (post &&
                         <Post
@@ -156,12 +157,19 @@ export default function CommentPage(){
                             postType={post.type}
                             userId={post.originalPost.userId}
                             repostUser={post.userId}
+                            OriginalUserImage={post.originalPost.userProfilePicture}
+                            userImage={post.userProfilePicture}
                         />
                     )}
             </div>
             
                 <div style={{position:"relative", background:"#FFF"}}>
+                    
                 <div className="comments-container radius">
+                    <div className="large-title messages-list-header">
+                        Comments
+                    </div>
+                    
 
                     { 
                         comments.map(comment => (

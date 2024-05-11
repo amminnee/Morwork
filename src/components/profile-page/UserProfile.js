@@ -463,6 +463,8 @@ export default function UserProfile(props) {
                                     saves={post.saves}
                                     reposts={post.reposts}
                                     postType={post.type}
+                                    userId={post.userId}
+                                    userImage={post.userProfilePicture}
                                 />
                                 :
                                 <Post
@@ -481,6 +483,9 @@ export default function UserProfile(props) {
                                     originalUserName={`${post.originalPost.firstName} ${post.originalPost.lastName}`}
                                     reposts={post.reposts}
                                     postType={post.type}
+                                    userId={post.originalPost.userId}
+                                    OriginalUserImage={post.originalPost.userProfilePicture}
+                                    userImage={post.userProfilePicture}
                                 />
                                 }
                             ) :
