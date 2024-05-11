@@ -14,7 +14,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 
 export default function Post(props) {
   const [expanded, setExpanded] = useState(false);
-  const MAX_CONTENT_LENGTH = 100;
+  const MAX_CONTENT_LENGTH = 105;
   const videoRef = useRef(null);
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [likeText, setLikeText] = useState("Like")

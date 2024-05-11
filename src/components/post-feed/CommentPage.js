@@ -164,7 +164,12 @@ export default function CommentPage(){
             </div>
             
                 <div style={{position:"relative", background:"#FFF"}}>
+                    
                 <div className="comments-container radius">
+                    <div className="large-title messages-list-header">
+                        Comments
+                    </div>
+                    
 
                     { 
                         comments.map(comment => (

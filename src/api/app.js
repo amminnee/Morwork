@@ -39,7 +39,6 @@ export const newPost = (postData) => {
 };
 
 export const likePost = (postId, userId, postType) => {
-    console.log("ok: " + postId + " " + userId);
     const token = localStorage.getItem("token");
     
     if (token) {
