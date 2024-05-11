@@ -5,12 +5,18 @@ export default function SettingsNav(props) {
     
     return (
         <div>
-            <div className={`navbar radius elevation-1 ${props.isScrolling && "scroll"}`}>
+            <div className={`nav-bar radius elevation-1 ${props.isScrolling && "scroll"}`}>
                 <NavItem
                     url="/settings/profile"
                     text="Profile info"
                     line="iconamoon:profile"
                     fill="iconamoon:profile-fill"
+                />
+                <NavItem
+                    url="/settings/organization"
+                    text="Organization"
+                    line="ri:building-line"
+                    fill="ri:building-fill"
                 />
                 
             </div>

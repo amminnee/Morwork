@@ -1,6 +1,7 @@
 import React from "react";
 import image from "../../morwork.png"
 import image2 from "../../image.png"
+import { NavLink } from "react-router-dom";
 
 export default function JobItem(props){
 
@@ -21,11 +22,13 @@ export default function JobItem(props){
             <div className="jobItem">
                 <div className="top-job">
                     <div className="shortInfo-job">
-                        <img src={props.company === "Oracle" ? image2 : image} />
+                        <img src={props.company.image} />
                         <div className="info-job">
                             <p className="medium-title">{props.title}</p>
-                            <p className="small-text">{props.company}</p>
-                            <p className="medium-label">{props.location}</p>
+                            <NavLink style={{textDecoration:"none"}} to={`/organization/${props.company.id}`}>
+                                <p className="small-text clickable">{props.company.name}</p>
+                            </NavLink>
+                            <p className="medium-label">{props.city.name}</p>
                         </div>
                     </div>
                     <div className="small-label">full time</div>
@@ -34,12 +37,15 @@ export default function JobItem(props){
                 <div className="job-detail-container">
                     <p className="medium-title">Job description</p>
                     <div className="jobDetail normal-text">
-                       {props.content}
+                       {props.description}
                     </div>
                 </div>
                 }
                 <div className="bottom-job">
-                    <div className="blue-button apply-now"><i class="fa-solid fa-arrow-right"></i> Apply now</div>
+                    {
+                        !props.isAdmin && 
+                        <div className="blue-button apply-now"><i class="fa-solid fa-arrow-right"></i> Apply now</div>
+                    }
                     <div className="primary-button" onClick={() => moreInfoClick(props.id)}>{buttonText}</div>
                 </div>
             </div>

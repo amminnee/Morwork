@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 
 const JobSkeleton = () => {
     return (
-        <div>
+        <div style={{width:"100%"}}>
             <div className="jobItem">
                 <div className="top-job">
                     <div className="shortInfo-job">

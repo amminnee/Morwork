@@ -14,6 +14,8 @@ import Settings from "./components/settings/Settings";
 import ProfileSettings from "./components/settings/ProfileSettings";
 import CommentPage from "./components/post-feed/CommentPage";
 import { getNotificationsByUserId } from "./api/app";
+import OrganizationSettings from "./components/settings/settings_organization/OrganizationSettings";
+import OrganizationCont from "./components/organization-page/OrganizationCont";
 
 export default () => {
 
@@ -51,8 +53,10 @@ export default () => {
               <Route element={<PrivateRoute />}>
                 <Route element={<Settings/>} path="/settings">
                   <Route element={<ProfileSettings />} path="/settings/profile" />
+                  <Route element={<OrganizationSettings />} path="/settings/organization" />
                 </Route>
-              <Route path="/comments/:postId/:postType" element={<CommentPage />} />
+                <Route path="/comments/:postId/:postType" element={<CommentPage />} />
+                <Route path="organization/:id" element={<OrganizationCont />} />
                 <Route element={<Main />}>
                     <Route path="/" element={<Feed />} />
                     <Route path="/jobs" element={<Jobs />} />

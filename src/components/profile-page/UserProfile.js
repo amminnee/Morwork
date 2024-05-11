@@ -98,10 +98,8 @@ export default function UserProfile(props) {
 
     const handleFollow = async () => {
         if (!isFollowed) {
-            console.log("follow")
             const res = await followUser(userId)
         } else {
-            console.log("unfollow")
             const res = await unfollowUser(userId)
         }
         followStatus()
@@ -112,7 +110,6 @@ export default function UserProfile(props) {
     useEffect(() => {
         const getProfile = async () => {
             const response = await userProfile(userId)
-            console.log(JSON.stringify(response.data, null, 2))
             setUserData(response.data)
 
             if (!isCurrentUser) {
@@ -136,7 +133,7 @@ export default function UserProfile(props) {
                         { isLoading ?
                             <Skeleton height={240} />
                             :
-                            <img src={userData.coverPicture} className="radius" />
+                            <img src={userData.coverPicture} />
                         }
                         
                     </div>
@@ -145,7 +142,7 @@ export default function UserProfile(props) {
                             <Skeleton className="avatar" />
                             :
                             <div className="avatar cont">
-                                <img src={userData.profilePicture} className="avatar" />
+                                <img src={userData.profilePicture} className="avatar elevation-1" />
                                 {
                                     isCurrentUser &&
                                     <div className="edit-button profile" onClick={(event) => setProfileAnchorEl(event.currentTarget)}>
@@ -222,7 +219,7 @@ export default function UserProfile(props) {
                             { isLoading ?
                                 <Skeleton height={10} width={180} />
                                 :
-                                <p className="medium-label">{userData.title}</p>
+                                <p className="normal-text">{userData.title}</p>
                             }
                             
                         </div>
@@ -449,8 +446,9 @@ export default function UserProfile(props) {
                         
                         :
                         <>
-                            {userData.posts.map(
-                                post => {console.log(post.type);return post.type === "STANDART_POST" ?
+                            { userData.posts.length > 0 ?
+                            userData.posts.map(
+                                post => {return post.type === "STANDART_POST" ?
                                 <Post
                                     key={post.id}
                                     username={`${post.firstName} ${post.lastName}`}
@@ -485,7 +483,9 @@ export default function UserProfile(props) {
                                     postType={post.type}
                                 />
                                 }
-                            )}
+                            ) :
+                            <p className="small-text"style={{margin:20}}>no posts yet</p>
+                        }
                         </>
                     }
                     

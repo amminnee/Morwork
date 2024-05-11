@@ -29,7 +29,7 @@ export default function Notification(props) {
     updateCounter.restartNotificationCounter()
     return (
         <div className="notification radius">
-            <h1 className="large-title">Notifications</h1>
+            <h1 className="large-title" style={{marginBottom:10}}>Notifications</h1>
             {isLoading ? (
                 <NotificationSkeleton />
             ) : (

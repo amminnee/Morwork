@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-    baseURL: "http://192.168.48.47:8081/morwork/api/v1",
+    baseURL: "http://localhost:8081/morwork/api/v1",
     headers: {
         "ngrok-skip-browser-warning": "true"
     }
@@ -481,6 +481,18 @@ export const fetchAllJobTypes = async () => {
     }
 }
 
+export const fetchAllIndustries = async () => {
+    try {
+        const industries = await api.get(
+            "/industry/get-all-industries",
+            {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        )
+        return industries.data
+    } catch(err) {
+        return err
+    }
+}
+
 export const updateUserSkills = async (skills) => {
     try {
         const res = await api.put(
@@ -637,6 +649,245 @@ export const unfollowUser = async (userId) => {
         const response = await api.put(
             `/user/unfollow-user?userId=${localStorage.getItem("userId")}&id=${userId}`,
             {},
+            {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        )
+        return response.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const getUserOrganization = async () => {
+    try {
+        const organization = await api.get(
+            `/user/get-user-company?userId=${localStorage.getItem("userId")}`,
+            {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        )
+        return organization.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const getDefaultLogo = async (type) => {
+    try {
+        const organization = await api.get(
+            `/company/get-default-logo?type=${type}`,
+            {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        )
+        return organization.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const getDefaultCover = async () => {
+    try {
+        const organization = await api.get(
+            `/company/get-default-cover`,
+            {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        )
+        return organization.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const addNewOrganization = async (logo, cover, formData) => {
+    try {
+
+        const res = await api.post(
+            `/company/add-new-organization`,
+            formData,
+            {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+                params: {
+                    "userId": localStorage.getItem("userId")
+                }
+            }
+        )
+        return res.data
+    } catch (err) {
+        return err
+    }
+}
+    
+export const updateOrganizationLogo = async (image, id) => {
+    console.log("it's called nigga")
+    const data = new FormData()
+    data.append("image", image)
+    data.append("id", id)
+
+    try {
+        const res = await api.put(
+            `/company/update-company-image`,
+            data,
+            {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        )
+        return res
+    } catch (err) {
+        console.error(err)
+        return err
+    }
+}
+
+export const updateOrganizationCover = async (cover, id) => {
+    const data = new FormData()
+    data.append("cover", cover)
+    data.append("id", id)
+
+    try {
+        const res = await api.put(
+            `/company/update-company-cover`,
+            data,
+            {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        )
+        return res
+    } catch (err) {
+        console.error(err)
+        return err
+    }
+}
+
+export const isUserAdmin = async (id) => {
+    try {
+        const isAdmin = await api.get(
+            `/user/is-user-admin?userId=${localStorage.getItem("userId")}&id=${id}`,
+            {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        )
+        return isAdmin.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const deleteOrganizationLogo = async (id) => {
+    try {
+        const res = await api.put(
+            `/company/delete-image?id=${id}`,
+            {},
+            {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        )
+        return res
+    } catch (err) {
+        console.error(err)
+        return err
+    }
+}
+
+export const deleteOrganizationCover = async (id) => {
+    try {
+        const res = await api.put(
+            `/company/delete-cover?id=${id}`,
+            {},
+            {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        )
+        return res
+    } catch (err) {
+        console.error(err)
+        return err
+    }
+}
+
+export const updateDescription = async (content, id) => {
+    const data = new FormData()
+    data.append("content", content)
+    data.append("id", id)
+
+    try {
+        const res = await api.put(
+            `/company/update-description`,
+            data,
+            {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        )
+        return res
+    } catch (err) {
+        console.error(err)
+        return err
+    }
+}
+
+export const leaveOrganization = async () => {
+    const data = new FormData()
+    data.append("userId", localStorage.getItem("userId"))
+
+    try {
+        const res = await api.put(
+            `/user/leave-organization`,
+            data,
+            {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        )
+        return res
+    } catch (err) {
+        console.error(err)
+        return err
+    }
+}
+
+export const updateOrganizationInfo = async (data) => {
+    try {
+        const res = await api.put(
+            `/company/update-info`,
+            data,
+            {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        )
+        return res
+    } catch (err) {
+        console.error(err)
+        return err
+    }
+}
+
+export const postJobOffer = async (id, data) => {
+    try {
+        const res = await api.post(
+            `/post/post-job-offer`,
+            data,
+            {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+                params: {
+                    "id": id
+                }
+            }
+        )
+        return res.data
+    } catch (err) {
+        return err
+    }
+}
+
+export const getCompanyOffers = async (id) => {
+    try {
+        const offers = await api.get(
+            `/post/get-company-offers?id=${id}`,
+            {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        )
+        return offers.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const getAllOffers = async () => {
+    try {
+        const offers = await api.get(
+            `/post/get-all-offers`,
+            {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        )
+        return offers.data
+    } catch(err) {
+        return err
+    }
+}
+    
+export const getOrganization = async (id) => {
+    try {
+        const response = await api.get(
+            `/company/get-company?id=${id}`,
             {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
         )
         return response.data

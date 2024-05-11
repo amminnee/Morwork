@@ -58,7 +58,7 @@ export default function Main() {
 
     return (
         <>
-            <Header isVisible={!scrolling} searchBar={true} />
+            <Header isVisible={!scrolling} />
             <div className="main-cont">
                 <Navbar
                     showNewPost={() => setNewPost("")}

@@ -14,10 +14,10 @@ export default function Settings() {
 
     return (
         <>
-            <Header isVisible={true} searchBar={false} />
+            <Header isVisible={true} />
             <div className="main-cont">
                 <SettingsNav />
-                <div>
+                <div style={{zIndex:1000}}>
                     <div className="settings-page elevation-1 radius">
                         <TextHeader title={header} />
                         <HeaderContext.Provider value={{header, setHeader}} >

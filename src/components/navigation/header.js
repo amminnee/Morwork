@@ -15,15 +15,13 @@ export default function Header(props){
                 <h1 className="large-title">MorWork</h1>
             </Link>
             
-            {props.searchBar &&
-                <form className="search-form" onSubmit={handleSubmit}>
-                    <input placeholder="Search" className="medium-text" />
-                    <button className="medium-text"><i class="fa-solid fa-magnifying-glass"></i></button>
-                    <i className="fa-regular fa-message medium-text headerIcon"></i>
-                    <i className="fa-solid fa-gear headerIcon"></i>
-                </form>
-            }
-            
+            <form className="search-form" onSubmit={handleSubmit}>
+                <input placeholder="Search" className="medium-text" />
+                <button className="medium-text"><i class="fa-solid fa-magnifying-glass"></i></button>
+                <i className="fa-regular fa-message medium-text headerIcon"></i>
+                <i className="fa-solid fa-gear headerIcon"></i>
+            </form>
+        
         </div>
     
     )
