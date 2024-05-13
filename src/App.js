@@ -54,6 +54,7 @@ export default () => {
                   <Route element={<ProfileSettings />} path="/settings/profile" />
                 </Route>
               <Route path="/comments/:postId/:postType" element={<CommentPage />} />
+              
               <Route path="/messages" element={<MessagesPage />}></Route>
                 <Route element={<Main />}>
                     <Route path="/" element={<Feed />} />
