@@ -62,8 +62,7 @@ export default () => {
                     <Route path="/" element={<Feed />} />
                     <Route path="/jobs" element={<Jobs />} />
                     <Route path="/notifications" element={<Notification notifications={notifications} />} />
-                    <Route path="/profile/:userId" element={<UserProfile />} />
-                    
+                    <Route path="/profile/:userId" element={<UserProfile />} />  
                 </Route>
               </Route>
             </Routes>
