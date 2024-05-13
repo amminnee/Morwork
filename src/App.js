@@ -56,6 +56,7 @@ export default () => {
               <Route path="/comments/:postId/:postType" element={<CommentPage />} />
               
               <Route path="/messages" element={<MessagesPage />}></Route>
+              
                 <Route element={<Main />}>
                     <Route path="/" element={<Feed />} />
                     <Route path="/jobs" element={<Jobs />} />
