@@ -233,10 +233,9 @@ export default function JobOffer(props) {
                     <LoadingButton 
                         loading ={isLoading}
                         variant="contained"
-                        endIcon={<Save/>} 
                         onClick={saveExperience}z
                     >
-                        Save
+                        Post
                     </LoadingButton>
                 </div>
             
