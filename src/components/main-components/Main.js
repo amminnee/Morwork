@@ -15,18 +15,17 @@ export default function Main() {
     React.useEffect(() => {
         const userId = localStorage.getItem("userId");
         if (userId) {
-            const fetchNotifications = () => {
-                getNotificationsByUserId(Number(userId))
-                    .then((res) => {
-                        setNotifications(res.data);
-                        const count = res.data.reduce((count, notification) => {
-                            return count + (notification.seen ? 0 : 1);
-                        }, 0);
-                        setUnseenNotificationCount(prev => count);
-                    })
-                    .catch((error) => {
-                        console.error("Error fetching notifications:", error);
-                    });
+            const fetchNotifications = async () => {
+                try {
+                    const res = await getNotificationsByUserId(Number(userId));
+                    setNotifications(res.data);
+                    const count = res.data.reduce((count, notification) => {
+                        return count + (notification.seen ? 0 : 1);
+                    }, 0);
+                    setUnseenNotificationCount(prev => count);
+                } catch (error) {
+                    console.error("Error fetching notifications:", error);
+                }
             };
     
             fetchNotifications();
@@ -36,6 +35,7 @@ export default function Main() {
             return () => clearInterval(intervalId);
         }
     }, []);
+    
     
 
     useEffect(() => {
