@@ -57,6 +57,7 @@ export default () => {
                   <Route element={<OrganizationSettings />} path="/settings/organization" />
                 </Route>
                 <Route path="/comments/:postId/:postType" element={<CommentPage />} />
+              
                 <Route path="organization/:id" element={<OrganizationCont />} />
                 <Route element={<Main />}>
                     <Route path="/" element={<Feed />} />
