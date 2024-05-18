@@ -41,7 +41,6 @@ export default function EditEducation(props) {
                     <IconButton onClick={() => {props.updateEdu(edu); hideWindow()}}><Edit /></IconButton>
                     <IconButton onClick={() => deleteEdu(edu.id)}><Delete /></IconButton>
                 </div> 
-                <p className="normal-text" style={{margin:"10px 0"}}>{edu.description}</p>
                 <div className="separator" />
             </div>
         ))

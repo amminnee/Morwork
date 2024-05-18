@@ -17,6 +17,7 @@ import { getNotificationsByUserId } from "./api/app";
 import MessagesPage from "./components/messages/MessagesPage";
 import OrganizationSettings from "./components/settings/settings_organization/OrganizationSettings";
 import OrganizationCont from "./components/organization-page/OrganizationCont";
+import SignUpSequence from "./components/authentication/signup-sequence/SignUpSequence";
 
 export default () => {
 
@@ -51,6 +52,7 @@ export default () => {
             <Routes>
               <Route path="/login" element={<LoginPage />} />
               <Route path="/sign-up" element={<SignUp />} />
+              <Route path="/personal-info" element={<SignUpSequence/>} />
               <Route element={<PrivateRoute />}>
                 <Route element={<Settings/>} path="/settings">
                   <Route element={<ProfileSettings />} path="/settings/profile" />

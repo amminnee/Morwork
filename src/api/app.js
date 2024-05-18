@@ -894,3 +894,36 @@ export const getOrganization = async (id) => {
         return err
     }
 }
+
+export const isUserSignedUp = async () => {
+    try {
+        const response = await api.get(
+            `/user/is-signed-up?userId=${localStorage.getItem("userId")}`,
+            {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        )
+        return response.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const updateUserInfo = async (data) => {
+    try {
+        const res = await api.put(
+            `/user/update-user-info`,
+            data.skills,
+            {
+                headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`},
+                params: {
+                    "about":data.about, 
+                    "title": data.title,
+                    "userId": localStorage.getItem("userId")
+                }
+            }
+        )
+        return res
+    } catch (err) {
+        console.error(err)
+        return err
+    }
+}

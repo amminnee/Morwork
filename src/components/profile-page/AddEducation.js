@@ -62,7 +62,8 @@ export default function AddEducation(props) {
     }
 
     const hideWindow = () => {
-        props.resetEdu()
+        if (props.education !== null)
+            props.resetEdu()
         props.hideWindow()
     }
     

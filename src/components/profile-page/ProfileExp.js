@@ -1,7 +1,10 @@
-import React from "react"
+import { ExpandLess, ExpandMore } from "@mui/icons-material"
+import { IconButton } from "@mui/material"
+import React, { useState } from "react"
 import Skeleton from "react-loading-skeleton"
 
 export default function ProfileExp(props) {
+    const [isExpanded, setExpanded] = useState(false)
     return(
         <div className="jobItem profile" style={{width:'100%'}}>
             <div className="top-job">
@@ -13,7 +16,9 @@ export default function ProfileExp(props) {
                             props.company!==null? 
                             props.company.image :
                             props.image
-                        } />
+                        }
+                        alt="Company image"
+                        />
                     }
                     
                     <div className="info-job">
@@ -43,17 +48,29 @@ export default function ProfileExp(props) {
                             <p className="small-label">{props.startDate} - {props.endDate}</p>
                         }
                         
-                </div>
+                    </div>
                 </div>
                 { props.isLoading ?
                     <Skeleton height={10} width={50} />
                     :
-                    <div className="small-label">{props.jobType.name}</div>
+                    <div style={{display:"flex", flexDirection:"column", justifyContent:"space-between", alignItems:"center"}}>
+                        <div className="small-label">{props.jobType.name}</div>
+                        {
+                            !props.isDesc &&
+                            <IconButton onClick={() => setExpanded(prev => !prev)}>{isExpanded ? <ExpandLess/> : <ExpandMore/>}</IconButton>
+                        }
+                        
+                    </div>
+                    
                 }
                
             </div>
             {
                 props.isDesc &&
+                <p className="normal-text">{props.description}</p>
+            }
+            {
+                isExpanded && !props.isDesc &&
                 <p className="normal-text">{props.description}</p>
             }
         </div>

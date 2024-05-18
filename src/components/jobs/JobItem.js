@@ -31,7 +31,7 @@ export default function JobItem(props){
                             <p className="medium-label">{props.city.name}</p>
                         </div>
                     </div>
-                    <div className="small-label">full time</div>
+                    <div className="small-label">{props.jobType.name}</div>
                 </div>
                 {jobId === props.id &&
                 <div className="job-detail-container">

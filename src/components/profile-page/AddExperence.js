@@ -66,7 +66,8 @@ export default function AddExperience(props) {
     }
 
     const hideWindow = () => {
-        props.resetExp()
+        if (props.experience != null)
+            props.resetExp()
         props.hideWindow()
     }
     

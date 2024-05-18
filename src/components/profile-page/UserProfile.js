@@ -325,7 +325,6 @@ export default function UserProfile(props) {
                                 addExperience={() => setShowAddExperienceWindow('visible')}
                                 updateExp={(exp) => updateExp(exp)}
                             />
- 
                         }
                         
                         { isLoading ?

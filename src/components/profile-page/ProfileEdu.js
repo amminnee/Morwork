@@ -1,7 +1,10 @@
-import React from "react"
+import { ExpandLess, ExpandMore } from "@mui/icons-material"
+import { IconButton } from "@mui/material"
+import React, { useState } from "react"
 import Skeleton from "react-loading-skeleton"
 
 export default function ProfileEdu(props) {
+    const [isExpanded, setExpanded] = useState(false)
     return(
         <div className="jobItem profile" style={{width:'100%'}}>
             <div className="top-job">
@@ -36,8 +39,30 @@ export default function ProfileEdu(props) {
                         }
                     </div>    
                 </div>
+                {
+                    !props.isLoading && !props.isDesc &&
+                    <div style={{display:"grid"}}>
+                        <IconButton 
+                            style={{marginTop:"auto"}}
+                            onClick={() => setExpanded(prev => !prev)}
+                        >
+                            {isExpanded ? <ExpandLess/> : <ExpandMore/>}
+                        </IconButton>
+                    </div>
+                    
+                }
+
+                
+                
             </div>
-            
+            {
+                isExpanded && !props.isDesc &&
+                <p className="normal-text">{props.description}</p>
+            }
+            {
+                props.isDesc &&
+                <p className="normal-text">{props.description}</p>
+            }
         </div>
     )
 }
