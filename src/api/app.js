@@ -332,7 +332,7 @@ export const getUserById = (id) => {
     }else{
         return Promise.reject(new Error("Token not available"))
     }
-}
+} 
 
 export const getNotificationsByUserId = (userId) =>{
     const token = localStorage.getItem("token")
@@ -892,5 +892,98 @@ export const getOrganization = async (id) => {
         return response.data
     } catch(err) {
         return err
+    }
+}
+
+export const NewApply = async (userId, description, jobId) => {
+    const data = new FormData()
+    data.append("userId", userId)
+    data.append("description", description)
+    data.append("jobId", jobId)
+
+    try{
+        const res = await api.post(`/job-type/new-apply`, data,
+            {headers:{
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }}
+        )
+    }catch(err){
+        return err;
+    }
+}
+
+export const getAllApplies = async () => {
+    try{
+        const result = await api.get("/job-type/applies",
+        {headers:{
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }}
+        )
+        return result;
+    }catch(err){
+        return err;
+    }
+}
+
+export const getAppliesByJobId = async (id) => {
+    try{
+        const res = await api.get(`/job-type/applies/${id}`,
+            {headers:{
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }}
+        )
+        return res
+    }catch(err){
+        return err;
+    }
+}
+
+export const searchUser = async (keyWord) => {
+    try{
+        const res = await api.get(`/user/search-users?keyWord=${keyWord}`,
+            {headers:{
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }}
+        )
+        return res.data
+    }catch(err){
+        return err;
+    }
+}
+export const searchCompany = async (keyWord) => {
+    try{
+        const res = await api.get(`/user/search-company?keyWord=${keyWord}`,
+            {headers:{
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }}
+        )
+        return res.data
+    }catch(err){
+        return err;
+    }
+}
+
+export const searchJobs = async (keyWord) => {
+    try{
+        const res = await api.get(`/post/get-jobs-by-keyword?keyWord=${keyWord}`,
+            {headers:{
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }}
+        )
+        return res.data
+    }catch(err){
+        return err;
+    }
+}
+export const searchPosts = async (keyWord) => {
+    try{
+        const res = await api.get(`/post/get-posts-by-keyword?keyWord=${keyWord}`,
+            {headers:{
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }}
+        )
+        return res.data
+    }catch(err){
+        return err;
     }
 }

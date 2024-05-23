@@ -3,7 +3,7 @@ import Post from "./Post";
 import SideInfo from "../main-components/SideInfo";
 import PostSkeleton from "./PostSkeleton";
 import 'react-loading-skeleton/dist/skeleton.css';
-import { getPosts } from "../../api/app";
+import { getPosts, searchUser } from "../../api/app";
 
 export default function Feed(props) {
     const [posts, setPosts] = useState([]);
@@ -67,7 +67,9 @@ export default function Feed(props) {
         const days = Math.floor(hours / 24);
         return `${days}d`;
     };
-    console.log(posts)
+    
+
+
     return (
         <div className="home-page">
             <div className="post-feed">
