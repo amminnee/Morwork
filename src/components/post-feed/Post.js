@@ -137,7 +137,6 @@ export default function Post(props) {
     .then(res => console.log(res))
     .then(window.location.reload())
   }
-  console.log(userLikes)
 
   const handleLikesPage = () => {
 

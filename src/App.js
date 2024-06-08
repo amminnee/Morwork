@@ -17,6 +17,7 @@ import { getNotificationsByUserId } from "./api/app";
 import MessagesPage from "./components/messages/MessagesPage";
 import OrganizationSettings from "./components/settings/settings_organization/OrganizationSettings";
 import OrganizationCont from "./components/organization-page/OrganizationCont";
+import { SearchPage } from "./components/search/SearchPage";
 import SignUpSequence from "./components/authentication/signup-sequence/SignUpSequence";
 import ServerTester from "./components/main-components/ServerTester";
 import ServerErrorPage from "./components/main-components/ServerErrorPage";
@@ -52,6 +53,25 @@ export default () => {
         <Router>
           <AuthProvider>
             <Routes>
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/sign-up" element={<SignUp />} />
+              <Route element={<PrivateRoute />}>
+                <Route element={<Settings/>} path="/settings">
+                  <Route element={<ProfileSettings />} path="/settings/profile" />
+                  <Route element={<OrganizationSettings />} path="/settings/organization" />
+                </Route>
+                <Route path="/comments/:postId/:postType" element={<CommentPage />} />
+              
+              <Route path="/messages" element={<MessagesPage />}></Route>
+              
+                <Route element={<Main />}>
+                    <Route path="/" element={<Feed />} />
+                    <Route path="/jobs" element={<Jobs />} />
+                    <Route path="/search" element={<SearchPage />}/>
+                    <Route path="/notifications" element={<Notification notifications={notifications} />} />
+                    <Route path="/profile/:userId" element={<UserProfile />} />  
+                </Route>
+              </Route>
               <Route element={<ServerTester />}> 
                 {/* <Route element={<ServerErrorPage />} path="/error" /> */}
                 <Route path="/login" element={<LoginPage />} />

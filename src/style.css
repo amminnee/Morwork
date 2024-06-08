@@ -376,13 +376,70 @@
     gap: 10px;
     border-radius: 30px;
 }
+.apply-now:hover{
+    background-color: #007bff13;
+}
 
 .more-details{
     color: var(--primary);
     font-size: 17px;
 }
 
+.applied{
+    color: #0000001a;
+    font-size: 50px;
+    letter-spacing: 20px;
+}
 
+/* Define the keyframes for the animations */
+@keyframes slideOutLeft {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* Apply the animations */
+.slide-out-left {
+    animation: slideOutLeft 0.5s forwards;
+}
+
+.slide-in-right {
+    animation: slideInRight 0.5s forwards;
+}
+.drop-down-search{
+    position: absolute;
+    background-color: #FFF;
+    width: 80%;
+    max-height: 350px;
+    overflow-y: auto;
+    left: -23%;
+}
+.drop-down-search li{
+    list-style: none;
+}
+
+.drop-down-search a{
+    color: #000;
+    text-decoration: none;
+    padding: 7px 8px;
+    width: 100%;
+    display: block;
+}
+.drop-down-search a:hover{
+    background-color: #EEE;
+}
 /* Jobs */
 
 /* Header */
@@ -1034,7 +1091,50 @@
 
 
 
+/* search page */
+.search-page{
+    height: 540px;
+    overflow-y: auto;
+}
+.seach-page-header{
+    width: 100%;
+    height: 60px;
+    /* border-bottom: 1px solid #EEE; */
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    background-color: #FFF;
+}
+.seach-page-header span{
+    background-color: #FFF;
+    text-align: center;
+    border-radius: 20px;
+    padding: 8px 0;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    cursor: pointer;
+    margin: 0 15px;
+    width: 60%;
+}
+.seach-page-header span:hover,
+.seach-page-header .active-search-filter{
+    background-color: var(--primary);
+    color: #FFF;
+}
 
+.all-filter{
+    background-color: #FFF;
+    margin: 8px 0;
+}
+.all-filter a{
+    text-decoration: none;
+    display: block;
+}
+.all-filter a:hover{
+    background-color: #EEE;
+}
+
+/* search page */
 
 
 

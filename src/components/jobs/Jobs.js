@@ -1,13 +1,32 @@
 import React, { useState } from "react";
 import JobItem from "./JobItem";
 import JobSkeleton from "./JobSkeleton";
-import { getAllOffers } from "../../api/app";
+import { getAllOffers, getUserById } from "../../api/app";
+import { Modal } from "react-bootstrap";
+import { TextField } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { Apply } from "./Apply";
+import { SignalWifiStatusbarNullSharp } from "@mui/icons-material";
+
 
 export default function Jobs(){
     const [isLoading, setIsLoading] = React.useState(true)
     const [jobs, setJobs] = useState(null)
     const [isAdmin, setIsAdmin] = useState(false)
     const [error, setError] = useState(null)
+    
+    const [showNewApply, setShowNewApply] = React.useState(false)
+
+    const [selectedJobId, setSelectedJobId] = React.useState(null)
+
+    const [user, setUser] = React.useState({})
+
+    const handleCloseNewApply = () =>{
+        setShowNewApply(false)
+    }
+    const handleOpenNewApply = () => {
+        setShowNewApply(true)
+    }
 
     const getOffers = async () => {
         setIsLoading(true)
@@ -20,9 +39,23 @@ export default function Jobs(){
             setError(null)
         }
     }
+    console.log(jobs)
+
+
+
+    const getUser = async () => {
+        const res = await getUserById(Number(localStorage.getItem("userId")))
+        if(res instanceof Error){
+            console.log("erroooor")
+        }else{
+            console.log(res.data)
+            setUser(res.data)
+        }
+    }
 
     React.useEffect(() => {
         getOffers()
+        getUser()
     }, []);
 
     return(
@@ -40,14 +73,24 @@ export default function Jobs(){
             :
             <div>
                 {jobs.map(offer => <JobItem 
-                    isAdmin={isAdmin}
+                    //isAdmin={isAdmin}
+                    isAdmin={user.company?.id === offer.company?.id}
                     key={offer.id}
+                    handleOpenNewApply={handleOpenNewApply}
+                    handleCloseNewApply={handleCloseNewApply}
+                    setSelectedJobId={setSelectedJobId}
+                    id={offer.id}
                     {...offer}
                 />
                 )}
             </div>
             )
-        }         
+        }
+        <Apply
+            showNewApply={showNewApply}
+            handleCloseNewApply={handleCloseNewApply}
+            selectedJobId={selectedJobId}
+        />
         </div>
     )
 }

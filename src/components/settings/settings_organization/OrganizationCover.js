@@ -11,6 +11,7 @@ export default function OrganizationCover(props) {
     const cropperRef = useRef(null);
 
     const handleNext = () => {
+        console.log("invoked2")
         if (typeof cropperRef.current?.cropper !== "undefined") {
             const canvas = cropperRef.current?.cropper.getCroppedCanvas()
             canvas.toBlob((blob) => {
@@ -41,6 +42,7 @@ export default function OrganizationCover(props) {
     },[])
 
     useEffect(() => {
+        console.log("invoked")
         if (!isFirstTime)
             handleNext()
         else setIsFirstTime(false)

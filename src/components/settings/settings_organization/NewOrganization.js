@@ -72,6 +72,7 @@ export default function NewOrganization(props) {
     }
 
     const handleNext = async (cover) => {
+        console.log("invoked3")
         if (activeStep === steps.length-1) {
             setError(null)
             setLoading (true)

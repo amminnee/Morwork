@@ -27,7 +27,6 @@ export default function Settings() {
                                 <Outlet /> 
                             }
                         </HeaderContext.Provider>
-                        
                     </div>
                 </div>
                 
