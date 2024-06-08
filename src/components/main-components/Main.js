@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../navigation/Navbar";
-import Header from "../navigation/Header";
+import Header from "../navigation/header";
 import { Outlet } from "react-router-dom";
 import NewPost from "../post-feed/NewPost";
 import { getNotificationsByUserId } from "../../api/app";

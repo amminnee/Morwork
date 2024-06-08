@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getOrganization } from "../../api/app";
-import Header from "../navigation/Header";
+import Header from "../navigation/header";
 import OrganizationPage from "./OrganizationPage";
 
 export default function OrganizationCont() {

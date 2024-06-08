@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import SettingsNav from "./SettingsNav";
-import Header from "../navigation/Header";
+import Header from "../navigation/header";
 import SettingsPage from "./SettingsPage";
 import TextHeader from "../navigation/TextHeader";
 

@@ -113,8 +113,8 @@ export default function Header(props){
                                 <img className="avatar" src={suggestion.image === null ? `http://localhost:8081/media/avatar.jpg` : `http://localhost:8081/media/${suggestion.image}`} alt="User avatar" width={33} height={33} />
                                 <div className="user-info"  style={{padding:"0"}}>
                                 <NavLink to={``} style={{textDecoration:"none"}}>
-                                    <p className="medium-title">{`${suggestion.name}`}</p>
-                                    <p className="small-label">{`${suggestion.industry.name}`}</p>
+                                    <p className="medium-title">{`${suggestion?.name}`}</p>
+                                    <p className="small-label">{`${suggestion.industry?.name}`}</p>
                                 </NavLink>
                                 </div>
                             </div>

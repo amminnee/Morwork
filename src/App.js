@@ -56,6 +56,7 @@ export default () => {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route element={<PrivateRoute />}>
+                <Route element={<OrganizationCont />} path="/organization/:id" />
                 <Route element={<Settings/>} path="/settings">
                   <Route element={<ProfileSettings />} path="/settings/profile" />
                   <Route element={<OrganizationSettings />} path="/settings/organization" />

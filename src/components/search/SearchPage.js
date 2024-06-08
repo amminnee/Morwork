@@ -80,9 +80,9 @@ export const SearchPage = (props) => {
                             <div className="user-profile " style={{padding:"10px"}}>
                                 <img className="avatar" src={suggestion.image === null ? `http://localhost:8081/media/ramLogo-922e16d8.jpg` : `http://localhost:8081/media/${suggestion.image}`} alt="User avatar" width={45} height={45} />
                                 <div className="user-info"  style={{padding:"0"}}>
-                                <NavLink to={`/profile/${props.id}`} style={{textDecoration:"none"}}>
-                                    <p className="medium-title">{`${suggestion.name}`}</p>
-                                    <p className="small-label">{suggestion.industry.name}</p>
+                                <NavLink to={`/organization/${props.id}`} style={{textDecoration:"none"}}>
+                                    <p className="medium-title">{`${suggestion?.name}`}</p>
+                                    <p className="small-label">{suggestion.industry?.name}</p>
                                 </NavLink>
                                 </div>
                             </div>
@@ -134,8 +134,8 @@ export const SearchPage = (props) => {
                                 <img className="avatar" src={suggestion.image === null ? `http://localhost:8081/media/ramLogo-922e16d8.jpg` : `http://localhost:8081/media/${suggestion.image}`} alt="User avatar" width={45} height={45} />
                                 <div className="user-info"  style={{padding:"0"}}>
                                 <NavLink to={`/profile/${props.id}`} style={{textDecoration:"none"}}>
-                                    <p className="medium-title">{`${suggestion.name}`}</p>
-                                    <p className="small-label">{suggestion.industry.name}</p>
+                                    <p className="medium-title">{`${suggestion?.name}`}</p>
+                                    <p className="small-label">{suggestion.industry?.name}</p>
                                 </NavLink>
                                 </div>
                             </div>

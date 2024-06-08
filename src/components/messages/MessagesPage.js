@@ -1,7 +1,7 @@
 import React from "react";
 import MessagesList from "./MessagesList";
 import Discussion from "./Discussion";
-import Header from "../navigation/Header";
+import Header from "../navigation/header";
 
 import SockJS from "sockjs-client";
 import { over } from "stompjs";
