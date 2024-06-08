@@ -927,3 +927,15 @@ export const updateUserInfo = async (data) => {
         return err
     }
 }
+
+export const demoRequest = async () => {
+    try {
+        const response = await api.get(
+            `/demo/hello`,
+            {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}}
+        )
+        return response
+    } catch(err) {
+        return err
+    }
+}

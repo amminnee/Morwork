@@ -18,6 +18,8 @@ import MessagesPage from "./components/messages/MessagesPage";
 import OrganizationSettings from "./components/settings/settings_organization/OrganizationSettings";
 import OrganizationCont from "./components/organization-page/OrganizationCont";
 import SignUpSequence from "./components/authentication/signup-sequence/SignUpSequence";
+import ServerTester from "./components/main-components/ServerTester";
+import ServerErrorPage from "./components/main-components/ServerErrorPage";
 
 export default () => {
 
@@ -50,25 +52,29 @@ export default () => {
         <Router>
           <AuthProvider>
             <Routes>
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/sign-up" element={<SignUp />} />
-              <Route path="/personal-info" element={<SignUpSequence/>} />
-              <Route element={<PrivateRoute />}>
-                <Route element={<Settings/>} path="/settings">
-                  <Route element={<ProfileSettings />} path="/settings/profile" />
-                  <Route element={<OrganizationSettings />} path="/settings/organization" />
-                </Route>
-                <Route path="/comments/:postId/:postType" element={<CommentPage />} />
-              
-              <Route path="/messages" element={<MessagesPage />}></Route>
-              
-                <Route element={<Main />}>
-                    <Route path="/" element={<Feed />} />
-                    <Route path="/jobs" element={<Jobs />} />
-                    <Route path="/notifications" element={<Notification notifications={notifications} />} />
-                    <Route path="/profile/:userId" element={<UserProfile />} />  
+              <Route element={<ServerTester />}> 
+                {/* <Route element={<ServerErrorPage />} path="/error" /> */}
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/sign-up" element={<SignUp />} />
+                <Route element={<PrivateRoute />}>
+                  <Route path="/personal-info" element={<SignUpSequence/>} />
+                  <Route element={<Settings/>} path="/settings">
+                    <Route element={<ProfileSettings />} path="/settings/profile" />
+                    <Route element={<OrganizationSettings />} path="/settings/organization" />
+                  </Route>
+                  <Route path="/comments/:postId/:postType" element={<CommentPage />} />
+            
+                  <Route path="/messages" element={<MessagesPage />}></Route>
+            
+                  <Route element={<Main />}>
+                      <Route path="/" element={<Feed />} />
+                      <Route path="/jobs" element={<Jobs />} />
+                      <Route path="/notifications" element={<Notification notifications={notifications} />} />
+                      <Route path="/profile/:userId" element={<UserProfile />} />  
+                  </Route>
                 </Route>
               </Route>
+              
             </Routes>
           </AuthProvider>
         </Router>

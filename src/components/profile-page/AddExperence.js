@@ -96,14 +96,6 @@ export default function AddExperience(props) {
         if (empty) {setLoading(false);return}
         
 
-        if (formData.city === null || formData.city.name !== formData.cityInputValue) {
-            setFieldError(prev => ({
-                ...prev,
-                cityInputValue:"Please select a city"
-            }))
-            setLoading(false)
-            return
-        }
         if (formData.jobType === null || formData.jobType.name !== formData.jobTypeInputValue) {
             setFieldError(prev => ({
                 ...prev,
